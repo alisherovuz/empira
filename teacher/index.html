@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Empira · O'qituvchi paneli (demo)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F7FB;--card:#FFFFFF;--ink:#0B1026;--text2:#3E445C;--muted:#5B6178;--border:#E1E4EE;--divider:#D5D9E6;
+  --blue:#3B4CFF;--blue-soft:#EEF0FF;--blue300:#8B96FF;--amber:#FFB21E;--amber-soft:#FFF4DC;--coral:#D9452B;--coral-soft:#FDECE8;--green:#12805C;--green-soft:#E3F5EE;
+  --sora:Sora,system-ui,sans-serif;--body:'Instrument Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B1026;--card:#141A36;--ink:#F1F3FA;--text2:#C3C8DD;--muted:#9AA1BD;--border:#262E55;--divider:#2E3762;
+  --blue:#6F7CFF;--blue-soft:#1D2555;--blue300:#8B96FF;--amber-soft:#3A2E10;--coral:#FF7A5E;--coral-soft:#3A1C16;--green:#3FCB95;--green-soft:#0F3328;
+}}
+:root[data-theme="dark"]{
+  --bg:#0B1026;--card:#141A36;--ink:#F1F3FA;--text2:#C3C8DD;--muted:#9AA1BD;--border:#262E55;--divider:#2E3762;
+  --blue:#6F7CFF;--blue-soft:#1D2555;--amber-soft:#3A2E10;--coral:#FF7A5E;--coral-soft:#3A1C16;--green:#3FCB95;--green-soft:#0F3328;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:8px}
+h1,h2,h3,p{margin:0}
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh}
+/* sidebar */
+.side{background:var(--card);border-right:1px solid var(--border);padding:22px 16px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 22px;font-family:var(--sora);font-weight:700;font-size:21px}
+.nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:var(--text2);text-decoration:none;font-weight:500}
+.nav a.on{background:var(--blue-soft);color:var(--blue);font-weight:600}
+.nav a:hover{color:var(--ink)}
+.student-link{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:1px solid var(--border);border-radius:999px;background:var(--card);color:var(--blue);font-weight:600;font-size:14px;text-decoration:none}
+.student-link:hover{border-color:var(--blue)}
+.side-foot{margin-top:auto;padding:12px;border:1px solid var(--border);border-radius:14px;font-size:13px;color:var(--muted)}
+.side-foot b{display:block;color:var(--ink);font-size:14px}
+/* main */
+main{padding:24px 32px 64px;display:flex;flex-direction:column;gap:22px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.top h1{font-family:var(--sora);font-weight:800;font-size:30px;letter-spacing:-.02em}
+.top p{color:var(--muted);margin-top:4px}
+.demo-tag{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;background:var(--amber-soft);color:var(--ink);font-size:13px;font-weight:600}
+.demo-tag i{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px}
+.card h2{font-family:var(--sora);font-weight:700;font-size:19px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:14px;margin-top:2px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;border:1px solid var(--divider);background:var(--card);font-weight:600}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:progress}
+
+/* AI clone */
+.clone-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
+.cl-col{border:1px solid var(--border);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.cl-col h3{font-family:var(--sora);font-size:16px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.cl-col h3 .sub{font-family:var(--body);font-weight:500;font-size:12.5px;margin:0}
+.src-list,.q-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.src-list li{display:flex;align-items:center;gap:10px}
+.src-list .ic{width:36px;height:36px;border-radius:10px;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center;flex:none}
+.src-list .tx{flex:1;min-width:0}
+.src-list .tx b{display:block;font-size:14px;line-height:1.3}
+.src-list .tx small{display:block;color:var(--muted);font-size:12.5px}
+.src-list li.locked .ic{background:var(--coral-soft);color:var(--coral)}
+.src-list li.soon{opacity:.6}
+.src-list .lock{font-size:12px;font-weight:700;color:var(--coral);white-space:nowrap}
+.src-list .ok{font-size:12px;font-weight:700;color:var(--green);white-space:nowrap}
+.src-list .wait{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
+.up-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.up-row small{color:var(--muted);font-size:12.5px}
+.privacy{background:var(--green-soft);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--ink)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text2)}
+.consent input{margin-top:3px;accent-color:var(--blue);width:16px;height:16px;flex:none}
+.traits{margin:0;display:flex;flex-direction:column;gap:8px}
+.traits div{background:var(--bg);border-radius:12px;padding:10px 12px}
+.traits dt{font-size:12px;color:var(--muted);font-weight:600}
+.traits dd{margin:2px 0 0;font-size:14px}
+.match{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.match div{display:flex;justify-content:space-between}
+.mk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mk div{background:var(--bg);border-radius:12px;padding:10px 12px}
+.mk small{display:block;font-size:12px;color:var(--muted)}
+.mk b{font-family:var(--sora);font-size:19px}
+.q-list li{border:1px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.q-list li small{color:var(--muted);font-size:12.5px}
+.q-list li .row{justify-content:space-between}
+.q-list .btn{height:34px;padding:0 12px;font-size:13px}
+.q-list li.done{background:var(--green-soft);border-color:transparent}
+.clone-state{font-size:14px;font-weight:600}
+@media (max-width:1180px){.clone-grid{grid-template-columns:minmax(0,1fr)}}
+/* builder */
+.builder{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13px;font-weight:600;color:var(--muted)}
+.field select{height:44px;border:1px solid var(--divider);border-radius:12px;padding:0 12px;background:var(--card);min-width:220px}
+.scan-box{margin-top:16px;border:1px dashed var(--divider);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center}
+.scan-box .ph{width:54px;height:68px;border-radius:8px;background:var(--bg);border:1px solid var(--border);position:relative;overflow:hidden;flex:none}
+.scan-box .ph i{position:absolute;left:8px;right:8px;height:4px;border-radius:2px;background:var(--divider)}
+.scan-line{position:absolute;left:0;right:0;height:3px;background:var(--blue);box-shadow:0 0 12px var(--blue);top:0;opacity:0}
+.scanning .scan-line{animation:scan 1.2s ease-in-out infinite;opacity:1}
+@keyframes scan{0%{top:0}50%{top:64px}100%{top:0}}
+@media (prefers-reduced-motion:reduce){.scanning .scan-line{animation:none;top:32px}}
+.scan-res{font-size:14px;color:var(--text2)}
+.scan-res b{color:var(--ink)}
+.conf{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:700}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:22px 0 12px;flex-wrap:wrap}
+.sec-head h3{font-family:var(--sora);font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.ai-badge{font-family:var(--body);font-size:11px;font-weight:700;color:#fff;background:var(--blue);padding:3px 8px;border-radius:6px}
+.toggle{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
+.switch{position:relative;width:42px;height:24px;border-radius:999px;background:var(--divider);border:0;padding:0;flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
+.switch[aria-checked="true"]{background:var(--blue)}
+.switch[aria-checked="true"]::after{left:21px}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tool{border:1px solid var(--border);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:flex-start;background:var(--card);animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.tool{animation:none}}
+.tool.distractor{border-style:dashed;border-color:var(--amber)}
+.ico{width:48px;height:48px;border-radius:12px;background:var(--bg);display:flex;align-items:center;justify-content:center;flex:none}
+.tool b{display:block;font-size:15px}
+.tool small{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:2px}
+.pill{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px}
+.pill.req{background:var(--blue-soft);color:var(--blue)}
+.pill.opt{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.pill.dis{background:var(--amber-soft);color:var(--ink)}
+.lib-controls{display:flex;gap:10px;flex-wrap:wrap}
+.lib-controls input{height:40px;border:1px solid var(--divider);border-radius:10px;padding:0 12px;background:var(--card);min-width:220px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--border);background:var(--card);font-size:13px;font-weight:600;color:var(--text2)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.lib{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px;max-height:268px;overflow:auto;padding-right:4px}
+.lib-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:12px;font-size:13px}
+.lib-item .ico{width:34px;height:34px;border-radius:9px}
+.lib-item.soon{opacity:.55}
+.lib-item em{font-style:normal;display:block;font-size:11px;color:var(--muted)}
+/* task preview */
+.preview{display:flex;flex-direction:column;gap:14px}
+.task{background:var(--bg);border-radius:14px;padding:14px;font-size:14px}
+.task .lbl{font-size:11px;font-weight:700;color:#fff;background:var(--ink);border-radius:6px;padding:3px 7px;display:inline-block;margin-bottom:8px}
+:root[data-theme="dark"] .task .lbl{background:var(--blue)}
+.kv{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-bottom:1px solid var(--border)}
+.kv span:first-child{color:var(--muted)}
+.hints{font-size:13px;color:var(--text2);padding-left:18px;margin:0}
+.hints li{margin:4px 0}
+/* results */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+.kpi{border:1px solid var(--border);border-radius:16px;padding:16px}
+.kpi small{color:var(--muted);font-size:13px}
+.kpi b{display:block;font-family:var(--sora);font-size:28px;font-weight:800;letter-spacing:-.02em;margin-top:4px}
+.kpi b.coral{color:var(--coral)}
+.results{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:22px;margin-top:18px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--divider)}
+td{padding:10px;border-bottom:1px solid var(--border)}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--bg)}
+.st{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px}
+.st.ok{background:var(--green-soft);color:var(--green)}
+.st.mid{background:var(--amber-soft);color:var(--ink)}
+.st.low{background:var(--coral-soft);color:var(--coral)}
+.st.no{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.bars{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.bar-row{font-size:13px}
+.bar-row div{display:flex;justify-content:space-between;margin-bottom:4px}
+.bar{height:10px;border-radius:999px;background:var(--bg);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:var(--blue)}
+.bar i.hot{background:var(--coral)}
+.insight{margin-top:16px;background:var(--blue-soft);border-radius:14px;padding:14px;font-size:14px;color:var(--ink)}
+.insight b{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(11,16,38,.4);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:var(--card);border-left:1px solid var(--border);z-index:41;transform:translateX(100%);transition:transform .25s ease;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));overflow:auto;display:flex;flex-direction:column;gap:16px}
+.drawer.on{transform:none}
+@media (prefers-reduced-motion:reduce){.drawer,.scrim{transition:none}}
+.drawer h3{font-family:var(--sora);font-size:22px}
+.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--border);margin-left:6px}
+.tl li{position:relative;padding:0 0 12px 18px;font-size:14px}
+.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--blue300)}
+.tl li.err::before{border-color:var(--coral);background:var(--coral)}
+.tl li.good::before{border-color:var(--green);background:var(--green)}
+.tl time{color:var(--muted);font-size:12px;margin-right:6px;font-variant-numeric:tabular-nums}
+.next{background:var(--amber-soft);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--card);padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:all .2s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.theme-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:inline-flex;align-items:center;justify-content:center}
+@media (max-width:1180px){.builder,.results{grid-template-columns:minmax(0,1fr)}.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.lib{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:820px){.app{grid-template-columns:minmax(0,1fr)}.side{display:none}main{padding:18px 16px 48px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.tools,.lib{grid-template-columns:minmax(0,1fr)}.table-wrap{overflow-x:auto}.field select{min-width:0;width:100%}.field{flex:1}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Menyu">
+    <div class="logo">
+      <svg width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(-2.5 0)"><path d="M12 6 H32 V11 H30 V22 L36 30 H24 V36 H40.5 L45 42 H24 V46 H14 V11 H12 Z" fill="#3B4CFF"/><path d="M14 49 H50.25 L57 58 H14 Z" fill="#FFB21E"/></g></svg>Empira
+    </div>
+    <nav class="nav">
+      <a href="#" class="on"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/></svg>Bosh sahifa</a>
+      <a href="#builder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/></svg>Laboratoriyalar</a>
+      <a href="#results"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M21 20H3"/></svg>Natijalar</a>
+      <a href="#clone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01"/></svg>AI klonim</a>
+      <a href="#results"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>O'quvchilar</a>
+      <a href="../lab/index.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>O'quvchi ko'rinishi</a>
+      <a href="../index.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14L21 3M15 3h6v6M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg>empira.uz</a>
+    </nav>
+    <div class="side-foot"><b>Dilnoza Karimova</b>Fizika o'qituvchisi · 8-B sinf<br>28 o'quvchi</div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <div>
+        <h1>Xayrli kun, Dilnoza opa</h1>
+        <p>Mavzu tanlang: AI kerakli asboblarni tanlab, laboratoriyani tayyorlaydi.</p>
+      </div>
+      <div class="row">
+        <a class="student-link" href="../lab/index.html">O'quvchi ko'rinishi <span aria-hidden="true">→</span></a>
+        <span class="demo-tag"><i></i>Demo ma'lumotlar</span>
+        <button class="theme-btn" id="theme" type="button" aria-label="Rang rejimini almashtirish"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button>
+      </div>
+    </div>
+
+    <section class="builder" id="builder">
+      <div class="card">
+        <h2>Yangi laboratoriya</h2>
+        <p class="sub">Sinf va mavzuni tanlang yoki darslik sahifasini skanerlang</p>
+        <div class="row" style="margin-top:16px;align-items:flex-end">
+          <div class="field"><label for="grade">Sinf</label>
+            <select id="grade"><option value="7">7-sinf</option><option value="8" selected>8-sinf</option></select></div>
+          <div class="field"><label for="topic">Mavzu</label><select id="topic"></select></div>
+        </div>
+        <div class="scan-box" id="scan-box">
+          <div class="ph" aria-hidden="true"><i style="top:10px"></i><i style="top:20px;right:18px"></i><i style="top:30px"></i><i style="top:40px;right:24px"></i><i style="top:50px"></i><span class="scan-line"></span></div>
+          <div style="flex:1">
+            <div class="scan-res" id="scan-res">Darslik sahifasini suratga oling: AI mavzuni o'zi aniqlaydi.</div>
+          </div>
+          <button class="btn" id="scan-btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M4 12h16"/></svg>Skanerlash</button>
+        </div>
+
+        <div class="sec-head">
+          <h3>Tavsiya etilgan asboblar <span class="ai-badge">AI</span></h3>
+          <div class="toggle"><button class="switch" id="dis-toggle" role="switch" aria-checked="false" aria-label="Sinov uchun keraksiz asbob qo'shish"></button>Sinov uchun keraksiz asbob qo'shish</div>
+        </div>
+        <div class="tools" id="tools"></div>
+
+        <div class="sec-head">
+          <h3>Asboblar kutubxonasi <span class="sub" id="lib-count" style="margin:0;font-family:var(--body);font-weight:500"></span></h3>
+          <div class="lib-controls">
+            <input id="lib-search" type="search" placeholder="Asbob qidirish…" aria-label="Asbob qidirish">
+          </div>
+        </div>
+        <div class="chips" id="cats"></div>
+        <div class="lib" id="lib"></div>
+      </div>
+
+      <aside class="card preview" aria-label="Laboratoriya ko'rinishi">
+        <div><h2>Topshiriq</h2><p class="sub" id="pv-title"></p></div>
+        <div class="task"><span class="lbl">TOPSHIRIQ</span><div id="pv-task"></div></div>
+        <div>
+          <div class="kv"><span>Laboratoriya turi</span><b id="pv-kind"></b></div>
+          <div class="kv"><span>Davomiyligi</span><b id="pv-time"></b></div>
+          <div class="kv"><span>Tekshiruv</span><b id="pv-check"></b></div>
+        </div>
+        <div><b style="font-size:14px">AI maslahatlari (javobsiz)</b><ol class="hints" id="pv-hints"></ol></div>
+        <button class="btn primary" id="assign" type="button" style="margin-top:auto">8-B sinfga topshirish</button>
+      </aside>
+    </section>
+
+    <section class="card" id="results">
+      <div class="row" style="justify-content:space-between">
+        <div><h2>Natijalar: Om qonuni</h2><p class="sub">8-B sinf · kecha topshirilgan · o'quvchini bosing, AI hisobotini ko'ring</p></div>
+        <span class="demo-tag"><i></i>Namuna</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><small>Bajardi</small><b>22 / 28</b></div>
+        <div class="kpi"><small>O'rtacha vaqt</small><b>11 daq</b></div>
+        <div class="kpi"><small>O'rtacha maslahat</small><b>1,4</b></div>
+        <div class="kpi"><small>Eng ko'p xato</small><b class="coral">9 o'quvchi</b></div>
+      </div>
+      <div class="results">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>O'quvchi</th><th>Holat</th><th>Vaqt</th><th>Xatolar</th><th>Tushunish</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-family:var(--sora);font-size:16px">Ko'p uchragan xatolar</h3>
+          <div class="bars" id="bars"></div>
+          <div class="insight"><b><span class="ai-badge">AI</span>Sinf xulosasi</b>9 o'quvchi ampermetrni parallel ulagan: ular o'lchov asbobi zanjirga qanday ulanishini hali farqlamaydi. Keyingi darsni ampermetr va voltmetrni ulashni solishtirishdan boshlashni tavsiya qilaman.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="clone">
+      <div class="row" style="justify-content:space-between;align-items:flex-start">
+        <div><h2>AI klonim <span class="ai-badge">AI</span></h2><p class="sub">O'quvchilar darsdan tashqari ham sizning uslubingizda yordam oladi. Har bir javobda «AI» belgisi turadi, bilmagan savolini sizga yuboradi.</p></div>
+        <div class="row">
+          <div class="toggle"><button class="switch" id="clone-on" role="switch" aria-checked="true" aria-label="Klonni o'quvchilarga ochish"></button><span class="clone-state" id="clone-state">O'quvchilarga ochiq</span></div>
+          <button class="btn primary" id="clone-test" type="button">Klonni sinab ko'rish</button>
+        </div>
+      </div>
+      <div class="clone-grid">
+        <div class="cl-col">
+          <h3>Nimadan o'rganadi</h3>
+          <ul class="src-list" id="src-list">
+            <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg></span><span class="tx"><b>Dars konspektlari</b><small>8 va 9-sinf · 18 ta PDF</small></span><button class="switch" role="switch" aria-checked="true" aria-label="Dars konspektlari"></button></li>
+            <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span><span class="tx"><b>Nazorat ishlari va testlar</b><small>9 ta fayl</small></span><button class="switch" role="switch" aria-checked="true" aria-label="Nazorat ishlari"></button></li>
+            <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/></svg></span><span class="tx"><b>Telegram kanal @dilnoza_fizika</b><small>1 240 ta post: e'lonlar va tushuntirishlar</small></span><button class="switch" role="switch" aria-checked="true" aria-label="Telegram kanal"></button></li>
+            <li class="soon"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span class="tx"><b>Ovozli tushuntirishlar</b><small>Klon sizning ovozingizda gapiradi</small></span><span class="wait">Tez orada</span></li>
+            <li class="locked"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span class="tx"><b>Shaxsiy yozishmalar</b><small>O'quvchilar va ota-onalar bilan chatlar</small></span><span class="lock">Olinmaydi</span></li>
+          </ul>
+          <div class="up-row"><label class="btn" for="clone-file" style="height:40px">Material qo'shish</label><input type="file" id="clone-file" multiple hidden accept=".pdf,.doc,.docx,.ppt,.pptx,.json,.txt,.jpg,.jpeg,.png"><small>PDF, Word, slayd, rasm yoki Telegram eksporti</small></div>
+          <label class="consent"><input type="checkbox" id="clone-consent" checked>Roziman: AI mening materiallarim va uslubim asosida o'quvchilarimga javob beradi. Istalgan vaqtda o'chira olaman.</label>
+        </div>
+        <div class="cl-col">
+          <h3>Uslubingiz <span class="sub">AI aniqladi, siz tasdiqlaysiz</span></h3>
+          <dl class="traits">
+            <div><dt>Murojaat</dt><dd>«Bolam», ism bilan, «sen» deb. Iliq, lekin talabchan.</dd></div>
+            <div><dt>Tushuntirish</dt><dd>Avval hayotiy misol (suv quvuri, yo'l, arg'imchoq), keyin formula.</dd></div>
+            <div><dt>Sevimli ibora</dt><dd>«Formulani yodlama, tushun.»</dd></div>
+            <div><dt>Qoidalar</dt><dd>Tayyor javobni aytmaydi, savol bilan yo'naltiradi. Bilmasa, sizga yuboradi.</dd></div>
+          </dl>
+          <div class="match"><div><span>Uslub mosligi (namuna)</span><b>92%</b></div><div class="bar"><i style="width:92%"></i></div></div>
+        </div>
+        <div class="cl-col">
+          <h3>Bu hafta <span class="sub">namuna</span></h3>
+          <div class="mk">
+            <div><small>Savollar</small><b id="cl-q">214</b></div>
+            <div><small>Sizga yuborildi</small><b id="cl-h">2</b></div>
+            <div><small>O'quvchilar</small><b>24 / 28</b></div>
+          </div>
+          <div class="bars">
+            <div class="bar-row"><div><span>Ampermetrni ulash</span><b>38%</b></div><div class="bar"><i style="width:38%"></i></div></div>
+            <div class="bar-row"><div><span>Uyga vazifa</span><b>24%</b></div><div class="bar"><i style="width:24%"></i></div></div>
+            <div class="bar-row"><div><span>Om qonuni</span><b>21%</b></div><div class="bar"><i style="width:21%"></i></div></div>
+          </div>
+          <b style="font-size:14px">Sizga yuborilgan savollar</b>
+          <ul class="q-list" id="q-list">
+            <li><span>«Nazorat ishida kalkulyator ishlatsak bo'ladimi?»</span><div class="row"><small>Malika R. · bugun 16:40</small><button class="btn" type="button" data-who="Malika">Javob berish</button></div></li>
+            <li><span>«Kasal bo'lib qoldim, laboratoriyani keyinroq qilsam bo'ladimi?»</span><div class="row"><small>Jasur T. · kecha 20:15</small><button class="btn" type="button" data-who="Jasur">Javob berish</button></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="O'quvchi hisoboti" aria-hidden="true">
+  <div class="row" style="justify-content:space-between"><span class="demo-tag"><i></i>Namuna hisobot</span><button class="theme-btn" id="close" type="button" aria-label="Yopish"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div><h3 id="d-name"></h3><p class="sub" id="d-meta"></p></div>
+  <div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:0" id="d-kpis"></div>
+  <p id="d-sum" style="font-size:15px;color:var(--text2)"></p>
+  <div><b style="font-size:14px">Qadamlar</b><ul class="tl" id="d-tl" style="margin-top:10px"></ul></div>
+  <div class="next" id="d-next"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+/* ---------- icons ---------- */
+const S = (inner) => '<svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--ink)">'+inner+'</svg>';
+const ICONS = {
+  battery: S('<rect x="4" y="10" width="22" height="12" rx="2"/><path d="M26 14v4"/><path d="M9 16h4M11 14v4" stroke="#3B4CFF"/><path d="M18 16h4" stroke="#3B4CFF"/>'),
+  resistor: S('<path d="M2 16h5l2-5 3 10 3-10 3 10 3-10 2 5h5" stroke="#3B4CFF"/>'),
+  ammeter: S('<circle cx="16" cy="16" r="11"/><path d="M12 21l4-10 4 10M13.5 17.5h5" stroke="#3B4CFF"/>'),
+  voltmeter: S('<circle cx="16" cy="16" r="11"/><path d="M12 11l4 10 4-10" stroke="#3B4CFF"/>'),
+  switch: S('<circle cx="7" cy="20" r="2"/><circle cx="25" cy="20" r="2"/><path d="M9 19l13-7" stroke="#3B4CFF"/>'),
+  bulb: S('<path d="M11 20a7 7 0 1 1 10 0v3H11z"/><path d="M12 27h8"/><path d="M14 18l2-3 2 3" stroke="#FFB21E"/>'),
+  wires: S('<path d="M4 22c6 0 6-12 12-12s6 12 12 12" stroke="#3B4CFF"/><circle cx="4" cy="22" r="2"/><circle cx="28" cy="22" r="2"/>'),
+  rheostat: S('<path d="M3 18h4l2-5 3 10 3-10 3 10 3-10 2 5h6" /><path d="M10 7l12 0M20 5l3 2-3 2" stroke="#3B4CFF"/>'),
+  capacitor: S('<path d="M3 16h10M19 16h10M13 9v14M19 9v14"/>'),
+  diode: S('<path d="M3 16h8M21 16h8M11 9v14l10-7zM21 9v14" />'),
+  magnet: S('<path d="M8 5v11a8 8 0 0 0 16 0V5h-5v11a3 3 0 0 1-6 0V5z"/><path d="M8 9h5M19 9h5" stroke="#D9452B"/>'),
+  spring: S('<path d="M16 3v4M10 8l12 2-12 2 12 2-12 2 12 2-12 2 6 1v6"/>'),
+  weight: S('<path d="M12 12h8l4 15H8z"/><circle cx="16" cy="8" r="3"/>'),
+  ruler: S('<rect x="11" y="3" width="10" height="26" rx="1"/><path d="M11 8h4M11 13h6M11 18h4M11 23h6" stroke="#3B4CFF"/>'),
+  dynamometer: S('<rect x="11" y="3" width="10" height="20" rx="2"/><path d="M16 23v6M14 29h4M13 8h6M13 12h6M13 16h6" stroke="#3B4CFF"/>'),
+  stand: S('<path d="M8 28h16M12 28V5h10M22 5v6"/>'),
+  stopwatch: S('<circle cx="16" cy="18" r="10"/><path d="M13 3h6M16 18l4-4" stroke="#3B4CFF"/>'),
+  prism: S('<path d="M16 5l11 22H5z"/><path d="M2 14l10 4" stroke="#D9452B"/>'),
+  laser: S('<rect x="3" y="12" width="16" height="8" rx="2"/><path d="M19 16h10" stroke="#D9452B"/>'),
+  lens: S('<path d="M16 3c5 5 5 21 0 26c-5-5-5-21 0-26z"/>'),
+  thermometer: S('<path d="M14 5a2 2 0 0 1 4 0v14a5 5 0 1 1-4 0z"/><path d="M16 12v10" stroke="#D9452B"/>'),
+  beaker: S('<path d="M8 4h16M10 4v20a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4V4"/><path d="M10 18h12" stroke="#3B4CFF"/>'),
+  scale: S('<path d="M4 26h24M8 26l3-9h10l3 9M16 17V9M10 9h12"/>'),
+  compass: S('<circle cx="16" cy="16" r="12"/><path d="M16 8l3 8-3 8-3-8z" stroke="#D9452B"/>'),
+};
+
+/* ---------- tool library (demo) ---------- */
+const TOOLS = [
+  ['battery','Akkumulator','Elektr','1,5–12 V'],['resistor','Rezistor','Elektr','1–100 Ω'],['ammeter','Ampermetr','Elektr','0–3 A'],
+  ['voltmeter','Voltmetr','Elektr','0–15 V'],['switch','Kalit','Elektr','ochiq / yopiq'],['bulb','Chiroq','Elektr','6 V · 3 W'],
+  ['wires','Ulovchi simlar','Elektr','10 ta'],['rheostat','Reostat','Elektr','0–50 Ω'],['capacitor','Kondensator','Elektr','tez orada',1],
+  ['diode','Diod','Elektr','tez orada',1],['magnet','Doimiy magnit','Magnetizm','polosali'],['compass','Kompas','Magnetizm','tez orada',1],
+  ['spring','Prujina','Mexanika','k = 20–100 N/m'],['weight','Yuklar to\u2019plami','Mexanika','50–500 g'],['ruler','Chizg\u2019ich','Mexanika','0–50 sm'],
+  ['dynamometer','Dinamometr','Mexanika','0–10 N'],['stand','Shtativ','Mexanika','universal'],['stopwatch','Sekundomer','Mexanika','0,01 s'],
+  ['scale','Tarozi','Mexanika','tez orada',1],['laser','Lazer','Optika','qizil nur'],['prism','Shisha plastinka','Optika','n = 1,5'],
+  ['lens','Linza','Optika','tez orada',1],['thermometer','Termometr','Issiqlik','tez orada',1],['beaker','Menzurka','Issiqlik','tez orada',1]
+].map(t => ({id:t[0],name:t[1],cat:t[2],spec:t[3],soon:!!t[4]}));
+const byId = id => TOOLS.find(t => t.id === id);
+
+/* ---------- topics (demo AI output) ---------- */
+const TOPICS = {
+  "8": [
+    {id:'ohm', name:"Om qonuni", kind:"Elektr zanjiri · 3D", time:"10–12 daqiqa", check:"Tok kuchi o'lchovi",
+     tools:[['battery',"Zanjir uchun kuchlanish manbai",1],['resistor',"Qarshilikni o'zgartirib, tokni kuzatish uchun",1],['ammeter',"Zanjirdagi tok kuchini o'lchaydi",1],['voltmeter',"Rezistordagi kuchlanishni o'lchaydi",1],['switch',"Zanjirni xavfsiz ochib-yopish uchun",0],['wires',"Elementlarni ulash uchun",1]],
+     distractors:[['magnet',"Bu tajribada kerak emas: o'quvchi buni sezadimi?"],['stopwatch',"Vaqt o'lchash bu mavzuga aloqasiz"]],
+     task:"Zanjirni yig'ing. Qarshilik 2 barobar oshsa, tok kuchi qanday o'zgaradi? O'lchab, xulosa yozing.",
+     hints:["Ampermetr zanjirga qanday ulanadi: ketma-ketmi yoki parallelmi?","Avval 10 Ω da tokni yozib oling, keyin 20 Ω ga o'zgartiring.","Tok kuchi va qarshilik ko'paytmasi nimaga teng bo'lyapti?"]},
+    {id:'par', name:"Parallel ulanish", kind:"Elektr zanjiri · 3D", time:"12–15 daqiqa", check:"Tarmoqlardagi toklar",
+     tools:[['battery',"Umumiy kuchlanish manbai",1],['bulb',"Ikkita chiroq: tarmoqlarni ko'rish uchun",1],['ammeter',"Har bir tarmoqdagi tokni o'lchash",1],['voltmeter',"Tarmoqlardagi kuchlanish tengligini tekshirish",1],['switch',"Bitta tarmoqni uzib ko'rish uchun",1],['wires',"Tarmoqlarni ulash",1]],
+     distractors:[['spring',"Mexanika asbobi, bu yerda kerak emas"],['laser',"Optika asbobi, bu yerda kerak emas"]],
+     task:"Ikki chiroqni parallel ulang. Bitta chiroqni uzsangiz, ikkinchisiga nima bo'ladi? Umumiy tok tarmoq toklari bilan qanday bog'liq?",
+     hints:["Voltmetrni har bir chiroqqa ulab ko'ring: ko'rsatkichlar qanday?","Umumiy tokni va har bir tarmoq tokini alohida o'lchang.","Tarmoq toklarini qo'shib, umumiy tok bilan solishtiring."]},
+    {id:'reo', name:"Reostat bilan tok boshqarish", kind:"Elektr zanjiri · 3D", time:"8–10 daqiqa", check:"Chiroq yorug'ligi va tok",
+     tools:[['battery',"Kuchlanish manbai",1],['rheostat',"Qarshilikni ravon o'zgartirish uchun",1],['bulb',"Tok o'zgarishini ko'z bilan ko'rish",1],['ammeter',"Tok kuchini o'lchash",1],['wires',"Ulash uchun",1]],
+     distractors:[['dynamometer',"Kuch o'lchaydi, bu tajribada kerak emas"],['prism',"Optika asbobi"]],
+     task:"Reostat surgichini suring. Chiroq yorug'ligi va ampermetr ko'rsatkichi qanday o'zgaradi? Nima uchun?",
+     hints:["Surgich qarshilikni oshiryaptimi yoki kamaytiryaptimi?","Qarshilik oshganda tok qanday o'zgaradi?","Chiroq yorug'ligi tok kuchiga qanday bog'liq?"]}
+  ],
+  "7": [
+    {id:'hooke', name:"Elastiklik kuchi (Guk qonuni)", kind:"Parametrik laboratoriya · 3D", time:"8–10 daqiqa", check:"Prujina cho'zilishi",
+     tools:[['spring',"Asosiy tajriba obyekti",1],['weight',"Har xil massali yuklar osish uchun",1],['ruler',"Cho'zilishni o'lchash uchun",1],['stand',"Prujinani osish uchun",1],['dynamometer',"Kuchni to'g'ridan-to'g'ri o'lchash",0]],
+     distractors:[['ammeter',"Elektr asbobi: bu tajribada kerak emas"],['laser',"Optika asbobi"]],
+     task:"Prujinaga 100 g, 200 g va 300 g yuk osing. Yuk ikki barobar oshsa, cho'zilish qanday o'zgaradi?",
+     hints:["Har safar cho'zilishni chizg'ich bilan yozib boring.","Cho'zilishlarni solishtiring: qanday qonuniyat bor?","Kuch va cho'zilish nisbati o'zgaryaptimi?"]},
+    {id:'refr', name:"Yorug'likning sinishi", kind:"Parametrik laboratoriya · 3D", time:"8–10 daqiqa", check:"Sinish burchagi",
+     tools:[['laser',"Yorug'lik nuri manbai",1],['prism',"Nur sinadigan muhit",1],['ruler',"Burchakni o'lchash uchun transportir o'rnida",0]],
+     distractors:[['weight',"Mexanika asbobi, bu yerda kerak emas"],['battery',"Elektr manbai, bu tajribaga aloqasiz"]],
+     task:"Tushish burchagini 30° dan 60° ga oshiring. Sinish burchagi ham ikki barobar oshadimi?",
+     hints:["Avval 30° da sinish burchagini yozib oling.","60° da qayta o'lchang va solishtiring.","Burchaklar emas, ularning sinuslarini solishtirib ko'ring."]}
+  ]
+};
+
+/* ---------- state ---------- */
+let grade = "8", topic = TOPICS["8"][0], distractors = false, cat = "Barchasi", q = "";
+const $ = id => document.getElementById(id);
+
+function fillTopics(){
+  $('topic').innerHTML = TOPICS[grade].map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+  topic = TOPICS[grade][0];
+}
+function toolCard(id, reason, kind){
+  const t = byId(id);
+  const pill = kind === 'dis' ? '<span class="pill dis">Sinov uchun</span>' : kind ? '<span class="pill req">Majburiy</span>' : '<span class="pill opt">Ixtiyoriy</span>';
+  return `<div class="tool ${kind==='dis'?'distractor':''}"><div class="ico">${ICONS[t.id]}</div><div><b>${t.name}</b><small>${reason}</small><small>${t.spec}</small>${pill}</div></div>`;
+}
+function renderTools(){
+  let html = topic.tools.map(([id,r,req]) => toolCard(id, r, req ? 1 : 0)).join('');
+  if (distractors) html += topic.distractors.map(([id,r]) => toolCard(id, r, 'dis')).join('');
+  $('tools').innerHTML = html;
+}
+function renderLib(){
+  const cats = ["Barchasi", ...new Set(TOOLS.map(t => t.cat))];
+  $('cats').innerHTML = cats.map(c => `<button class="chip" type="button" aria-pressed="${c===cat}" data-cat="${c}">${c}</button>`).join('');
+  const list = TOOLS.filter(t => (cat === "Barchasi" || t.cat === cat) && t.name.toLowerCase().includes(q.toLowerCase()));
+  $('lib').innerHTML = list.map(t => `<div class="lib-item ${t.soon?'soon':''}"><div class="ico">${ICONS[t.id]}</div><div>${t.name}<em>${t.soon ? 'Tez orada' : t.cat}</em></div></div>`).join('') || '<p class="sub">Hech narsa topilmadi</p>';
+  const ready = TOOLS.filter(t => !t.soon).length;
+  $('lib-count').textContent = `· ${TOOLS.length} ta asbob, ${ready} tasi ishlaydi`;
+}
+function renderPreview(){
+  $('pv-title').textContent = `${grade}-sinf · Fizika · ${topic.name}`;
+  $('pv-task').textContent = topic.task;
+  $('pv-kind').textContent = topic.kind;
+  $('pv-time').textContent = topic.time;
+  $('pv-check').textContent = topic.check;
+  $('pv-hints').innerHTML = topic.hints.map(h => `<li>${h}</li>`).join('');
+}
+function renderAll(){ renderTools(); renderPreview(); }
+
+$('grade').addEventListener('change', e => { grade = e.target.value; fillTopics(); renderAll(); resetScan(); });
+$('topic').addEventListener('change', e => { topic = TOPICS[grade].find(t => t.id === e.target.value); renderAll(); resetScan(); });
+$('dis-toggle').addEventListener('click', e => { distractors = !distractors; e.currentTarget.setAttribute('aria-checked', String(distractors)); renderTools(); });
+$('cats').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (!b) return; cat = b.dataset.cat; renderLib(); });
+$('lib-search').addEventListener('input', e => { q = e.target.value; renderLib(); });
+
+/* ---------- scan demo ---------- */
+function resetScan(){ $('scan-res').textContent = "Darslik sahifasini suratga oling: AI mavzuni o'zi aniqlaydi."; }
+$('scan-btn').addEventListener('click', () => {
+  const box = $('scan-box'), btn = $('scan-btn');
+  box.classList.add('scanning'); btn.disabled = true;
+  $('scan-res').textContent = "AI sahifani o'qiyapti…";
+  setTimeout(() => {
+    box.classList.remove('scanning'); btn.disabled = false;
+    grade = "8"; $('grade').value = "8"; fillTopics(); topic = TOPICS["8"][0]; $('topic').value = 'ohm'; renderAll();
+    $('scan-res').innerHTML = "Aniqlandi: <b>Om qonuni</b>, 8-sinf fizika. Formula: <b>I = U / R</b><span class=\"conf\">ishonch 92%</span>";
+  }, 1800);
+});
+
+/* ---------- results (demo) ---------- */
+const STUDENTS = [
+  {n:"Aziz",st:'ok',t:"12 daq",e:2,u:"Yaxshi",hints:0,ind:"Yuqori",sum:"Ampermetrni ikki marta noto'g'ri uladi, keyin maslahatsiz o'zi tuzatdi. Om qonunini tushunadi, parallel ulanishda ikkilanadi.",next:"Keyingi: parallel zanjirlar laboratoriyasi",
+   tl:[["00:40","Akkumulator va rezistor qo'shildi",""],["02:10","Zanjir yig'ildi",""],["03:15","Ampermetr parallel ulandi","err"],["04:02","Xatoni o'zi tuzatdi","good"],["07:30","Xato takrorlandi","err"],["09:10","Maslahatsiz tuzatdi","good"],["10:20","R = 20 Ω: tok 0,3 A","" ],["12:00","Topshiriq bajarildi","good"]]},
+  {n:"Madina",st:'ok',t:"9 daq",e:0,u:"Yaxshi",hints:0,ind:"Yuqori",sum:"Zanjirni birinchi urinishda to'g'ri yig'di va qonuniyatni o'zi yozdi.",next:"Keyingi: reostat bilan tok boshqarish",
+   tl:[["01:05","Zanjir yig'ildi",""],["04:30","R = 10 Ω: tok 0,6 A",""],["06:10","R = 20 Ω: tok 0,3 A",""],["09:00","Topshiriq bajarildi","good"]]},
+  {n:"Jasur",st:'mid',t:"15 daq",e:3,u:"O'rtacha",hints:2,ind:"O'rtacha",sum:"Qisqa tutashuv qildi, maslahatdan keyin tuzatdi. Tok va kuchlanish farqini hali aralashtiradi.",next:"Keyingi: ampermetr va voltmetr taqqoslash",
+   tl:[["02:00","Qisqa tutashuv","err"],["03:10","Maslahat so'radi",""],["05:00","Tuzatdi","good"],["08:40","Voltmetr ketma-ket ulandi","err"],["10:15","Maslahat so'radi",""],["15:00","Topshiriq bajarildi","good"]]},
+  {n:"Sevara",st:'ok',t:"10 daq",e:1,u:"Yaxshi",hints:1,ind:"Yuqori",sum:"Bitta kichik xato, tez tuzatdi. Natijalarni aniq yozdi.",next:"Keyingi: parallel ulanish",
+   tl:[["01:30","Zanjir yig'ildi",""],["03:00","Ampermetr teskari ulandi","err"],["03:40","Tuzatdi","good"],["10:00","Topshiriq bajarildi","good"]]},
+  {n:"Bekzod",st:'low',t:"18 daq",e:5,u:"Past",hints:3,ind:"Past",sum:"Zanjirni yopishda qiynaldi, uchta maslahatdan keyin bajardi. Asosiy tushunchalarni takrorlash kerak.",next:"Keyingi: oddiy zanjir yig'ish (takrorlash)",
+   tl:[["03:00","Zanjir ochiq qoldi","err"],["05:30","Maslahat so'radi",""],["08:00","Qisqa tutashuv","err"],["10:10","Maslahat so'radi",""],["18:00","Topshiriq bajarildi","good"]]},
+  {n:"Nilufar",st:'no',t:"—",e:0,u:"—",hints:0,ind:"—",sum:"Hali boshlamagan.",next:"Eslatma yuborish",tl:[]},
+];
+$('rows').innerHTML = STUDENTS.map((s,i) => {
+  const lab = {ok:'Bajardi',mid:'Bajardi',low:'Qiynaldi',no:'Boshlamagan'}[s.st];
+  const cls = {ok:'ok',mid:'mid',low:'low',no:'no'}[s.st];
+  return `<tr data-i="${i}" tabindex="0"><td><b>${s.n}</b></td><td><span class="st ${cls}">${lab}</span></td><td>${s.t}</td><td>${s.st==='no'?'—':s.e}</td><td>${s.u}</td></tr>`;
+}).join('');
+const ERR = [["Ampermetr parallel ulangan",9,1],["Qisqa tutashuv",6,0],["Voltmetr ketma-ket ulangan",5,0],["Zanjir ochiq qolgan",4,0]];
+$('bars').innerHTML = ERR.map(([l,n,hot]) => `<div class="bar-row"><div><span>${l}</span><b>${n} o'quvchi</b></div><div class="bar"><i class="${hot?'hot':''}" style="width:${n/28*100*2.5}%"></i></div></div>`).join('');
+
+function openDrawer(i){
+  const s = STUDENTS[i];
+  $('d-name').textContent = s.n;
+  $('d-meta').textContent = `Om qonuni · ${s.t} · ${s.st==='no'?'—':s.e+' ta xato'}`;
+  $('d-kpis').innerHTML = [["Tushunish",s.u],["Maslahatlar",s.hints],["Mustaqillik",s.ind]].map(([k,v]) => `<div class="kpi" style="padding:12px"><small>${k}</small><b style="font-size:19px">${v}</b></div>`).join('');
+  $('d-sum').textContent = s.sum;
+  $('d-tl').innerHTML = s.tl.map(([t,x,c]) => `<li class="${c}"><time>${t}</time>${x}</li>`).join('') || '<li>Ma\u2019lumot yo\u2019q</li>';
+  $('d-next').textContent = s.next;
+  $('drawer').classList.add('on'); $('scrim').classList.add('on'); $('drawer').setAttribute('aria-hidden','false');
+  $('close').focus();
+}
+function closeDrawer(){ $('drawer').classList.remove('on'); $('scrim').classList.remove('on'); $('drawer').setAttribute('aria-hidden','true'); }
+$('rows').addEventListener('click', e => { const r = e.target.closest('tr'); if (r) openDrawer(+r.dataset.i); });
+$('rows').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.i) { e.preventDefault(); openDrawer(+e.target.dataset.i); } });
+$('close').addEventListener('click', closeDrawer); $('scrim').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+/* ---------- assign + theme ---------- */
+let tt;
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2400); }
+$('assign').addEventListener('click', () => toast(`"${topic.name}" laboratoriyasi 8-B sinfga topshirildi`));
+$('theme').addEventListener('click', () => {
+  const r = document.documentElement, dark = r.getAttribute('data-theme') === 'dark' || (!r.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+  r.setAttribute('data-theme', dark ? 'light' : 'dark');
+  try { localStorage.setItem('empira-theme', dark ? 'light' : 'dark'); } catch(_) {}
+});
+try { const t = localStorage.getItem('empira-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(_) {}
+
+fillTopics(); renderAll(); renderLib();
+})();
+</script>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const say = m => { if (typeof toast === 'function') toast(m); };
+  $('src-list').addEventListener('click', e => {
+    const b = e.target.closest('.switch'); if (!b) return;
+    const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', String(on));
+    say(on ? 'Manba yoqildi: klon qayta o\'rganadi' : 'Manba o\'chirildi: klon undan foydalanmaydi');
+  });
+  $('clone-on').addEventListener('click', e => {
+    const on = e.currentTarget.getAttribute('aria-checked') !== 'true';
+    e.currentTarget.setAttribute('aria-checked', String(on));
+    $('clone-state').textContent = on ? "O'quvchilarga ochiq" : "O'chirilgan";
+    say(on ? 'Klon o\'quvchilarga ochildi' : 'Klon o\'chirildi. O\'quvchilar uni ko\'rmaydi');
+  });
+  $('clone-consent').addEventListener('change', e => { if (!e.target.checked) { $('clone-on').setAttribute('aria-checked','false'); $('clone-state').textContent = "O'chirilgan"; say('Roziliksiz klon ishlamaydi'); } });
+  $('clone-file').addEventListener('change', e => {
+    [...e.target.files].slice(0, 5).forEach(f => {
+      const li = document.createElement('li');
+      li.innerHTML = '<span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></svg></span><span class="tx"><b></b><small>AI o\'qiyapti…</small></span><span class="wait">…</span>';
+      li.querySelector('b').textContent = f.name;
+      $('src-list').insertBefore(li, $('src-list').querySelector('.soon'));
+      setTimeout(() => { li.querySelector('small').textContent = 'Tayyor · ' + Math.max(1, Math.round(f.size / 40000)) + ' bet, uslub yangilandi'; const st = li.querySelector('.wait'); st.className = 'ok'; st.textContent = 'Qo\'shildi'; }, 1600);
+    });
+    say('Material qo\'shildi. Klon uni o\'rganmoqda');
+    e.target.value = '';
+  });
+  $('q-list').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const li = b.closest('li'); li.classList.add('done'); b.replaceWith(Object.assign(document.createElement('small'), { textContent: 'Javob yuborildi ✓' }));
+    say('Javobingiz ' + b.dataset.who + 'ga yuborildi (demo)');
+  });
+  document.addEventListener('empira-clone-handoff', () => { $('cl-h').textContent = String(Number($('cl-h').textContent) + 1); });
+  document.addEventListener('empira-clone-question', () => { $('cl-q').textContent = String(Number($('cl-q').textContent) + 1); });
+  $('clone-test').addEventListener('click', () => window.EmpiraClone && window.EmpiraClone.open());
+})();
+</script>
+<script>window.EMPIRA_CLONE = { mode: 'preview', api: '../api/clone' };</script>
+<script src="../assets/clone-widget.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<title>Empira 3D Laboratoriya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F6F7FB;--card:#FFFFFF;--bar:rgba(246,247,251,.9);--ink:#0B1026;--text2:#3E445C;--muted:#5B6178;--border:#E1E4EE;--divider:#D5D9E6;
+  --blue:#3B4CFF;--btn:#3B4CFF;--blue-soft:#EEF0FF;--blue300:#8B96FF;--amber:#FFB21E;--amber-soft:#FFF4DC;--coral:#C23A20;--coral-soft:#FDECE8;
+  --green:#12805C;--green-soft:#E3F5EE;--glass:rgba(255,255,255,.82);--shadow:0 18px 40px -24px rgba(11,16,38,.35);
+  --sora:Sora,"Segoe UI",system-ui,sans-serif;--body:"Instrument Sans","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#0B1026;--card:#141A36;--bar:rgba(11,16,38,.9);--ink:#F1F3FA;--text2:#C3C8DD;--muted:#9AA1BD;--border:#262E55;--divider:#2E3762;
+  --blue:#8B96FF;--blue-soft:#1D2555;--amber-soft:#3A2E10;--coral:#FF8A70;--coral-soft:#3A1C16;--green:#3FCB95;--green-soft:#0F3328;--glass:rgba(20,26,54,.86);--shadow:0 18px 40px -24px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--bg:#0B1026;--card:#141A36;--bar:rgba(11,16,38,.9);--ink:#F1F3FA;--text2:#C3C8DD;--muted:#9AA1BD;--border:#262E55;--divider:#2E3762;
+  --blue:#8B96FF;--blue-soft:#1D2555;--amber-soft:#3A2E10;--coral:#FF8A70;--coral-soft:#3A1C16;--green:#3FCB95;--green-soft:#0F3328;--glass:rgba(20,26,54,.86);--shadow:0 18px 40px -24px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--btn);outline-offset:2px;border-radius:8px}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-family:var(--sora);letter-spacing:-.01em;text-wrap:balance}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#app{height:100%;display:flex;flex-direction:column}
+.topbar{flex:none;display:flex;align-items:center;gap:12px;height:60px;padding-inline:20px;background:var(--bar);border-bottom:1px solid var(--border);position:relative;z-index:20}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--sora);font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}
+.crumb{color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.icon-btn{width:38px;height:38px;flex:none;border-radius:10px;border:1px solid var(--border);background:var(--card);display:inline-flex;align-items:center;justify-content:center}
+.avatar{width:36px;height:36px;flex:none;border-radius:50%;background:var(--btn);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700}
+main{flex:1;min-height:0;overflow:auto}
+main.labmode{overflow:hidden}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--divider);background:var(--card);font-weight:600;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--btn);border-color:var(--btn);color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.amber{background:var(--amber);border-color:var(--amber);color:#0B1026;font-weight:700}
+.btn.small{min-height:38px;font-size:14px;padding:0 12px}
+.btn:disabled{opacity:.5;cursor:not-allowed;filter:none}
+.ai{display:inline-block;font-family:var(--body);font-size:11px;font-weight:700;color:#fff;background:var(--btn);padding:2px 7px;border-radius:6px;letter-spacing:.02em}
+.demo{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;background:var(--amber-soft);color:var(--ink);font-size:12px;font-weight:600}
+.demo i{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+/* ---------- hub ---------- */
+.hub{max-width:1220px;margin:0 auto;padding-block:28px 64px;padding-inline:20px;display:flex;flex-direction:column;gap:22px}
+.hub-head p.eyebrow{color:var(--muted);font-weight:600}
+.hub-head h1{font-size:clamp(28px,4vw,40px);font-weight:800;margin-top:2px}
+.hub-head .lead{color:var(--text2);max-width:640px;margin-top:6px}
+.hub-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px}
+.assign{position:relative;overflow:hidden;border-radius:22px;padding:24px;background:#3B4CFF;color:#fff;display:flex;flex-direction:column;gap:10px}
+.assign .tag{align-self:flex-start;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.18)}
+.assign h2{font-size:28px;font-weight:800}
+.assign p{color:#E3E6FF;max-width:430px}
+.assign .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:#E3E6FF}
+.assign .meta b{color:#fff}
+.assign .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.assign svg.deco{position:absolute;right:-6px;bottom:-8px;pointer-events:none;opacity:.95}
+.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:22px}
+.scan{display:flex;flex-direction:column;gap:12px}
+.scan h2{font-size:19px}
+.scan .sub{color:var(--muted);font-size:14px}
+.scan-row{display:flex;gap:10px;flex-wrap:wrap}
+.scan-res{display:flex;gap:12px;align-items:center;border:1px dashed var(--divider);border-radius:14px;padding:12px;min-height:74px}
+.page-thumb{width:48px;height:60px;flex:none;border-radius:6px;background:var(--bg);border:1px solid var(--border);position:relative;overflow:hidden;background-size:cover;background-position:center}
+.page-thumb i{position:absolute;left:7px;right:7px;height:3px;border-radius:2px;background:var(--divider)}
+.page-thumb .beam{position:absolute;left:0;right:0;height:3px;background:var(--btn);box-shadow:0 0 10px var(--btn);top:4px;opacity:0}
+.scanning .page-thumb .beam{opacity:1;animation:sweep 1.1s ease-in-out infinite}
+@keyframes sweep{50%{top:54px}}
+@media (prefers-reduced-motion:reduce){.scanning .page-thumb .beam{animation:none;top:28px}}
+.scan-res p{font-size:14px;color:var(--text2)}
+.scan-res b{color:var(--ink)}
+.conf{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:700}
+.filters{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.filters h2{font-size:20px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);font-weight:600;font-size:14px;color:var(--text2)}
+.fchip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.lab-card{color:var(--ink);text-decoration:none;display:flex;flex-direction:column;text-align:left;padding:0;border-radius:20px;border:1px solid var(--border);background:var(--card);overflow:hidden;transition:transform .15s,border-color .15s,box-shadow .15s}
+.lab-card:hover{transform:translateY(-3px);border-color:var(--blue300);box-shadow:var(--shadow)}
+@media (prefers-reduced-motion:reduce){.lab-card{transition:none}.lab-card:hover{transform:none}}
+.thumb{position:relative;aspect-ratio:16/10;max-width:100%;background:linear-gradient(180deg,var(--blue-soft),var(--bg));display:flex;align-items:center;justify-content:center;color:var(--blue)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .badge3d{position:absolute;left:12px;top:12px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--glass);color:var(--ink)}
+.thumb .rec{position:absolute;right:12px;top:12px}
+.lab-card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.lab-card h3{font-size:18px}
+.lab-card p{color:var(--text2);font-size:14px}
+.lab-card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;font-size:13px;color:var(--muted)}
+.state{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--blue-soft);color:var(--blue)}
+.state.done{background:var(--green-soft);color:var(--green)}
+.lab-card.soon{opacity:.6;cursor:not-allowed}
+.lab-card.soon:hover{transform:none;box-shadow:none;border-color:var(--border)}
+.lab-card.pulse{border-color:var(--btn);box-shadow:0 0 0 3px color-mix(in srgb,var(--btn) 30%,transparent)}
+/* ---------- lab ---------- */
+.lab{display:grid;grid-template-columns:300px minmax(0,1fr) 360px;height:100%}
+.panel{background:var(--card);overflow:auto;display:flex;flex-direction:column}
+.panel.left{border-right:1px solid var(--border)}
+.panel.right{border-left:1px solid var(--border)}
+.psec{padding:18px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--border)}
+.psec:last-child{border-bottom:0}
+.sec-title{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.sec-title h2{font-size:16px}
+.note{color:var(--muted);font-size:13px}
+.tool-list{display:flex;flex-direction:column;gap:8px}
+.tool{display:grid;grid-template-columns:42px minmax(0,1fr);gap:10px;align-items:center;text-align:left;padding:9px 10px;border-radius:14px;border:1px solid var(--border);background:var(--card);transition:border-color .15s,background .15s}
+.tool:hover:not(:disabled){border-color:var(--blue300)}
+.tool .ico{width:42px;height:42px;border-radius:11px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.tool .top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:2px}.tool b{display:block;font-size:14px}
+.tool small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35}
+.tool .st{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--blue-soft);color:var(--blue);white-space:nowrap}
+.tool.placed{background:var(--green-soft);border-color:transparent}
+.tool.placed .st{background:transparent;color:var(--green)}
+.tool.wrong{background:var(--coral-soft);border-color:transparent}
+.tool.wrong .st{background:transparent;color:var(--coral)}
+.tool.spotted .st{background:transparent;color:var(--green)}
+.tool:disabled{cursor:default}
+.ctl{display:flex;flex-direction:column;gap:4px}
+.ctl label{display:flex;justify-content:space-between;font-size:14px;color:var(--text2);font-weight:500}
+.ctl label b{font-family:var(--sora);color:var(--ink);font-variant-numeric:tabular-nums}
+.ctl input[type=range]{width:100%;height:30px;accent-color:var(--btn)}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:0 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-weight:600;font-size:14px;width:100%}
+.toggle .sw{position:relative;width:42px;height:24px;border-radius:999px;background:var(--divider);flex:none}
+.toggle .sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
+.toggle[aria-checked="true"] .sw{background:var(--btn)}
+.toggle[aria-checked="true"] .sw::after{left:21px}
+.toggle:disabled{opacity:.5;cursor:not-allowed}
+.stage{position:relative;min-width:0;overflow:hidden;background:var(--bg);container-type:inline-size}@container (max-width:860px){.hint3d{display:none}}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.tag3d{position:absolute;left:0;top:0;transform:translate(-50%,-100%);padding:4px 9px;border-radius:8px;background:var(--glass);border:1px solid var(--border);font-size:12.5px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:0 6px 16px -10px rgba(11,16,38,.4);color:var(--ink)}
+.tag3d.hot{color:var(--blue)}
+.steps{position:absolute;left:14px;top:14px;margin:0;padding:4px;list-style:none;display:flex;gap:4px;border-radius:12px;background:var(--glass);border:1px solid var(--border);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.steps li{display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.steps li span{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;background:var(--bg);font-variant-numeric:tabular-nums}
+.steps li.on{background:var(--btn);color:#fff}
+.steps li.on span{background:rgba(255,255,255,.25)}
+.steps li.done{color:var(--green)}
+.readouts{position:absolute;left:50%;transform:translateX(-50%);top:62px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:calc(100% - 28px)}
+.ro{display:flex;align-items:baseline;gap:8px;height:40px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--border);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:13px;color:var(--muted);white-space:nowrap;align-items:center}
+.ro b{font-family:var(--sora);font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
+.ro.hot{border-color:color-mix(in srgb,var(--btn) 45%,transparent);color:var(--blue)}
+.ro.hot b{color:var(--blue)}
+.cam{position:absolute;right:14px;bottom:14px;display:flex;gap:6px}
+.cam .icon-btn{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);width:auto;padding:0 10px;gap:6px;font-size:13px;font-weight:600;height:38px}
+.cam .icon-btn[aria-pressed="true"]{background:var(--btn);color:#fff;border-color:var(--btn)}
+.hint3d{position:absolute;left:14px;bottom:18px;font-size:12.5px;color:var(--muted);background:var(--glass);padding:4px 10px;border-radius:8px}
+.nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--text2)}
+.task-box{background:var(--blue-soft);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.task-box .lbl{align-self:flex-start;font-size:11px;font-weight:700;color:#fff;background:var(--btn);border-radius:6px;padding:3px 8px}
+.task-box h2{font-size:18px}
+.task-box p{font-size:14px;color:var(--text2)}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.empty{color:var(--muted);white-space:normal;text-align:center;padding:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row2 .btn{white-space:nowrap;padding-inline:10px}
+.chat{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow:auto}
+.msg{max-width:92%;padding:9px 12px;border-radius:14px 14px 14px 4px;background:var(--bg);font-size:14px;line-height:1.45}
+.msg.ok{background:var(--green-soft)}
+.msg.warn{background:var(--coral-soft)}
+.msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:var(--btn);color:#fff}
+.sitelink{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:999px}
+.sitelink:hover{color:var(--ink);border-color:var(--blue300)}
+.to-teacher{align-self:flex-start;font-size:14px;font-weight:600;color:var(--blue);text-decoration:none}
+.to-teacher:hover{text-decoration:underline}
+/* modal + toast */
+.modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(11,16,38,.45)}
+.sheet{width:min(560px,100%);max-height:100%;overflow:auto;background:var(--card);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;border:1px solid var(--border)}
+.sheet h2{font-size:24px}
+.concl{background:var(--green-soft);border-radius:14px;padding:12px 14px;font-size:14.5px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.stat{border:1px solid var(--border);border-radius:12px;padding:10px}
+.stat small{display:block;color:var(--muted);font-size:12px}
+.stat b{font-family:var(--sora);font-size:20px;font-variant-numeric:tabular-nums}
+.aisum{background:var(--blue-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+.aisum b{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sheet .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.toast{position:fixed;left:50%;bottom:calc(78px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);z-index:60;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:12px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .2s;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:1180px){.lab{grid-template-columns:270px minmax(0,1fr) 320px}}
+@media (max-width:1000px){
+  main.labmode{overflow:auto}
+  .lab{display:flex;flex-direction:column;height:auto}
+  .stage{order:-1;height:58vh;min-height:340px;flex:none}
+  .panel{overflow:visible}
+  .panel.left,.panel.right{border:0;border-top:1px solid var(--border)}
+  .hub-top{grid-template-columns:minmax(0,1fr)}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .topbar{padding-inline:14px;gap:8px}
+  .crumb,.hide-s{display:none}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .steps li{padding:0 6px}
+  .steps li em{display:none}
+  .readouts{top:58px;left:12px;transform:none;justify-content:flex-start;max-width:calc(100% - 24px)}
+  .ro{height:32px;padding:0 10px;font-size:12px}
+  .ro b{font-size:13px}
+  .hint3d{display:none}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .assign svg.deco{display:none}
+}
+</style>
+</head>
+<body>
+
+
+<div id="app">
+  <header class="topbar">
+    <button class="icon-btn" id="back" type="button" aria-label="Mavzularga qaytish" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <a class="logo" href="#top" id="home"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(-2.5 0)"><path d="M12 6 H32 V11 H30 V22 L36 30 H24 V36 H40.5 L45 42 H24 V46 H14 V11 H12 Z" fill="#3B4CFF"/><path d="M14 49 H50.25 L57 58 H14 Z" fill="#FFB21E"/></g></svg>Empira</a>
+    <span class="crumb" id="crumb">3D laboratoriya</span>
+    <span class="spacer"></span>
+    <a class="sitelink hide-s" href="../index.html">empira.uz</a>
+    <span class="demo hide-s"><i></i>Demo</span>
+    <span class="chip" title="Ball"><svg width="16" height="16" viewBox="0 0 24 24" fill="#FFB21E" aria-hidden="true"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7-6.2-3.6-6.2 3.6 1.4-7L2 9.3l7-.8z"/></svg><span id="pts">1 240</span></span>
+    <button class="icon-btn" id="theme" type="button" aria-label="Rang rejimini almashtirish"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button>
+    <span class="avatar" aria-label="Aziz">A</span>
+  </header>
+
+  <main id="main">
+    <section class="hub" id="hub">
+      <div class="hub-head">
+        <p class="eyebrow">Salom, Aziz · 8-B sinf</p>
+        <h1>Qaysi tajribani qilamiz?</h1>
+        <p class="lead">Mavzuni tanla yoki darslik sahifasini yukla. AI kerakli asboblarni kutubxonadan tanlab, shu mavzuning 3D laboratoriyasini ochadi.</p>
+      </div>
+
+      <div class="hub-top">
+        <article class="assign">
+          <span class="tag">O'qituvchi topshirig'i · Dilnoza opa</span>
+          <h2>Om qonuni</h2>
+          <p>Zanjir yig'ing va qarshilik o'zgarganda tok kuchi qanday o'zgarishini toping.</p>
+          <div class="meta"><span>Muddat: <b>ertaga, 18:00</b></span><span>~10 daqiqa</span><span>Mukofot: <b>+50 ball</b></span></div>
+          <div class="actions"><a class="btn amber" href="#ohm">3D laboratoriyani ochish</a></div>
+          <svg class="deco" width="210" height="150" viewBox="0 0 210 150" aria-hidden="true">
+            <path d="M40 50 H170 V125 H40 Z" fill="none" stroke="#8B96FF" stroke-width="4"/>
+            <rect x="28" y="72" width="24" height="30" fill="#3B4CFF"/><line x1="26" y1="79" x2="54" y2="79" stroke="#fff" stroke-width="4"/><line x1="32" y1="87" x2="48" y2="87" stroke="#fff" stroke-width="4"/><line x1="26" y1="95" x2="54" y2="95" stroke="#fff" stroke-width="4"/>
+            <rect x="82" y="40" width="50" height="20" fill="#3B4CFF"/><polyline points="82,50 90,42 98,58 106,42 114,58 122,42 132,50" fill="none" stroke="#fff" stroke-width="3"/>
+            <circle cx="170" cy="88" r="28" fill="#FFB21E" opacity=".3"/><circle cx="170" cy="88" r="15" fill="#3B4CFF" stroke="#FFB21E" stroke-width="4"/>
+            <circle cx="105" cy="125" r="13" fill="#3B4CFF" stroke="#fff" stroke-width="3"/><text x="99.5" y="131" fill="#fff" font-family="Sora,sans-serif" font-weight="700" font-size="15">A</text>
+          </svg>
+        </article>
+
+        <article class="card scan" id="scan">
+          <div class="sec-title"><h2>Darslikdan boshlash</h2><span class="ai">AI</span></div>
+          <p class="sub">Sahifa rasmini yukla: AI mavzuni aniqlab, mos laboratoriyani tavsiya qiladi.</p>
+          <div class="scan-row">
+            <label class="btn primary small" for="file">Sahifa rasmini yuklash</label>
+            <input class="vh" type="file" id="file" accept="image/*">
+            <button class="btn small" type="button" id="sample">Namuna sahifa bilan sinash</button>
+          </div>
+          <div class="scan-res" id="scan-res">
+            <div class="page-thumb" id="page-thumb"><i style="top:10px"></i><i style="top:18px;right:16px"></i><i style="top:26px"></i><i style="top:34px;right:20px"></i><i style="top:42px"></i><span class="beam"></span></div>
+            <p id="scan-text">Natija shu yerda chiqadi.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="filters">
+        <h2>Fizika laboratoriyalari</h2>
+        <div class="chips" id="grades" role="group" aria-label="Sinf bo'yicha saralash"></div>
+      </div>
+      <div class="grid" id="cards"></div>
+    </section>
+
+    <section class="lab" id="lab" hidden>
+      <aside class="panel left">
+        <div class="psec">
+          <div class="sec-title"><h2>AI tanlagan asboblar</h2><span class="ai">AI</span></div>
+          <p class="note" id="tools-note"></p>
+          <div class="tool-list" id="tools"></div>
+          <button class="btn small" type="button" id="place-all">Kerakli asboblarni joylash</button>
+        </div>
+        <div class="psec">
+          <div class="sec-title"><h2>Boshqaruv</h2><span class="note" id="ctl-note"></span></div>
+          <div id="controls" style="display:flex;flex-direction:column;gap:12px"></div>
+        </div>
+      </aside>
+
+      <div class="stage" id="stage">
+        <canvas id="gl" tabindex="0" aria-label="3D laboratoriya sahnasi"></canvas>
+        <div class="labels" id="labels"></div>
+        <ol class="steps" id="steps">
+          <li><span>1</span><em>Asboblar</em></li><li><span>2</span><em>Tajriba</em></li><li><span>3</span><em>O'lchash</em></li><li><span>4</span><em>Xulosa</em></li>
+        </ol>
+        <div class="readouts" id="readouts"></div>
+        <div class="cam">
+          <button class="icon-btn" type="button" id="cam-top" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16M12 4v16"/></svg>Yuqoridan</button>
+          <button class="icon-btn" type="button" id="cam-reset"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Kamera</button>
+          <button class="icon-btn" type="button" id="restart"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4v6h6M20 20v-6h-6M20 10a8 8 0 0 0-14-4L4 10M4 14a8 8 0 0 0 14 4l2-4"/></svg>Qayta</button>
+        </div>
+        <p class="hint3d">Sudrab aylantiring · g'ildirak bilan yaqinlashtiring</p>
+        <div class="nogl" id="nogl" hidden><p>3D sahna bu qurilmada ochilmadi. Boshqaruv va o'lchovlar ishlayveradi.</p></div>
+      </div>
+
+      <aside class="panel right">
+        <div class="psec">
+          <div class="task-box"><span class="lbl">Topshiriq</span><h2 id="lab-title"></h2><p id="task"></p></div>
+        </div>
+        <div class="psec">
+          <div class="sec-title"><h2>O'lchovlar</h2><span class="note" id="rows-note"></span></div>
+          <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+          <div class="row2"><button class="btn" type="button" id="record">O'lchovni yozish</button><button class="btn primary" type="button" id="check">Tekshirish</button></div>
+        </div>
+        <div class="psec">
+          <div class="sec-title"><h2>AI ustoz</h2><span class="note">o'zbek tilida</span></div>
+          <div class="chat" id="chat" aria-live="polite"></div>
+          <button class="btn small" type="button" id="hint">Maslahat olish</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="sheet">
+    <span class="demo" style="align-self:flex-start"><i></i>O'qituvchiga yuboriladi (demo)</span>
+    <h2 id="m-title">Zo'r! Qonuniyatni topding</h2>
+    <p class="concl" id="m-concl"></p>
+    <div class="stats" id="m-stats"></div>
+    <div class="aisum"><b><span class="ai">AI</span>Xulosa (namuna)</b><p id="m-sum"></p></div>
+    <a class="to-teacher" href="../teacher/index.html">Bu hisobot o'qituvchi panelida qanday ko'rinadi <span aria-hidden="true">→</span></a>
+    <div class="actions"><button class="btn" type="button" id="m-stay">Laboratoriyada qolish</button><a class="btn primary" href="#top" id="m-hub">Boshqa tajriba</a></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+const $ = id => document.getElementById(id);
+const fmt = (n, d = 2) => Number(n).toFixed(d).replace('.', ',');
+const pts = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isDark = () => { const t = document.documentElement.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; };
+const store = { get(k){ try { return localStorage.getItem(k); } catch(_) { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(_) {} } };
+
+/* ================= icons ================= */
+const SVG = inner => `<svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+const ICON = {
+  battery:SVG('<rect x="4" y="10" width="22" height="12" rx="2"/><path d="M26 14v4"/><path d="M9 16h4M11 14v4M18 16h4" stroke="#3B4CFF"/>'),
+  resistor:SVG('<path d="M2 16h5l2-5 3 10 3-10 3 10 3-10 2 5h5" stroke="#3B4CFF"/>'),
+  ammeter:SVG('<circle cx="16" cy="16" r="11"/><path d="M12 21l4-10 4 10M13.5 17.5h5" stroke="#3B4CFF"/>'),
+  voltmeter:SVG('<circle cx="16" cy="16" r="11"/><path d="M12 11l4 10 4-10" stroke="#3B4CFF"/>'),
+  switch:SVG('<circle cx="7" cy="20" r="2"/><circle cx="25" cy="20" r="2"/><path d="M9 19l13-7" stroke="#3B4CFF"/>'),
+  bulb:SVG('<path d="M11 20a7 7 0 1 1 10 0v3H11z"/><path d="M12 27h8"/><path d="M14 18l2-3 2 3" stroke="#FFB21E"/>'),
+  magnet:SVG('<path d="M8 5v11a8 8 0 0 0 16 0V5h-5v11a3 3 0 0 1-6 0V5z"/><path d="M8 9h5M19 9h5" stroke="#D9452B"/>'),
+  spring:SVG('<path d="M16 3v4M10 8l12 2-12 2 12 2-12 2 12 2-12 2 6 1v6"/>'),
+  weights:SVG('<path d="M12 12h8l4 15H8z"/><circle cx="16" cy="8" r="3"/>'),
+  ruler:SVG('<rect x="11" y="3" width="10" height="26" rx="1"/><path d="M11 8h4M11 13h6M11 18h4M11 23h6" stroke="#3B4CFF"/>'),
+  stand:SVG('<path d="M8 28h16M12 28V5h12M22 5v5"/>'),
+  bob:SVG('<path d="M10 4h12M16 4l-4 16"/><circle cx="11" cy="23" r="4" stroke="#3B4CFF"/>'),
+  stopwatch:SVG('<circle cx="16" cy="18" r="10"/><path d="M13 3h6M16 18l4-4" stroke="#3B4CFF"/>'),
+  laser:SVG('<rect x="3" y="12" width="16" height="8" rx="2"/><path d="M19 16h10" stroke="#D9452B"/>'),
+  glass:SVG('<path d="M5 9h22v14H5z"/><path d="M2 5l10 8 6 4 12 8" stroke="#D9452B"/>'),
+  protractor:SVG('<path d="M4 24a12 12 0 0 1 24 0z"/><path d="M16 24v-8M16 24l6-6" stroke="#3B4CFF"/>'),
+  beaker:SVG('<path d="M8 4h16M10 4v20a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4V4"/><path d="M10 18h12" stroke="#3B4CFF"/>'),
+};
+const TOOLNAME = {battery:"Akkumulator",resistor:"Rezistor",ammeter:"Ampermetr",voltmeter:"Voltmetr",switch:"Kalit",bulb:"Chiroq",magnet:"Magnit",spring:"Prujina",weights:"Yuklar to'plami",ruler:"Chizg'ich",stand:"Shtativ",bob:"Ip va sharcha",stopwatch:"Sekundomer",laser:"Lazer",glass:"Shisha plastinka",protractor:"Transportir"};
+
+/* ================= labs ================= */
+function pair(rows, key, ratio, same){
+  for (const a of rows) for (const b of rows) {
+    if (a === b || !a[key] || !b[key]) continue;
+    if (same && !same(a, b)) continue;
+    if (Math.abs(b[key] / a[key] - ratio) < 0.02 * ratio) return [a, b];
+  }
+  return null;
+}
+const LABS = {
+  ohm: {
+    title:"Om qonuni", grade:8, time:"~10 daqiqa", blurb:"Zanjir yig'ib, qarshilik va tok kuchi orasidagi bog'liqlikni top.",
+    task:"Zanjirni yig'ib, kalitni yop. Kuchlanish 6 V bo'lganda qarshilikni 10 Ω va 20 Ω qilib o'lcha. Tok kuchi qanday o'zgaradi?",
+    hints:["Tok o'tishi uchun zanjir yopiq bo'lishi kerak. Kalitga e'tibor ber.","10 Ω da o'lchovni yoz, keyin qarshilikni 20 Ω ga o'zgartirib yana yoz.","Har bir o'lchovda tok kuchini qarshilikka ko'paytirib ko'r. Natija nimaga teng?"],
+    tools:[
+      {key:'battery',kind:'battery',why:"Zanjirga kuchlanish beradi",pos:[-1.05,0,0.1]},
+      {key:'switch',kind:'switch',why:"Zanjirni ochib-yopadi",pos:[-0.5,0,-0.5]},
+      {key:'resistor',kind:'resistor',why:"Tokka qarshilik ko'rsatadi",pos:[0.3,0,-0.5]},
+      {key:'ammeter',kind:'ammeter',why:"Tok kuchini o'lchaydi",pos:[0.55,0,0.35]},
+      {key:'voltmeter',kind:'voltmeter',why:"Kuchlanishni o'lchaydi",pos:[0.3,0,-0.82]},
+      {key:'magnet',kind:'magnet',why:"Magnit maydon hosil qiladi",distractor:true,wrongMsg:"Magnit bu zanjirga kerak emas: tok kuchini o'lchashda u ishtirok etmaydi."},
+    ],
+    wires:[
+      {from:'battery.p',to:'switch.a',cur:'I'},{from:'switch.b',to:'resistor.a',cur:'I'},
+      {from:'resistor.b',to:'ammeter.b',cur:'I'},{from:'ammeter.a',to:'battery.n',cur:'I'},
+      {from:'voltmeter.a',to:'resistor.a',cur:'v'},{from:'voltmeter.b',to:'resistor.b',cur:'v'},
+    ],
+    params:[{id:'U',label:'Kuchlanish',min:1.5,max:12,step:1.5,value:6,unit:'V',d:1},{id:'R',label:'Qarshilik',min:5,max:30,step:1,value:10,unit:'Ω',d:0}],
+    toggles:[{id:'K',label:'Kalit K',value:false,tool:'switch'}],
+    cam:{p:[0.25,2.05,2.95],t:[0,0.12,-0.12]},
+    compute(P,T,on){
+      const closed = on && T.K, I = closed ? P.U / P.R : 0, Ur = closed ? P.U : 0;
+      return {I, Ur, Pw:P.U*I, cur:{I, v:0},
+        readouts:[['Voltmetr',fmt(Ur,1)+' V'],['Qarshilik',P.R+' Ω'],['Ampermetr',fmt(I,2)+' A',1]],
+        labels:{battery:fmt(P.U,1)+' V',resistor:P.R+' Ω',ammeter:'I = '+fmt(I,2)+' A',voltmeter:'U = '+fmt(Ur,1)+' V'}};
+    },
+    update3d(w,r,S){ w.tools.switch.part.set(S.toggles.K); w.tools.resistor.part.glow(Math.min(1,r.Pw/7.2)); w.tools.ammeter.part.needle(r.I/3); w.tools.voltmeter.part.needle(r.Ur/15); },
+    readyMsg:"Zanjir yig'ildi! Endi kalitni yop: 3D dagi kalitni yoki chapdagi tugmani bos.",
+    onToggle(S,r){ return S.toggles.K ? `Tok o'tdi! Ampermetr ${fmt(r.I,2)} A ko'rsatyapti. Endi "O'lchovni yozish" tugmasini bos.` : "Kalit ochildi: zanjir uzildi, tok yo'q."; },
+    cols:['U, V','R, Ω','I, A'],
+    record(P,T,r){ if (!T.K) return {err:"Zanjir ochiq: tok o'tmayapti. Avval kalitni yop."}; return {key:P.U+'|'+P.R,U:P.U,R:P.R,I:r.I,cells:[fmt(P.U,1),P.R,fmt(r.I,2)]}; },
+    check(rows){
+      const p = pair(rows,'R',2,(a,b)=>a.U===b.U);
+      if (!p) return {ok:false,msg:"Bir xil kuchlanishda ikkita o'lchov kerak: ikkinchisida qarshilik birinchisidan 2 barobar katta bo'lsin (masalan 10 Ω va 20 Ω)."};
+      const [a,b]=p; return {ok:true,msg:`Qarshilik ${a.R} Ω dan ${b.R} Ω ga oshganda tok ${fmt(a.I,2)} A dan ${fmt(b.I,2)} A ga tushdi: 2 barobar kamaydi. Demak I = U / R. Bu Om qonuni.`,law:"I = U / R"};
+    }
+  },
+  parallel: {
+    title:"Parallel ulanish", grade:8, time:"~12 daqiqa", blurb:"Ikki chiroqni parallel ula va bitta tarmoq uzilganda nima bo'lishini ko'r.",
+    task:"Ikki chiroq parallel ulangan. K2 kalitini yopiq va ochiq holatda o'lcha. 1-chiroq toki o'zgaradimi? Umumiy tok qanday o'zgaradi?",
+    hints:["Parallel ulanishda har bir chiroq o'z tarmog'iga ega.","K2 yopiq holatda o'lchov yoz, keyin K2 ni ochib yana yoz.","1-chiroq toki o'zgardimi? Umumiy tok tarmoq toklarining yig'indisiga teng emasmi?"],
+    tools:[
+      {key:'battery',kind:'battery',why:"Zanjirga kuchlanish beradi",pos:[-1.1,0,0.15]},
+      {key:'ammeter',kind:'ammeter',why:"Umumiy tokni o'lchaydi",pos:[-0.55,0,0.6]},
+      {key:'bulb1',kind:'bulb',name:"1-chiroq",why:"Birinchi tarmoq yuklamasi",pos:[0.55,0,-0.35]},
+      {key:'switch',kind:'switch',name:"Kalit K2",why:"2-tarmoqni ochib-yopadi",pos:[0.12,0,0.6]},
+      {key:'bulb2',kind:'bulb',name:"2-chiroq",why:"Ikkinchi tarmoq yuklamasi",pos:[0.75,0,0.6]},
+      {key:'spring',kind:'spring',why:"Cho'zilganda kuch hosil qiladi",distractor:true,wrongMsg:"Prujina mexanika asbobi: elektr zanjiriga kerak emas."},
+    ],
+    junctions:[[-0.05,0.02,0.15],[1.3,0.02,0.15]],
+    wires:[
+      {from:'battery.p',to:'ammeter.a',cur:'I'},{from:'ammeter.b',to:[-0.05,0.02,0.15],cur:'I'},
+      {from:[-0.05,0.02,0.15],to:'bulb1.a',cur:'I1'},{from:'bulb1.b',to:[1.3,0.02,0.15],cur:'I1'},
+      {from:[-0.05,0.02,0.15],to:'switch.a',cur:'I2'},{from:'switch.b',to:'bulb2.a',cur:'I2'},{from:'bulb2.b',to:[1.3,0.02,0.15],cur:'I2'},
+      {from:[1.3,0.02,0.15],via:[[1.3,0.03,-0.86],[-1.21,0.03,-0.86]],to:'battery.n',cur:'I'},
+    ],
+    params:[{id:'U',label:'Kuchlanish',min:1.5,max:12,step:1.5,value:6,unit:'V',d:1}],
+    toggles:[{id:'K2',label:'Kalit K2',value:true,tool:'switch'}],
+    cam:{p:[0.15,2.25,3.05],t:[0.05,0.08,0]},
+    compute(P,T,on){
+      const I1 = on ? P.U/12 : 0, I2 = on && T.K2 ? P.U/12 : 0, I = I1 + I2, b = (P.U*P.U/12)/3;
+      return {I1,I2,I,b1:on?b:0,b2:on&&T.K2?b:0,cur:{I,I1,I2},
+        readouts:[['Kuchlanish',fmt(P.U,1)+' V'],['1-chiroq I₁',fmt(I1,2)+' A'],['Umumiy tok I',fmt(I,2)+' A',1]],
+        labels:{bulb1:'I₁ = '+fmt(I1,2)+' A',bulb2:'I₂ = '+fmt(I2,2)+' A',ammeter:'I = '+fmt(I,2)+' A',battery:fmt(P.U,1)+' V'}};
+    },
+    update3d(w,r,S){ w.tools.switch.part.set(S.toggles.K2); w.tools.bulb1.part.light(r.b1); w.tools.bulb2.part.light(r.b2); w.tools.ammeter.part.needle(r.I/3); },
+    readyMsg:"Zanjir tayyor: ikkala chiroq yonyapti. Endi K2 kalitini ochib-yopib ko'r.",
+    onToggle(S,r){ return S.toggles.K2 ? "K2 yopildi: 2-chiroq yana yondi. 1-chiroqqa qara: o'zgardimi?" : `K2 ochildi: 2-chiroq o'chdi, lekin 1-chiroq yonib turibdi. Umumiy tok ${fmt(r.I,2)} A.`; },
+    cols:['U, V','K2','I₁, A','I, A'],
+    record(P,T,r){ return {key:P.U+'|'+T.K2,U:P.U,K2:T.K2,I1:r.I1,I:r.I,cells:[fmt(P.U,1),T.K2?'yopiq':'ochiq',fmt(r.I1,2),fmt(r.I,2)]}; },
+    check(rows){
+      let a=null,b=null;
+      for (const x of rows) for (const y of rows) if (x.U===y.U && x.K2 && !y.K2) { a=x; b=y; }
+      if (!a) return {ok:false,msg:"Bir xil kuchlanishda ikkita o'lchov kerak: biri K2 yopiq, biri K2 ochiq holatda."};
+      return {ok:true,msg:`K2 ochilganda 1-chiroq toki o'zgarmadi (${fmt(a.I1,2)} A), umumiy tok esa ${fmt(a.I,2)} A dan ${fmt(b.I,2)} A ga tushdi. Parallel ulanishda I = I₁ + I₂ va tarmoqlar bir-biriga bog'liq emas.`,law:"I = I₁ + I₂"};
+    }
+  },
+  hooke: {
+    title:"Guk qonuni", grade:7, time:"~8 daqiqa", blurb:"Prujinaga yuk osib, kuch va cho'zilish orasidagi qonuniyatni top.",
+    task:"Prujinaga 200 g va 400 g yuk os. Yuk 2 barobar oshsa, cho'zilish qanday o'zgaradi? Prujina bikrligi k = 50 N/m.",
+    hints:["Yuk osilgandan keyin prujinaning pastki uchini chizg'ichdan o'qi.","200 g da o'lchov yoz, keyin 400 g da yana yoz.","Kuchni cho'zilishga bo'lib ko'r: F / x nimaga teng bo'lyapti?"],
+    tools:[
+      {key:'stand',kind:'stand',why:"Asboblarni osish uchun tayanch",pos:[-0.1,0,-0.55]},
+      {key:'spring',kind:'spring',why:"Cho'zilganda kuch hosil qiladi",needs:['stand'],anchor:'stand.hook'},
+      {key:'weights',kind:'weights',why:"50 g lik yuklar to'plami",needs:['spring'],anchor:'stand.hook'},
+      {key:'ruler',kind:'ruler',why:"Uzunlikni santimetrda o'lchaydi",pos:[-0.28,0,0]},
+      {key:'voltmeter',kind:'voltmeter',why:"Kuchlanishni o'lchaydi",distractor:true,wrongMsg:"Voltmetr elektr asbobi: prujina tajribasida kerak emas."},
+    ],
+    params:[{id:'m',label:'Yuk massasi',min:50,max:500,step:50,value:200,unit:'g',d:0}],
+    toggles:[],
+    cam:{p:[0.55,1.35,3.1],t:[-0.1,0.82,0]},
+    compute(P,T,on){
+      const F = P.m/1000*9.8, x = on ? F/50 : 0;
+      return {F,x,cur:{},readouts:[['Massa',P.m+' g'],['Kuch F',fmt(on?F:0,2)+' N'],["Cho'zilish x",fmt(x*100,1)+' sm',1]],
+        labels:{weights:P.m+' g',ruler:'x = '+fmt(x*100,1)+' sm'}};
+    },
+    update3d(w,r,S,dt){
+      const st = w.st; st.x = st.x ?? 0; st.x += (r.x - st.x) * Math.min(1, dt*6); if (dt===0) st.x = r.x;
+      const hook = w.anchor('stand.hook'), rest = 0.35, stretch = st.x * 8, yb = hook.y - rest - stretch;
+      w.tools.spring.part.len(rest + stretch);
+      w.tools.weights.base.set(hook.x, yb, hook.z);
+      w.tools.weights.part.mass(S.params.m);
+      w.tools.ruler.part.marker(yb);
+    },
+    readyMsg:"Tajriba tayyor: prujina yuk ostida cho'zildi. Chizg'ichdagi sariq belgiga qara.",
+    cols:['m, g','F, N','x, sm'],
+    record(P,T,r){ return {key:String(P.m),m:P.m,x:r.x,cells:[P.m,fmt(r.F,2),fmt(r.x*100,1)]}; },
+    check(rows){
+      const p = pair(rows,'m',2);
+      if (!p) return {ok:false,msg:"Ikkita o'lchov kerak: ikkinchisida yuk birinchisidan 2 barobar og'ir bo'lsin (masalan 200 g va 400 g)."};
+      const [a,b]=p; return {ok:true,msg:`Yuk ${a.m} g dan ${b.m} g ga oshganda cho'zilish ${fmt(a.x*100,1)} sm dan ${fmt(b.x*100,1)} sm ga oshdi: aynan 2 barobar. Demak F = k·x (Guk qonuni), k = 50 N/m.`,law:"F = k·x"};
+    }
+  },
+  pendulum: {
+    title:"Matematik mayatnik", grade:9, time:"~10 daqiqa", blurb:"Ip uzunligini o'zgartirib, tebranish davri qanday o'zgarishini o'lcha.",
+    task:"Ip uzunligini 1,00 m va 0,25 m qilib davrni o'lcha. Uzunlik 4 barobar qisqarsa, davr qanday o'zgaradi?",
+    hints:["Davr: bitta to'liq tebranish (borib-qaytish) vaqti. Sekundomerga qara.","1,00 m da o'lchov yoz, keyin 0,25 m ga o'zgartirib yana yoz.","Davr 4 barobar emas, kamroq o'zgaradi. Kvadrat ildiz haqida o'yla."],
+    tools:[
+      {key:'stand',kind:'stand',why:"Asboblarni osish uchun tayanch",pos:[-0.2,0,-0.55]},
+      {key:'bob',kind:'bob',why:"Ipga osilgan og'ir sharcha",needs:['stand'],anchor:'stand.hook'},
+      {key:'stopwatch',kind:'stopwatch',why:"Vaqtni 0,01 s aniqlikda o'lchaydi",pos:[0.75,0,0.35]},
+      {key:'ammeter',kind:'ammeter',why:"Tok kuchini o'lchaydi",distractor:true,wrongMsg:"Ampermetr elektr asbobi: mayatnik tajribasida kerak emas."},
+    ],
+    params:[{id:'L',label:'Ip uzunligi',min:0.25,max:2,step:0.05,value:1,unit:'m',d:2}],
+    toggles:[],
+    cam:{p:[0.45,1.3,3.35],t:[0,0.8,0]},
+    compute(P,T,on){
+      const Tp = 2*Math.PI*Math.sqrt(P.L/9.8);
+      return {T:Tp,on,cur:{},readouts:[['Uzunlik L',fmt(P.L,2)+' m'],['g','9,8 m/s²'],['Davr T',fmt(Tp,2)+' s',1]],labels:{stopwatch:'T = '+fmt(Tp,2)+' s',bob:'L = '+fmt(P.L,2)+' m'}};
+    },
+    update3d(w,r,S,dt){
+      const st=w.st; st.phase=(st.phase??0.9)+(r.on?dt*2*Math.PI/r.T:0);
+      w.tools.bob.part.set(0.25+S.params.L*0.62, r.on?0.3*Math.sin(st.phase):0);
+      st.clock=(st.clock??0)+(r.on?dt:0); w.tools.stopwatch.part.hand(st.clock);
+    },
+    readyMsg:"Mayatnik tebranyapti! Sekundomer davrni ko'rsatadi. Ip uzunligini o'zgartirib ko'r.",
+    cols:['L, m','T, s'],
+    record(P,T,r){ return {key:String(P.L),L:P.L,T:r.T,cells:[fmt(P.L,2),fmt(r.T,2)]}; },
+    check(rows){
+      const p = pair(rows,'L',0.25);
+      if (!p) return {ok:false,msg:"Ikkita o'lchov kerak: ikkinchisida ip birinchisidan 4 barobar qisqa bo'lsin (masalan 1,00 m va 0,25 m)."};
+      const [a,b]=p; return {ok:true,msg:`Ip ${fmt(a.L,2)} m dan ${fmt(b.L,2)} m ga (4 barobar) qisqarganda davr ${fmt(a.T,2)} s dan ${fmt(b.T,2)} s ga tushdi: faqat 2 barobar. Demak T = 2π√(L/g).`,law:"T = 2π√(L/g)"};
+    }
+  },
+  refraction: {
+    title:"Yorug'likning sinishi", grade:8, time:"~8 daqiqa", blurb:"Lazer nurini shishaga yo'naltirib, tushish va sinish burchaklarini solishtir.",
+    task:"Tushish burchagini 30° va 60° qil. Burchak 2 barobar oshsa, sinish burchagi ham 2 barobar oshadimi?",
+    hints:["Burchaklar normalga (uzuq chiziq) nisbatan o'lchanadi.","30° va 60° da ikki o'lchov yoz.","Burchaklarni emas, ularning sinuslarini solishtir: sin θ₁ / sin θ₂ nimaga teng?"],
+    tools:[
+      {key:'glass',kind:'glass',why:"Nur sinadigan shaffof muhit",pos:[0,0,0]},
+      {key:'laser',kind:'laser',why:"Ingichka yorug'lik nuri beradi",pos:[-0.8,0,1.2]},
+      {key:'protractor',kind:'protractor',why:"Burchaklarni o'lchaydi",pos:[-0.2,0,0.4]},
+      {key:'weights',kind:'weights',why:"50 g lik yuklar to'plami",distractor:true,wrongMsg:"Yuklar mexanika asbobi: yorug'lik tajribasida kerak emas."},
+    ],
+    params:[{id:'a',label:'Tushish burchagi',min:0,max:80,step:1,value:30,unit:'°',d:0}],
+    toggles:[],
+    cam:{p:[0.95,2.45,2.35],t:[-0.1,0,0.25]},
+    compute(P,T,on){
+      const b = Math.asin(Math.sin(P.a*Math.PI/180)/1.5)*180/Math.PI;
+      return {a:P.a,b,cur:{},readouts:[['Tushish θ₁',P.a+'°'],['Shisha n','1,5'],['Sinish θ₂',fmt(b,1)+'°',1]],labels:{laser:'θ₁ = '+P.a+'°',protractor:'θ₂ = '+fmt(b,1)+'°'}};
+    },
+    update3d(w,r,S){ w.refr(r.a, r.b); },
+    readyMsg:"Nur shishaga kirib sinyapti. Uzuq chiziq: normal. Burchakni o'zgartirib ko'r.",
+    cols:['θ₁, °','θ₂, °','sin θ₁ / sin θ₂'],
+    record(P,T,r){ return {key:String(P.a),a:P.a,b:r.b,cells:[P.a,fmt(r.b,1),P.a>0?fmt(Math.sin(P.a*Math.PI/180)/Math.sin(r.b*Math.PI/180),2):'—']}; },
+    check(rows){
+      const p = pair(rows,'a',2);
+      if (!p) return {ok:false,msg:"Ikkita o'lchov kerak: ikkinchisida tushish burchagi birinchisidan 2 barobar katta bo'lsin (masalan 30° va 60°)."};
+      const [a,b]=p; return {ok:true,msg:`θ₁ ${a.a}° dan ${b.a}° ga oshganda θ₂ ${fmt(a.b,1)}° dan ${fmt(b.b,1)}° ga oshdi: 2 barobar emas. Lekin sin θ₁ / sin θ₂ doim 1,5 ga teng. Bu yorug'likning sinish qonuni.`,law:"sin θ₁ / sin θ₂ = n"};
+    }
+  },
+};
+const ORDER = ['ohm','parallel','refraction','hooke','pendulum'];
+const RECOMMENDED = 'ohm';
+
+/* ================= hub ================= */
+let grade = 'all';
+const thumbs = {};
+function renderGrades(){
+  const opts = [['all','Barchasi'],['7','7-sinf'],['8','8-sinf'],['9','9-sinf']];
+  $('grades').innerHTML = opts.map(([v,l]) => `<button class="fchip" type="button" data-g="${v}" aria-pressed="${v===grade}">${l}</button>`).join('');
+}
+function renderCards(){
+  const done = JSON.parse(store.get('empira-done') || '[]');
+  const html = ORDER.filter(id => grade==='all' || String(LABS[id].grade)===grade).map(id => {
+    const L = LABS[id], n = L.tools.filter(t=>!t.distractor).length;
+    return `<a class="lab-card" href="#${id}" id="card-${id}">
+      <div class="thumb">${thumbs[id]?`<img src="${thumbs[id]}" alt="">`:ICON[L.tools[0].kind].replace('width="26" height="26"','width="64" height="64"')}<span class="badge3d">3D · ${L.grade}-sinf</span>${id===RECOMMENDED?'<span class="rec ai">AI tavsiyasi</span>':''}</div>
+      <div class="body"><h3>${L.title}</h3><p>${L.blurb}</p>
+      <div class="meta"><span>${n} asbob · ${L.time}</span><span class="state ${done.includes(id)?'done':''}">${done.includes(id)?'Bajarildi':'Ochish'}</span></div></div></a>`;
+  }).join('');
+  const soon = (grade==='all'||grade==='8') ? `<div class="lab-card soon" aria-disabled="true"><div class="thumb">${ICON.beaker.replace('width="26" height="26"','width="64" height="64"')}<span class="badge3d">Kimyo</span></div><div class="body"><h3>Kislota va ishqorlar</h3><p>Indikator rangini pH ga qarab kuzatish.</p><div class="meta"><span>Tez orada</span><span class="state">Tez orada</span></div></div></div>` : '';
+  $('cards').innerHTML = html + soon;
+}
+$('grades').addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (!b) return; grade = b.dataset.g; renderGrades(); renderCards(); });
+
+function runScan(file){
+  const box = $('scan-res'), txt = $('scan-text'), th = $('page-thumb');
+  if (file) { const r = new FileReader(); r.onload = () => { th.style.backgroundImage = `url("${r.result}")`; th.querySelectorAll('i').forEach(i=>i.hidden=true); }; r.readAsDataURL(file); }
+  box.classList.add('scanning'); txt.textContent = "AI sahifani o'qiyapti…";
+  setTimeout(() => {
+    box.classList.remove('scanning');
+    txt.innerHTML = `Topildi: <b>Om qonuni</b>, 8-sinf fizika. Formula: <b>I = U / R</b><span class="conf">ishonch 92%</span><br><a class="btn primary small" style="margin-top:8px" href="#ohm">Laboratoriyani ochish</a><br><span class="note">Demo: skaner natijasi namuna.</span>`;
+    const c = $('card-ohm'); if (c) { c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 2400); }
+  }, reduced() ? 300 : 1700);
+}
+$('file').addEventListener('change', e => { if (e.target.files[0]) runScan(e.target.files[0]); e.target.value=''; });
+$('sample').addEventListener('click', () => runScan(null));
+
+/* ================= 3D engine ================= */
+let THREE = null, OrbitControls = null, glFailed = false, renderer = null, controls = null, W = null, raf = 0, lastT = 0, camTween = null;
+const TEX = {};
+const V = (x,y,z) => new THREE.Vector3(x,y,z);
+const COL = { ink:0x1A2146, dark:0x252E5C, blue:0x3B4CFF, blue300:0x8B96FF, amber:0xFFB21E, coral:0xE0452B, metal:0xC3C8DA, white:0xFFFFFF };
+function M(color, r = .55, m = .05, extra = {}){ return new THREE.MeshStandardMaterial({color, roughness:r, metalness:m, ...extra}); }
+function mesh(geo, mat, x=0, y=0, z=0){ const o = new THREE.Mesh(geo, mat); o.position.set(x,y,z); o.castShadow = true; o.receiveShadow = true; return o; }
+function canvasTex(key, w, h, draw){
+  if (TEX[key]) return TEX[key];
+  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; TEX[key] = t; return t;
+}
+function faceTex(letter){
+  return canvasTex('face'+letter, 256, 256, (x) => {
+    x.fillStyle = '#FFFFFF'; x.beginPath(); x.arc(128,128,126,0,Math.PI*2); x.fill();
+    x.strokeStyle = '#0B1026'; x.lineCap = 'round';
+    for (let i = 0; i <= 10; i++) { const th = (0.5 - i/10)*1.6, dx = -Math.sin(th), dy = -Math.cos(th), r0 = i%5 ? 90 : 80;
+      x.lineWidth = i%5 ? 3 : 5; x.beginPath(); x.moveTo(128+dx*r0, 165+dy*r0); x.lineTo(128+dx*102, 165+dy*102); x.stroke(); }
+    x.strokeStyle = '#E0452B'; x.lineWidth = 5; x.beginPath(); x.arc(128,165,108,-Math.PI/2-0.8+1.28,-Math.PI/2+0.8); x.stroke();
+    x.fillStyle = '#0B1026'; x.font = '700 46px Sora, sans-serif'; x.textAlign = 'center'; x.fillText(letter, 128, 222);
+  });
+}
+function clockTex(){
+  return canvasTex('clock', 256, 256, (x) => {
+    x.fillStyle = '#FFFFFF'; x.beginPath(); x.arc(128,128,126,0,Math.PI*2); x.fill();
+    x.strokeStyle = '#0B1026'; x.lineCap = 'round';
+    for (let i = 0; i < 60; i++) { const a = i/60*Math.PI*2, r0 = i%5 ? 108 : 96; x.lineWidth = i%5 ? 2 : 4; x.beginPath(); x.moveTo(128+Math.sin(a)*r0, 128-Math.cos(a)*r0); x.lineTo(128+Math.sin(a)*118, 128-Math.cos(a)*118); x.stroke(); }
+    x.fillStyle = '#0B1026'; x.font = '700 22px Sora, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    [['0',0],['15',90],['30',180],['45',270]].forEach(([s,d]) => { const a = d*Math.PI/180; x.fillText(s, 128+Math.sin(a)*76, 128-Math.cos(a)*76); });
+  });
+}
+function glowTex(){
+  return canvasTex('glow', 128, 128, (x) => { const g = x.createRadialGradient(64,64,0,64,64,64); g.addColorStop(0,'rgba(255,190,60,1)'); g.addColorStop(.35,'rgba(255,178,30,.45)'); g.addColorStop(1,'rgba(255,178,30,0)'); x.fillStyle = g; x.fillRect(0,0,128,128); });
+}
+function rulerTex(){
+  return canvasTex('ruler', 128, 1000, (x) => {
+    x.fillStyle = '#FFFFFF'; x.fillRect(0,0,128,1000); x.fillStyle = '#0B1026'; x.font = '700 30px Sora, sans-serif'; x.textBaseline = 'middle';
+    for (let i = 0; i <= 11; i++) { const y = 50 + i*80; x.fillRect(0, y-2, i%2 ? 40 : 62, 4); if (i%2===0) x.fillText(String(i), 72, y); }
+    for (let i = 0; i < 22; i++) { const y = 50 + i*40 + 40; if ((i+1)%2) x.fillRect(0, y-1, 24, 2); }
+  });
+}
+function protractorTex(){
+  return canvasTex('protr', 512, 512, (x) => {
+    x.strokeStyle = 'rgba(59,76,255,.9)'; x.fillStyle = 'rgba(59,76,255,.9)'; x.lineWidth = 4;
+    x.beginPath(); x.arc(256,256,240,0,Math.PI*2); x.stroke();
+    for (let d = 0; d < 360; d += 5) { const a = d*Math.PI/180, r0 = d%30===0 ? 200 : d%10===0 ? 216 : 226; x.lineWidth = d%30===0 ? 4 : 2; x.beginPath(); x.moveTo(256+Math.sin(a)*r0, 256-Math.cos(a)*r0); x.lineTo(256+Math.sin(a)*240, 256-Math.cos(a)*240); x.stroke(); }
+    x.font = '700 26px Sora, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    for (let d = 0; d < 360; d += 30) { const a = d*Math.PI/180, lab = String(Math.min(d%180, 180-d%180)); x.fillText(lab, 256+Math.sin(a)*172, 256-Math.cos(a)*172); }
+  });
+}
+
+/* ----- tool builders: each returns {g, terms, part} ----- */
+const BUILD = {
+  battery(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.38,0.22,0.24), M(COL.ink,.45), 0,0.11,0));
+    g.add(mesh(new THREE.BoxGeometry(0.384,0.05,0.244), M(COL.amber,.5), 0,0.155,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.03,0.035,0.06,16), M(COL.coral,.3,.3), 0.11,0.25,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.03,0.035,0.06,16), M(COL.blue300,.3,.3), -0.11,0.25,0));
+    return {g, terms:{p:V(0.11,0.28,0), n:V(-0.11,0.28,0)}, label:V(0,0.42,0)};
+  },
+  resistor(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.72,0.03,0.16), M(COL.dark,.6), 0,0.015,0));
+    [-0.3,0.3].forEach(x => { g.add(mesh(new THREE.CylinderGeometry(0.014,0.014,0.12,10), M(COL.metal,.25,.8), x,0.075,0)); });
+    const lead = new THREE.CylinderGeometry(0.008,0.008,0.1,8); lead.rotateZ(Math.PI/2);
+    [-0.255,0.255].forEach(x => g.add(mesh(lead, M(COL.metal,.25,.8), x,0.13,0)));
+    const bodyM = M(0xE9DCC0,.5,0,{emissive:0xFF4A18, emissiveIntensity:0});
+    const body = new THREE.CylinderGeometry(0.05,0.05,0.42,28); body.rotateZ(Math.PI/2);
+    g.add(mesh(body, bodyM, 0,0.13,0));
+    [[-0.12,0x7A4A1E],[-0.05,0x0B1026],[0.02,0x0B1026],[0.13,0xC9A227]].forEach(([x,c]) => { const bg = new THREE.CylinderGeometry(0.052,0.052,0.024,28); bg.rotateZ(Math.PI/2); g.add(mesh(bg, M(c,.5), x,0.13,0)); });
+    return {g, terms:{a:V(-0.3,0.14,0), b:V(0.3,0.14,0)}, label:V(0,0.04,0.2), part:{glow:k => { bodyM.emissiveIntensity = k*1.4; }}};
+  },
+  meter(letter){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.38,0.14,0.26), M(COL.ink,.45), 0,0.07,0));
+    const face = new THREE.Group(); face.position.set(0,0.2,0.02); face.rotation.x = -Math.PI/2 + 0.6;
+    face.add(mesh(new THREE.BoxGeometry(0.25,0.25,0.02), M(COL.ink,.45), 0,0,-0.012));
+    const disc = new THREE.Mesh(new THREE.CircleGeometry(0.105,48), new THREE.MeshBasicMaterial({map:faceTex(letter)})); disc.position.z = 0.0005; face.add(disc);
+    const ng = new THREE.BoxGeometry(0.007,0.09,0.003); ng.translate(0,0.045,0);
+    const needle = new THREE.Mesh(ng, new THREE.MeshBasicMaterial({color:0x3B4CFF})); needle.position.set(0,-0.031,0.003); face.add(needle);
+    const hub = new THREE.Mesh(new THREE.CircleGeometry(0.01,16), new THREE.MeshBasicMaterial({color:0x0B1026})); hub.position.set(0,-0.031,0.004); face.add(hub);
+    g.add(face);
+    g.add(mesh(new THREE.CylinderGeometry(0.018,0.02,0.04,12), M(COL.coral,.3,.3), -0.16,0.16,0.09));
+    g.add(mesh(new THREE.CylinderGeometry(0.018,0.02,0.04,12), M(COL.blue300,.3,.3), 0.16,0.16,0.09));
+    let cur = 0.4;
+    return {g, terms:{a:V(-0.16,0.18,0.09), b:V(0.16,0.18,0.09)}, label:V(0,0.4,0), part:{needle:f => { const t = (0.5 - Math.max(0,Math.min(1,f)))*1.6; cur += (t - cur)*0.25; needle.rotation.z = cur; }}};
+  },
+  ammeter(){ return BUILD.meter('A'); },
+  voltmeter(){ return BUILD.meter('V'); },
+  switch(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.36,0.035,0.16), M(COL.dark,.6), 0,0.0175,0));
+    [-0.13,0.13].forEach(x => g.add(mesh(new THREE.CylinderGeometry(0.018,0.02,0.05,12), M(COL.metal,.25,.8), x,0.06,0)));
+    const piv = new THREE.Group(); piv.position.set(-0.13,0.075,0);
+    const lg = new THREE.BoxGeometry(0.28,0.016,0.03); lg.translate(0.14,0,0);
+    piv.add(mesh(lg, M(COL.metal,.25,.85)));
+    const knob = new THREE.CylinderGeometry(0.018,0.018,0.07,12); piv.add(mesh(knob, M(COL.blue,.4), 0.25,0.035,0));
+    g.add(piv);
+    const hit = new THREE.Mesh(new THREE.BoxGeometry(0.42,0.2,0.24), new THREE.MeshBasicMaterial({visible:false})); hit.position.y = 0.08; hit.userData.click = true; g.add(hit);
+    let ang = 0.7;
+    return {g, terms:{a:V(-0.13,0.08,0), b:V(0.13,0.08,0)}, label:V(0,0.3,0), hit, part:{set:on => { const t = on ? 0 : 0.7; ang += (t-ang)*0.25; piv.rotation.z = ang; }}};
+  },
+  bulb(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.34,0.03,0.2), M(COL.dark,.6), 0,0.015,0));
+    [-0.12,0.12].forEach(x => g.add(mesh(new THREE.CylinderGeometry(0.016,0.018,0.04,10), M(COL.metal,.25,.8), x,0.05,0)));
+    g.add(mesh(new THREE.CylinderGeometry(0.06,0.07,0.1,20), M(COL.blue300,.35,.6), 0,0.08,0));
+    const glassM = new THREE.MeshStandardMaterial({color:0xFFFFFF, roughness:.1, metalness:0, transparent:true, opacity:.35, emissive:0xFFB21E, emissiveIntensity:0, depthWrite:false});
+    const glass = new THREE.Mesh(new THREE.SphereGeometry(0.13,32,24), glassM); glass.position.y = 0.25; g.add(glass);
+    const filM = new THREE.MeshStandardMaterial({color:0x6B5A33, emissive:0xFFB21E, emissiveIntensity:0.1});
+    const fil = new THREE.Mesh(new THREE.TorusGeometry(0.035,0.006,8,24), filM); fil.position.y = 0.25; g.add(fil);
+    const light = new THREE.PointLight(0xFFB21E, 0, 2.2, 2); light.position.y = 0.25; g.add(light);
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(), blending:THREE.AdditiveBlending, depthWrite:false, transparent:true, opacity:0})); halo.position.y = 0.25; g.add(halo);
+    let cur = 0;
+    return {g, terms:{a:V(-0.12,0.07,0), b:V(0.12,0.07,0)}, label:V(0,0.5,0), part:{light:b => { const t = Math.min(1.5, b); cur += (t-cur)*0.2; glassM.emissiveIntensity = cur*0.9; filM.emissiveIntensity = 0.1 + cur*3; light.intensity = cur*2.5; halo.material.opacity = Math.min(1, cur*0.9); const s = 0.25 + cur*0.55; halo.scale.set(s,s,s); }}};
+  },
+  stand(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.44,0.04,0.32), M(COL.ink,.5), 0,0.02,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.018,0.018,1.68,16), M(COL.metal,.25,.85), 0,0.86,0));
+    const arm = new THREE.CylinderGeometry(0.014,0.014,0.6,12); arm.rotateX(Math.PI/2);
+    g.add(mesh(arm, M(COL.metal,.25,.85), 0,1.64,0.28));
+    g.add(mesh(new THREE.BoxGeometry(0.06,0.06,0.06), M(COL.ink,.4), 0,1.64,0));
+    g.add(mesh(new THREE.TorusGeometry(0.018,0.005,8,16), M(COL.metal,.25,.85), 0,1.615,0.55));
+    return {g, terms:{hook:V(0,1.6,0.55)}};
+  },
+  bob(){
+    const g = new THREE.Group(), piv = new THREE.Group(); g.add(piv);
+    const str = new THREE.Mesh(new THREE.CylinderGeometry(0.003,0.003,1,6), new THREE.MeshStandardMaterial({color:0x5B6178})); piv.add(str);
+    const ball = mesh(new THREE.SphereGeometry(0.07,32,24), M(COL.blue,.3,.4)); piv.add(ball);
+    return {g, terms:{}, label:V(0.25,-0.4,0), part:{set:(len,ang) => { str.scale.y = len; str.position.y = -len/2; ball.position.y = -len - 0.06; piv.rotation.z = ang; }}};
+  },
+  stopwatch(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.16,0.05,0.1), M(COL.ink,.5), 0,0.025,0));
+    const body = new THREE.CylinderGeometry(0.11,0.11,0.04,40); body.rotateX(Math.PI/2);
+    g.add(mesh(body, M(COL.ink,.4), 0,0.16,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.015,0.015,0.04,12), M(COL.amber,.4), 0,0.29,0));
+    const face = new THREE.Mesh(new THREE.CircleGeometry(0.098,48), new THREE.MeshBasicMaterial({map:clockTex()})); face.position.set(0,0.16,0.021); g.add(face);
+    const hg = new THREE.BoxGeometry(0.006,0.085,0.002); hg.translate(0,0.042,0);
+    const hand = new THREE.Mesh(hg, new THREE.MeshBasicMaterial({color:0xE0452B})); hand.position.set(0,0.16,0.023); g.add(hand);
+    return {g, terms:{}, label:V(0,0.42,0), part:{hand:t => { hand.rotation.z = -(t % 60)/60*Math.PI*2; }}};
+  },
+  spring(){
+    const g = new THREE.Group(); const mat = M(COL.blue300,.3,.7); let meshS = null, last = -1;
+    class Helix extends THREE.Curve { constructor(l){ super(); this.l = l; } getPoint(t, o = new THREE.Vector3()){ const a = t*14*Math.PI*2; return o.set(Math.cos(a)*0.055, -t*this.l, Math.sin(a)*0.055); } }
+    const len = l => { if (Math.abs(l-last) < 0.002) return; last = l; if (meshS) { g.remove(meshS); meshS.geometry.dispose(); } meshS = mesh(new THREE.TubeGeometry(new Helix(l), 320, 0.008, 6), mat); g.add(meshS); };
+    len(0.35);
+    return {g, terms:{}, part:{len}};
+  },
+  weights(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.TorusGeometry(0.02,0.005,8,16), M(COL.metal,.25,.85), 0,-0.005,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.006,0.006,0.24,8), M(COL.metal,.25,.85), 0,-0.14,0));
+    const discs = []; for (let i = 0; i < 10; i++) { const d = mesh(new THREE.CylinderGeometry(0.065,0.065,0.017,32), M(i%2?COL.ink:0x2E3872,.45,.3), 0,-0.03-0.0095-i*0.019,0); discs.push(d); g.add(d); }
+    return {g, terms:{}, label:V(0.2,-0.12,0), part:{mass:m => { const n = Math.round(m/50); discs.forEach((d,i) => d.visible = i < n); }}};
+  },
+  ruler(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.14,0.03,0.12), M(COL.ink,.5), 0,0.015,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.01,0.01,0.3,8), M(COL.metal,.25,.85), 0,0.16,0));
+    g.add(mesh(new THREE.BoxGeometry(0.07,1.0,0.012), M(COL.white,.6), 0,0.8,-0.004));
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(0.064,1.0), new THREE.MeshBasicMaterial({map:rulerTex()})); face.position.set(0,0.8,0.0025); g.add(face);
+    const mk = new THREE.Mesh(new THREE.BoxGeometry(0.16,0.008,0.02), new THREE.MeshBasicMaterial({color:0xFFB21E})); mk.position.set(0.06,1.25,0.01); g.add(mk);
+    const rest = new THREE.Mesh(new THREE.BoxGeometry(0.1,0.004,0.016), new THREE.MeshBasicMaterial({color:0x3B4CFF})); rest.position.set(0.03,1.25,0.012); g.add(rest);
+    return {g, terms:{}, label:V(0.2,1.05,0), part:{marker:y => { mk.position.y = y; }}};
+  },
+  laser(){
+    const g = new THREE.Group();
+    g.add(mesh(new THREE.BoxGeometry(0.14,0.03,0.12), M(COL.dark,.6), -0.15,0.015,0));
+    g.add(mesh(new THREE.CylinderGeometry(0.012,0.012,0.04,8), M(COL.metal,.25,.85), -0.15,0.045,0));
+    g.add(mesh(new THREE.BoxGeometry(0.3,0.08,0.08), M(COL.ink,.4), -0.15,0.07,0));
+    const lens = new THREE.CylinderGeometry(0.02,0.02,0.02,16); lens.rotateZ(Math.PI/2);
+    g.add(mesh(lens, M(COL.amber,.3,.2,{emissive:0xE0452B,emissiveIntensity:.6}), 0.005,0.07,0));
+    return {g, terms:{}, label:V(-0.15,0.25,0)};
+  },
+  glass(){
+    const g = new THREE.Group();
+    const bm = new THREE.MeshStandardMaterial({color:0xC9CEFF, roughness:.05, metalness:0, transparent:true, opacity:.28, depthWrite:false});
+    const b = new THREE.Mesh(new THREE.BoxGeometry(1.8,0.14,0.8), bm); b.position.y = 0.07; b.receiveShadow = true; g.add(b);
+    const e = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.8,0.14,0.8)), new THREE.LineBasicMaterial({color:0x8B96FF})); e.position.y = 0.07; g.add(e);
+    return {g, terms:{}};
+  },
+  protractor(){
+    const g = new THREE.Group();
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(0.7,0.7), new THREE.MeshBasicMaterial({map:protractorTex(), transparent:true, depthWrite:false})); p.rotation.x = -Math.PI/2; p.position.y = 0.003; g.add(p);
+    return {g, terms:{}, label:V(0.1,0.25,-0.5)};
+  },
+};
+
+function makeBeam(){
+  const g = new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.CylinderGeometry(0.006,0.006,1,8), new THREE.MeshBasicMaterial({color:0xFF3B2F})));
+  g.add(new THREE.Mesh(new THREE.CylinderGeometry(0.022,0.022,1,12), new THREE.MeshBasicMaterial({color:0xFF6A4D, transparent:true, opacity:.28, depthWrite:false, blending:THREE.AdditiveBlending})));
+  g.visible = false; return g;
+}
+const UP = () => V(0,1,0);
+function setSeg(g, a, b){ const d = b.clone().sub(a), len = d.length(); if (len < 1e-4) { g.visible = false; return; } g.visible = true; g.position.copy(a).addScaledVector(d, 0.5); g.quaternion.setFromUnitVectors(UP(), d.normalize()); g.scale.set(1, len, 1); }
+
+class Wire {
+  constructor(points, cur, scene){
+    this.cur = cur;
+    this.curve = new THREE.CatmullRomCurve3(points, false, 'catmullrom', 0.35);
+    this.len = this.curve.getLength();
+    this.geo = new THREE.TubeGeometry(this.curve, Math.max(24, Math.round(this.len*40)), 0.011, 8);
+    this.mesh = new THREE.Mesh(this.geo, M(COL.blue,.4,.1)); this.mesh.castShadow = true; scene.add(this.mesh);
+    this.total = this.geo.index.count; this.grow = 1;
+    this.dots = []; const n = Math.max(3, Math.round(this.len*7));
+    const dm = new THREE.MeshBasicMaterial({color:0xFFB21E});
+    for (let i = 0; i < n; i++) { const d = new THREE.Mesh(new THREE.SphereGeometry(0.016,10,8), dm); d.userData.t = i/n; d.visible = false; scene.add(d); this.dots.push(d); }
+  }
+  setGrow(p){ this.grow = p; this.geo.setDrawRange(0, Math.floor(this.total*Math.max(0,Math.min(1,p))/3)*3); }
+  tick(I, dt){
+    const show = this.grow >= 1 && I > 1e-4, v = 0.12 + Math.min(I,2.5)*0.45;
+    for (const d of this.dots) { d.visible = show; if (!show) continue; d.userData.t = (d.userData.t + dt*v/this.len) % 1; this.curve.getPointAt(d.userData.t, d.position); }
+  }
+}
+
+function sceneColors(){ return isDark() ? {bg:0x10163A, top:0x232B57, leg:0x1B2248, grid:0x3A4478} : {bg:0xE9ECF6, top:0xFFFFFF, leg:0xD5D9E6, grid:0xC9CEE3}; }
+
+function createWorld(id, thumb){
+  const L = LABS[id], scene = new THREE.Scene(), cs = sceneColors();
+  scene.background = new THREE.Color(cs.bg);
+  scene.add(new THREE.HemisphereLight(0xFFFFFF, 0x8890B0, 1.25));
+  const sun = new THREE.DirectionalLight(0xFFFFFF, 2.1); sun.position.set(2.2,4.2,2.6); sun.castShadow = true;
+  sun.shadow.mapSize.set(thumb ? 1024 : 2048, thumb ? 1024 : 2048); Object.assign(sun.shadow.camera, {left:-2.4,right:2.4,top:2.4,bottom:-2.4,near:0.5,far:12}); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+  scene.add(sun); const fill = new THREE.DirectionalLight(0xC9CEFF, 0.55); fill.position.set(-3,2,-2); scene.add(fill);
+  const topM = M(cs.top,.85), legM = M(cs.leg,.7);
+  const top = mesh(new THREE.BoxGeometry(3.2,0.08,2.0), topM, 0,-0.04,0); top.castShadow = false; scene.add(top);
+  [[-1.5,-0.9],[1.5,-0.9],[-1.5,0.9],[1.5,0.9]].forEach(([x,z]) => scene.add(mesh(new THREE.CylinderGeometry(0.05,0.05,0.9,12), legM, x,-0.53,z)));
+  const grid = new THREE.GridHelper(3.0, 30, cs.grid, cs.grid); grid.material.transparent = true; grid.material.opacity = 0.45; grid.position.y = 0.002; grid.scale.z = 1.9/3; scene.add(grid);
+  const camera = new THREE.PerspectiveCamera(36, 1.6, 0.05, 60); camera.position.set(...L.cam.p);
+
+  const w = {id, scene, camera, tools:{}, wires:[], st:{}, clickables:[], themed:{topM,legM,grid}};
+  for (const t of L.tools) {
+    if (t.distractor) continue;
+    const b = BUILD[t.kind](); b.g.visible = false; scene.add(b.g);
+    w.tools[t.key] = {...b, t, placed:false, anim:null, base: t.pos ? V(...t.pos) : V(0,0,0)};
+    if (b.hit) { b.hit.userData.tool = t.key; w.clickables.push(b.hit); }
+  }
+  w.anchor = ref => { const [k,term] = ref.split('.'), T = w.tools[k]; return T.terms[term].clone().add(T.base); };
+  w.point = ref => Array.isArray(ref) ? V(...ref) : w.anchor(ref);
+  w.place = (key, instant) => { const T = w.tools[key]; if (!T || T.placed) return; T.placed = true; T.g.visible = true; T.anim = instant || reduced() ? null : {t0:performance.now()}; };
+  w.buildWires = instant => {
+    (L.junctions||[]).forEach(p => { const j = mesh(new THREE.SphereGeometry(0.022,16,12), M(COL.blue,.4,.1), ...p); scene.add(j); });
+    (L.wires||[]).forEach((wd, i) => {
+      const a = w.point(wd.from), b = w.point(wd.to), pts = [a];
+      if (wd.via) wd.via.forEach(v => pts.push(V(...v)));
+      else { const mid = a.clone().lerp(b, 0.5); mid.y = Math.max(a.y,b.y) + 0.08 + a.distanceTo(b)*0.05; pts.push(mid); }
+      pts.push(b);
+      const wire = new Wire(pts, wd.cur, scene); wire.delay = i*0.12; wire.t0 = performance.now();
+      wire.setGrow(instant || reduced() ? 1 : 0); w.wires.push(wire);
+    });
+  };
+  w.transforms = now => {
+    for (const T of Object.values(w.tools)) {
+      if (!T.placed) continue;
+      T.g.position.copy(T.base);
+      if (T.anim) { const p = Math.min(1, (now - T.anim.t0)/480), e = 1 - Math.pow(1-p, 3); T.g.position.y += (1-e)*0.55; T.g.scale.setScalar(0.55 + 0.45*e); if (p >= 1) { T.anim = null; T.g.scale.setScalar(1); } }
+    }
+    for (const wr of w.wires) if (wr.grow < 1) wr.setGrow(((now - wr.t0)/1000 - wr.delay)/0.55);
+  };
+  w.tickWires = (r, dt) => { for (const wr of w.wires) wr.tick(r.cur[wr.cur] || 0, dt); };
+  w.applyTheme = () => { const c = sceneColors(); scene.background.setHex(c.bg); topM.color.setHex(c.top); legM.color.setHex(c.leg); grid.material.color.setHex(c.grid); };
+  if (id === 'refraction') {
+    const beams = [makeBeam(), makeBeam(), makeBeam()]; beams.forEach(b => scene.add(b));
+    const spot = () => { const s = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(), color:0xFF5A40, blending:THREE.AdditiveBlending, depthWrite:false, transparent:true})); s.scale.set(0.12,0.12,0.12); s.visible = false; scene.add(s); return s; };
+    const s1 = spot(), s2 = spot();
+    const nm = new THREE.LineDashedMaterial({color:0x3B4CFF, dashSize:0.04, gapSize:0.03});
+    const normal = new THREE.Line(new THREE.BufferGeometry().setFromPoints([V(-0.2,0.075,0.85), V(-0.2,0.075,-0.05)]), nm); normal.computeLineDistances(); normal.visible = false; scene.add(normal);
+    const arcA = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({color:0xE09500})); const arcB = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({color:0x3B4CFF}));
+    scene.add(arcA, arcB); let lastA = null;
+    w.refr = (aDeg, bDeg) => {
+      const a = aDeg*Math.PI/180, b = bDeg*Math.PI/180, E = V(-0.2,0.075,0.4), din = V(Math.sin(a),0,-Math.cos(a)), S = E.clone().addScaledVector(din,-1.05);
+      const las = w.tools.laser; las.base.set(S.x, 0, S.z); las.g.rotation.y = Math.atan2(-din.z, din.x);
+      const on = las.placed && !las.anim, gl = w.tools.glass.placed, pr = w.tools.protractor.placed;
+      beams.forEach(bm => bm.visible = false); s1.visible = s2.visible = false;
+      if (on) {
+        setSeg(beams[0], S.clone().setY(0.075), E);
+        if (gl) { const dr = V(Math.sin(b),0,-Math.cos(b)), X = E.clone().addScaledVector(dr, 0.8/Math.cos(b)); setSeg(beams[1], E, X); setSeg(beams[2], X, X.clone().addScaledVector(din, 0.9)); s1.position.copy(E); s2.position.copy(X); s1.visible = s2.visible = true; }
+        else setSeg(beams[1], E, E.clone().addScaledVector(din, 1.7));
+      }
+      normal.visible = arcA.visible = arcB.visible = pr;
+      if (pr && lastA !== aDeg) { lastA = aDeg; const pa = [], pb = [];
+        for (let i = 0; i <= 24; i++) { const s = a*i/24, t = b*i/24; pa.push(V(-0.2 - Math.sin(s)*0.22, 0.078, 0.4 + Math.cos(s)*0.22)); pb.push(V(-0.2 + Math.sin(t)*0.2, 0.078, 0.4 - Math.cos(t)*0.2)); }
+        arcA.geometry.dispose(); arcA.geometry = new THREE.BufferGeometry().setFromPoints(pa); arcB.geometry.dispose(); arcB.geometry = new THREE.BufferGeometry().setFromPoints(pb); }
+    };
+  }
+  w.dispose = () => { scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) { (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m.dispose()); } }); };
+  // anchored tools (hang from the stand) take their base from the anchor
+  for (const t of L.tools) if (t.anchor && w.tools[t.key]) w.tools[t.key].anchorRef = t.anchor;
+  w.syncAnchors = () => { for (const T of Object.values(w.tools)) if (T.anchorRef && T.t.key !== 'weights') T.base.copy(w.anchor(T.anchorRef)); };
+  return w;
+}
+
+async function load3D(){
+  if (THREE || glFailed) return !!THREE;
+  try {
+    THREE = await import('three');
+    ({OrbitControls} = await import('three/addons/controls/OrbitControls.js'));
+    const c = document.createElement('canvas'); if (!(c.getContext('webgl2') || c.getContext('webgl'))) throw new Error('no webgl');
+    return true;
+  } catch (e) { console.warn(e); glFailed = true; THREE = null; return false; }
+}
+
+function makeThumb(r3, id){
+  const L = LABS[id], w = createWorld(id, true);
+  Object.keys(w.tools).forEach(k => w.place(k, true)); w.syncAnchors(); w.buildWires(true);
+  const S0 = {params:Object.fromEntries(L.params.map(p=>[p.id,p.value])), toggles:Object.fromEntries(L.toggles.map(t=>[t.id,true])), ready:true};
+  const r = L.compute(S0.params, S0.toggles, true);
+  for (let i = 0; i < 30; i++) L.update3d(w, r, S0, i ? 0.03 : 0);
+  w.st.phase = 1.1; L.update3d(w, r, S0, 0);
+  w.transforms(performance.now()); w.tickWires(r, 0.5);
+  w.camera.aspect = 1.6; w.camera.lookAt(...L.cam.t); w.camera.updateProjectionMatrix();
+  r3.render(w.scene, w.camera); const url = r3.domElement.toDataURL('image/jpeg', 0.86); w.dispose(); return url;
+}
+async function genThumbs(){
+  if (!(await load3D())) return;
+  let r3;
+  try { r3 = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true}); } catch (_) { return; }
+  r3.setSize(560, 350, false); r3.setPixelRatio(1); r3.shadowMap.enabled = true; r3.shadowMap.type = THREE.PCFSoftShadowMap; r3.toneMapping = THREE.ACESFilmicToneMapping; r3.outputColorSpace = THREE.SRGBColorSpace;
+  for (const id of ORDER) { try { thumbs[id] = makeThumb(r3, id); } catch (e) { console.warn(e); } await new Promise(r => setTimeout(r, 30)); }
+  r3.dispose(); r3.forceContextLoss?.(); renderCards();
+}
+
+/* ================= lab session ================= */
+let S = null;
+const stage = $('stage'), canvas = $('gl');
+function initRenderer(){
+  if (renderer || !THREE) return !!renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75)); renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace;
+    new ResizeObserver(resize).observe(stage);
+    let down = null;
+    canvas.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+    canvas.addEventListener('pointerup', e => { if (!down || !W) return; const moved = Math.hypot(e.clientX-down[0], e.clientY-down[1]); down = null; if (moved > 6) return; pick3d(e); });
+    return true;
+  } catch (e) { console.warn(e); glFailed = true; return false; }
+}
+function fitFov(a){ const base = 36, design = 1.6; if (a >= design) return base; const h = Math.tan(base*Math.PI/360)*design; return Math.min(70, 2*Math.atan(h/a)*180/Math.PI); }
+function resize(){ if (!renderer || !W) return; const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); W.camera.aspect = w/h; W.camera.fov = fitFov(w/h); W.camera.updateProjectionMatrix(); }
+function pick3d(e){
+  const r = canvas.getBoundingClientRect(), ray = new THREE.Raycaster();
+  ray.setFromCamera(new THREE.Vector2(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1), W.camera);
+  const hit = ray.intersectObjects(W.clickables.filter(o => W.tools[o.userData.tool].placed), false)[0];
+  if (hit) { const tg = LABS[S.id].toggles.find(t => t.tool === hit.object.userData.tool); if (tg) toggle(tg.id); }
+}
+
+function openLab(id){
+  const L = LABS[id];
+  S = {id, placed:new Set(), wrong:new Set(), params:Object.fromEntries(L.params.map(p=>[p.id,p.value])), toggles:Object.fromEntries(L.toggles.map(t=>[t.id,t.value])),
+       ready:false, rows:[], mistakes:0, hints:0, hintIdx:0, start:performance.now(), solved:false, lastCheck:null};
+  $('hub').hidden = true; $('lab').hidden = false; $('main').classList.add('labmode'); $('back').hidden = false; $('crumb').textContent = L.title + ' · 3D laboratoriya';
+  document.title = L.title + ' · Empira';
+  $('lab-title').textContent = L.title; $('task').textContent = L.task;
+  const need = L.tools.filter(t=>!t.distractor).length;
+  $('tools-note').textContent = `Kutubxonadagi 24 ta asbobdan ${L.tools.length} tasi tanlandi. Bittasi ortiqcha: uni stolga qo'yma!`;
+  renderTools(); renderControls(); renderTable(); $('chat').innerHTML = '';
+  say(`Salom! Bugun: ${L.title}. Avval kerakli ${need} ta asbobni stolga qo'y. Asbob ustiga bos.`);
+  updateUI();
+  if (W) { W.dispose(); W = null; }
+  $('nogl').hidden = true;
+  load3D().then(ok => {
+    if (!S || S.id !== id) return;
+    if (!ok || !initRenderer()) { $('nogl').hidden = false; return; }
+    W = createWorld(id, false);
+    controls?.dispose(); controls = new OrbitControls(W.camera, canvas);
+    Object.assign(controls, {enableDamping:true, dampingFactor:0.08, enablePan:false, minDistance:1.6, maxDistance:7, maxPolarAngle:1.48, minPolarAngle:0.05});
+    resetCam(true); resize(); buildLabels(); lastT = performance.now();
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
+  });
+}
+function closeLab(){
+  cancelAnimationFrame(raf); raf = 0; if (W) { W.dispose(); W = null; } S = null;
+  $('lab').hidden = true; $('hub').hidden = false; $('main').classList.remove('labmode'); $('back').hidden = true; $('crumb').textContent = '3D laboratoriya'; document.title = 'Empira 3D Laboratoriya';
+  $('labels').innerHTML = ''; renderCards();
+}
+
+function renderTools(){
+  const L = LABS[S.id];
+  $('tools').innerHTML = L.tools.map(t => {
+    const placed = S.placed.has(t.key), wrong = S.wrong.has(t.key), spotted = t.distractor && S.ready && !wrong;
+    const st = placed ? 'Stolda' : wrong ? 'Kerak emas' : spotted ? "Ortiqcha ✓" : "Stolga qo'yish";
+    return `<button class="tool ${placed?'placed':''} ${wrong?'wrong':''} ${spotted?'spotted':''}" type="button" data-k="${t.key}" ${placed||wrong||spotted?'disabled':''}>
+      <span class="ico">${ICON[t.kind]}</span><span class="tx"><span class="top"><b>${t.name||TOOLNAME[t.kind]}</b><span class="st">${st}</span></span><small>${t.why}</small></span></button>`;
+  }).join('');
+  $('place-all').disabled = S.ready;
+}
+$('tools').addEventListener('click', e => { const b = e.target.closest('.tool'); if (b && !b.disabled) placeTool(b.dataset.k); });
+$('place-all').addEventListener('click', () => { const L = LABS[S.id]; L.tools.filter(t=>!t.distractor).forEach((t,i) => { const sid = S.id; setTimeout(() => { if (S && S.id === sid) placeTool(t.key, true); }, reduced() ? 0 : i*220); }); });
+
+function placeTool(key, quiet){
+  if (!S) return;
+  const L = LABS[S.id], t = L.tools.find(x => x.key === key);
+  if (!t || S.placed.has(key) || S.wrong.has(key)) return;
+  if (t.distractor) { S.wrong.add(key); S.mistakes++; say(t.wrongMsg, 'warn'); toast("Bu asbob kerak emas"); renderTools(); return; }
+  const miss = (t.needs||[]).filter(k => !S.placed.has(k));
+  if (miss.length) { const nm = miss.map(k => { const x = L.tools.find(y=>y.key===k); return x.name||TOOLNAME[x.kind]; }).join(', '); say(`Avval ${nm} ni qo'y: ${t.name||TOOLNAME[t.kind]} unga osiladi.`); toast(`Avval: ${nm}`); return; }
+  S.placed.add(key); W?.place(key); W?.syncAnchors();
+  const need = L.tools.filter(x=>!x.distractor);
+  if (need.every(x => S.placed.has(x.key))) {
+    S.ready = true; S.readyAt = performance.now();
+    const sid = S.id; setTimeout(() => { if (!S || S.id !== sid) return; W?.buildWires(false); }, reduced() ? 0 : 450);
+    const dis = L.tools.find(x=>x.distractor);
+    say(L.readyMsg, 'ok');
+    if (dis && !S.wrong.has(dis.key)) say(`Zo'r: ${dis.name||TOOLNAME[dis.kind]} ni stolga qo'ymading. U bu tajribada haqiqatan kerak emas.`, 'ok');
+  } else if (!quiet) {
+    const left = need.filter(x => !S.placed.has(x.key)).length;
+    if (left) toast(`${t.name||TOOLNAME[t.kind]} stolda. Yana ${left} ta asbob qoldi`);
+  }
+  renderTools(); renderControls(); updateUI();
+}
+
+function renderControls(){
+  const L = LABS[S.id], dis = S.ready ? '' : 'disabled';
+  $('ctl-note').textContent = S.ready ? '' : 'asboblar joylangach';
+  $('controls').innerHTML = L.params.map(p => `<div class="ctl"><label for="p-${p.id}"><span>${p.label}</span><b id="pv-${p.id}">${fmt(S.params[p.id],p.d)} ${p.unit}</b></label><input type="range" id="p-${p.id}" data-p="${p.id}" min="${p.min}" max="${p.max}" step="${p.step}" value="${S.params[p.id]}" ${dis}></div>`).join('')
+    + L.toggles.map(t => `<button class="toggle" type="button" role="switch" id="t-${t.id}" data-t="${t.id}" aria-checked="${S.toggles[t.id]}" ${dis}><span>${t.label}: <b>${S.toggles[t.id]?'yopiq':'ochiq'}</b></span><span class="sw"></span></button>`).join('');
+}
+$('controls').addEventListener('input', e => { const id = e.target.dataset.p; if (!id) return; const p = LABS[S.id].params.find(x=>x.id===id); S.params[id] = Number(e.target.value); $('pv-'+id).textContent = fmt(S.params[id],p.d)+' '+p.unit; updateUI(); });
+$('controls').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b && !b.disabled) toggle(b.dataset.t); });
+function toggle(id){
+  if (!S || !S.ready) { toast("Avval barcha asboblarni joylang"); return; }
+  const L = LABS[S.id]; S.toggles[id] = !S.toggles[id];
+  const b = $('t-'+id); if (b) { b.setAttribute('aria-checked', S.toggles[id]); b.querySelector('b').textContent = S.toggles[id] ? 'yopiq' : 'ochiq'; }
+  const r = L.compute(S.params, S.toggles, S.ready); if (L.onToggle) say(L.onToggle(S, r)); updateUI();
+}
+
+function res(){ const L = LABS[S.id]; return L.compute(S.params, S.toggles, S.ready); }
+function updateUI(){
+  if (!S) return;
+  const r = res();
+  $('readouts').innerHTML = r.readouts.map(([k,v,hot]) => `<div class="ro ${hot?'hot':''}">${k} <b>${S.ready ? v : '—'}</b></div>`).join('');
+  const step = S.solved ? 3 : S.rows.length ? 2 : S.ready ? 1 : 0;
+  [...$('steps').children].forEach((li,i) => { li.className = i === step ? 'on' : i < step ? 'done' : ''; });
+  $('record').disabled = !S.ready; $('check').disabled = !S.ready;
+}
+function renderTable(){
+  const L = LABS[S.id];
+  $('thead').innerHTML = `<tr><th>№</th>${L.cols.map(c=>`<th>${c}</th>`).join('')}</tr>`;
+  $('tbody').innerHTML = S.rows.length ? S.rows.map((r,i) => `<tr><td>${i+1}</td>${r.cells.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('') : `<tr><td class="empty" colspan="${L.cols.length+1}">Hali o'lchov yo'q. Parametrni o'rnat va "O'lchovni yozish" ni bos.</td></tr>`;
+  $('rows-note').textContent = S.rows.length ? `${S.rows.length} / 6` : '';
+}
+$('record').addEventListener('click', () => {
+  const L = LABS[S.id], row = L.record(S.params, S.toggles, res());
+  if (row.err) { S.mistakes++; say(row.err, 'warn'); return; }
+  if (S.rows.some(r => r.key === row.key)) { toast("Bu o'lchov allaqachon yozilgan"); return; }
+  if (S.rows.length >= 6) S.rows.shift();
+  S.rows.push(row); renderTable(); updateUI();
+  if (S.rows.length === 1) say("Yaxshi! Endi parametrni o'zgartirib, yana bitta o'lchov yoz. Keyin \"Tekshirish\" ni bos.");
+  else toast("O'lchov yozildi");
+});
+$('check').addEventListener('click', () => {
+  const L = LABS[S.id], c = L.check(S.rows);
+  if (!c.ok) { say(c.msg, 'warn'); return; }
+  const first = !S.solved; S.solved = true; S.lastCheck = c; updateUI();
+  say(c.msg, 'ok');
+  if (first) { addPoints(S.mistakes ? 50 : 60); const d = JSON.parse(store.get('empira-done')||'[]'); if (!d.includes(S.id)) { d.push(S.id); store.set('empira-done', JSON.stringify(d)); } }
+  showReport(c);
+});
+$('hint').addEventListener('click', () => {
+  const L = LABS[S.id];
+  if (S.hintIdx >= L.hints.length) { say("Barcha maslahatlar berildi. Topshiriqni yana bir bor o'qi."); return; }
+  say("Maslahat bering", 'me'); S.hints++; say(L.hints[S.hintIdx++]);
+});
+function say(text, kind){ const d = document.createElement('div'); d.className = 'msg ' + (kind||''); d.textContent = text; $('chat').appendChild(d); $('chat').scrollTop = $('chat').scrollHeight; }
+
+function showReport(c){
+  const L = LABS[S.id], sec = Math.round((performance.now() - S.start)/1000), mm = String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+  $('m-concl').textContent = c.msg;
+  $('m-stats').innerHTML = [['Vaqt',mm],['Xatolar',S.mistakes],['Maslahatlar',S.hints],["O'lchovlar",S.rows.length]].map(([k,v]) => `<div class="stat"><small>${k}</small><b>${v}</b></div>`).join('');
+  const wrong = [...S.wrong].map(k => { const t = L.tools.find(x=>x.key===k); return t.name||TOOLNAME[t.kind]; });
+  $('m-sum').textContent = `Aziz "${L.title}" laboratoriyasini ${mm} da bajardi. ` +
+    (wrong.length ? `Asbob tanlashda xato qildi (${wrong.join(', ')}), lekin to'g'ri asboblar bilan davom etdi. ` : "Kerakli asboblarni to'g'ri tanladi va ortiqcha asbobni aniqladi. ") +
+    (S.hints ? `${S.hints} ta maslahatdan foydalandi. ` : "Maslahatsiz ishladi. ") +
+    `${S.rows.length} ta o'lchov qilib, ${c.law} qonuniyatini o'zi topdi.`;
+  $('modal').hidden = false; $('m-stay').focus();
+}
+$('m-stay').addEventListener('click', () => { $('modal').hidden = true; });
+$('m-hub').addEventListener('click', () => { $('modal').hidden = true; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('modal').hidden) $('modal').hidden = true; });
+
+let points = 1240;
+function addPoints(n){ points += n; $('pts').textContent = pts(points); toast(`+${n} ball!`); }
+let tt; function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2200); }
+
+/* labels that follow 3D objects */
+let LBL = [];
+function buildLabels(){
+  const L = LABS[S.id]; $('labels').innerHTML = ''; LBL = [];
+  for (const [key, T] of Object.entries(W.tools)) {
+    if (!T.label) continue; const el = document.createElement('div'); el.className = 'tag3d'; el.hidden = true; $('labels').appendChild(el); LBL.push({key, el});
+  }
+}
+const tmpV = () => new THREE.Vector3();
+function placeLabels(r){
+  const w = stage.clientWidth, h = stage.clientHeight;
+  for (const l of LBL) {
+    const T = W.tools[l.key], txt = r.labels[l.key];
+    if (!T.placed || T.anim || !txt || !S.ready) { l.el.hidden = true; continue; }
+    const p = tmpV().copy(T.label).add(T.g.position); if (l.key === 'bob') { p.copy(T.base).add(V(0.22,-(0.25+S.params.L*0.62)*0.55,0)); }
+    p.project(W.camera);
+    if (p.z > 1) { l.el.hidden = true; continue; }
+    l.el.hidden = false; l.el.textContent = txt; l.el.style.transform = `translate(${(p.x*0.5+0.5)*w}px, ${(-p.y*0.5+0.5)*h}px) translate(-50%,-100%)`;
+  }
+}
+
+function resetCam(instant){ if (!W) return; const L = LABS[S.id]; $('cam-top').setAttribute('aria-pressed','false'); tweenCam(V(...L.cam.p), V(...L.cam.t), instant); }
+function tweenCam(p, t, instant){
+  if (instant || reduced()) { W.camera.position.copy(p); controls.target.copy(t); controls.update(); camTween = null; return; }
+  camTween = {p0:W.camera.position.clone(), t0:controls.target.clone(), p, t, s:performance.now()};
+}
+$('cam-reset').addEventListener('click', () => resetCam(false));
+$('cam-top').addEventListener('click', () => { if (!W) return; const b = $('cam-top'), on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(on)); const t = V(...LABS[S.id].cam.t); if (on) tweenCam(V(t.x, t.y + 3.6, t.z + 0.02), t); else resetCam(false); });
+$('restart').addEventListener('click', () => { if (S) openLab(S.id); });
+
+function frame(now){
+  raf = requestAnimationFrame(frame);
+  if (!W || !S || document.hidden) { lastT = now; return; }
+  const dt = Math.min(0.05, (now - lastT)/1000); lastT = now;
+  if (camTween) { const p = Math.min(1, (now - camTween.s)/600), e = p<.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2; W.camera.position.lerpVectors(camTween.p0, camTween.p, e); controls.target.lerpVectors(camTween.t0, camTween.t, e); if (p >= 1) camTween = null; }
+  controls.update();
+  const L = LABS[S.id], r = res();
+  W.syncAnchors(); L.update3d(W, r, S, dt); W.transforms(now); W.tickWires(r, dt);
+  renderer.render(W.scene, W.camera); placeLabels(r);
+}
+
+/* ================= routing + theme ================= */
+function route(){
+  const h = location.hash.replace('#','');
+  if (LABS[h]) openLab(h); else if (S) closeLab();
+}
+window.addEventListener('hashchange', route);
+$('back').addEventListener('click', () => { location.hash = 'top'; });
+const applyTheme = () => { if (W) W.applyTheme(); };
+$('theme').addEventListener('click', () => { const r = document.documentElement; r.setAttribute('data-theme', isDark() ? 'light' : 'dark'); store.set('empira-3d-theme', r.getAttribute('data-theme')); applyTheme(); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+{ const t = store.get('empira-3d-theme'); if (t) document.documentElement.setAttribute('data-theme', t); }
+
+renderGrades(); renderCards(); route();
+genThumbs();
+</script>
+
+
+<script>
+window.EMPIRA_CLONE = {
+  mode: 'student', student: 'Aziz', api: '../api/clone',
+  context: () => { const lab = document.getElementById('lab'); return lab && !lab.hidden ? { id: location.hash.slice(1), lab: document.getElementById('lab-title').textContent } : {}; }
+};
+</script>
+<script src="../assets/clone-widget.js" defer></script>
+<style>body:has(.modal:not([hidden])) .ecw{display:none}.panel.right::after{content:"";display:block;height:76px;flex:none}</style>
+</body>
+</html>
