@@ -67,21 +67,21 @@ img,svg{display:block;max-width:100%}
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
 .hero::before{content:"";position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:27px 27px;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);opacity:.9}
 .hero .wrap{position:relative;z-index:1}
-.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center;padding:62px 0 72px}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center;padding:38px 0 46px}
 .badge{display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 14px 0 11px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-size:13.5px;color:var(--ink2);font-weight:500;box-shadow:var(--shadow)}
 .badge .cup{width:15px;height:15px;color:var(--amber)}
 h1{font-size:clamp(38px,5.1vw,62px);font-weight:800}
-.hero-sub{margin-top:22px;font-size:19px;color:var(--ink2);max-width:33ch}
-.hero-cta{display:flex;gap:13px;margin-top:30px;flex-wrap:wrap}
+.hero-sub{margin-top:15px;font-size:18px;color:var(--ink2);max-width:33ch}
+.hero-cta{display:flex;gap:13px;margin-top:22px;flex-wrap:wrap}
 .hero-meta{display:flex;align-items:center;gap:16px;margin-top:26px;font-size:14.5px;color:var(--ink3);flex-wrap:wrap}
 .hero-meta span{display:inline-flex;align-items:center}
 .hero-meta span+span{padding-left:16px;border-left:1px solid var(--line)}
 .hero-meta b{color:var(--ink);font-weight:600}
-.hero-stats{display:flex;gap:30px;margin-top:30px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:30px;margin-top:20px;flex-wrap:wrap}
 .hs{display:flex;flex-direction:column}
 .hs .hv{font-family:var(--sora);font-weight:800;font-size:34px;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
 .hs .hk{font-size:13.5px;color:var(--ink3);margin-top:6px}
-@media (max-width:760px){.hero-stats{gap:22px}.hs .hv{font-size:28px}}
+@media (max-width:760px){.hero-stats{gap:18px 26px;margin-top:18px}.hs .hv{font-size:26px}.hs .hk{font-size:12.5px}}
 
 /* hero 3D lab */
 .hero-lab{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lab);overflow:hidden}
@@ -246,7 +246,7 @@ section{position:relative}
 
 /* ---------- responsive ---------- */
 @media (max-width:920px){
-  .hero-grid{grid-template-columns:1fr;gap:38px;padding:44px 0 56px}
+  .hero-grid{grid-template-columns:1fr;gap:26px;padding:24px 0 34px}
   .hero-sub{max-width:46ch}
   .split{grid-template-columns:1fr;gap:30px}
   .lab-grid{grid-template-columns:1fr}
@@ -695,13 +695,21 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", liveUrl: 
     animate(document.getElementById('hs-labs'), LABS);
   }
   function go(){
-    var d={students:0,teachers:0};
+    var d={students:0,teachers:0}, fired=false;
+    var el=document.getElementById('hero-stats');
+    function run(){ if(fired)return; fired=true; render(d); }
+    function arm(){
+      if('IntersectionObserver' in window && el){
+        var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ run(); io.disconnect(); } }); }, {threshold:0.4});
+        io.observe(el);
+      } else { run(); }
+    }
     try{
       if(window.supabase){
         var sb=window.supabase.createClient(SB_URL,SB_KEY);
-        sb.rpc('public_stats').then(function(r){ if(r&&r.data){ d.students=r.data.students||0; d.teachers=r.data.teachers||0; } render(d); }).catch(function(){ render(d); });
-      } else { render(d); }
-    }catch(e){ render(d); }
+        sb.rpc('public_stats').then(function(r){ if(r&&r.data){ d.students=r.data.students||0; d.teachers=r.data.teachers||0; } arm(); }).catch(arm);
+      } else { arm(); }
+    }catch(e){ arm(); }
   }
   if(document.readyState!=='loading') go(); else document.addEventListener('DOMContentLoaded', go);
 })();
