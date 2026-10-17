@@ -77,6 +77,11 @@ h1{font-size:clamp(38px,5.1vw,62px);font-weight:800}
 .hero-meta span{display:inline-flex;align-items:center}
 .hero-meta span+span{padding-left:16px;border-left:1px solid var(--line)}
 .hero-meta b{color:var(--ink);font-weight:600}
+.hero-stats{display:flex;gap:30px;margin-top:30px;flex-wrap:wrap}
+.hs{display:flex;flex-direction:column}
+.hs .hv{font-family:var(--sora);font-weight:800;font-size:34px;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.hs .hk{font-size:13.5px;color:var(--ink3);margin-top:6px}
+@media (max-width:760px){.hero-stats{gap:22px}.hs .hv{font-size:28px}}
 
 /* hero 3D lab */
 .hero-lab{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lab);overflow:hidden}
@@ -279,8 +284,7 @@ section{position:relative}
       <a href="#nega">Nega Empira</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-ghost btn-sm" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Kirish</a>
-      <a class="btn btn-blue btn-sm" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Ro‘yxatdan o‘tish</a>
+      <a class="btn btn-blue btn-sm" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
       <button class="menu-btn" aria-label="Menyu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
@@ -290,8 +294,7 @@ section{position:relative}
       <a href="#oqituvchi">O‘qituvchiga</a>
       <a href="#oquvchi">O‘quvchiga</a>
       <a href="#nega">Nega Empira</a>
-      <a class="btn btn-ghost" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Kirish</a>
-      <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Ro‘yxatdan o‘tish</a>
+      <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
     </nav>
   </div>
 </header>
@@ -303,17 +306,20 @@ section{position:relative}
     <div class="wrap">
       <div class="hero-grid">
         <div class="hero-copy">
-          <span class="badge"><svg class="cup" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v2h3v3a4 4 0 0 1-4 4h-.3A6 6 0 0 1 13 16.9V19h3v2H8v-2h3v-2.1A6 6 0 0 1 7.3 12H7a4 4 0 0 1-4-4V5h3V3Zm0 4H5v1a2 2 0 0 0 1 1.7V7Zm12 0v2.7A2 2 0 0 0 19 8V7h-1Z"/></svg>Milliy sun’iy intellekt xakatoni, Namangan bosqichi g‘olibi</span>
+          <span class="badge">O‘zbek maktablari uchun · Bepul · Brauzerda</span>
           <h1>Har bir tajriba qog‘ozdan chiqib, o‘quvchining qo‘liga ko‘chadi.</h1>
           <p class="hero-sub">Empira — O‘zbek maktablari uchun 3D virtual laboratoriya. Fizika, kimyo, biologiya: o‘quvchi har bir tajribani o‘zi yig‘adi, o‘lchaydi va natijani ko‘radi. Na asbob, na alohida xona kerak.</p>
           <div class="hero-cta">
             <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
             <a class="btn btn-ghost" href="#qanday">Qanday ishlaydi</a>
           </div>
-          <div class="hero-meta">
-            <span><b>Fizikadan 88</b>&nbsp;ta tajriba tayyor</span>
-            <span>Kimyo, biologiya&nbsp;<b>yo‘lda</b></span>
-            <span>Ro‘yxatdan o‘tishsiz</span>
+          <div class="hero-stats" id="hero-stats">
+            <div class="hs"><span class="hv" id="hs-students">0</span><span class="hk">o‘quvchi</span></div>
+            <div class="hs"><span class="hv" id="hs-teachers">0</span><span class="hk">o‘qituvchi</span></div>
+            <div class="hs"><span class="hv" id="hs-topics">0</span><span class="hk">mavzu</span></div>
+            <div class="hs"><span class="hv" id="hs-labs">0</span><span class="hk">laboratoriya</span></div>
+          </div>
+          <div class="hero-meta" hidden>
           </div>
         </div>
 
@@ -563,7 +569,7 @@ section{position:relative}
 
 <footer class="site-footer">
   <div class="wrap footer-in">
-    <div class="footer-brand"><img src="./assets/full-logo-dark.svg" alt="Empira"><span>© 2026 Empira. Milliy sun’iy intellekt xakatoni g‘olibi, Namangan bosqichi.</span></div>
+    <div class="footer-brand"><img src="./assets/full-logo-dark.svg" alt="Empira"><span>© 2026 Empira. O‘zbek maktablari uchun 3D virtual laboratoriya.</span></div>
     <nav class="footer-nav" aria-label="Pastki menyu">
       <a href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Laboratoriya</a>
       <a href="teacher/index.html">O‘qituvchi paneli</a>
@@ -671,6 +677,33 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", liveUrl: 
   const tgUrl=EMPIRA.telegramUsername?'https://t.me/'+EMPIRA.telegramUsername:'';
   document.querySelectorAll('[data-telegram-link]').forEach(a=>{if(tgUrl)a.href=tgUrl;else a.remove();});
   document.querySelectorAll('[data-email-link]').forEach(a=>{if(EMPIRA.email)a.href='mailto:'+EMPIRA.email;else a.remove();});
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  var SB_URL="https://bxxpukjszidkcbuewbcf.supabase.co", SB_KEY="sb_publishable_OxQzGLAdRWcCX06JnzEN7A_cRrRyMBM";
+  var TOPICS=12, LABS=88; // platformadagi mavzu va laboratoriya soni
+  function animate(el,to){ if(!el) return; var dur=1500,t0=null;
+    function step(now){ if(!t0)t0=now; var p=Math.min((now-t0)/dur,1); var e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(e*to).toLocaleString('en-US').replace(/,/g,' '); if(p<1)requestAnimationFrame(step); }
+    requestAnimationFrame(step); }
+  function render(d){
+    animate(document.getElementById('hs-students'), d.students||0);
+    animate(document.getElementById('hs-teachers'), d.teachers||0);
+    animate(document.getElementById('hs-topics'), TOPICS);
+    animate(document.getElementById('hs-labs'), LABS);
+  }
+  function go(){
+    var d={students:0,teachers:0};
+    try{
+      if(window.supabase){
+        var sb=window.supabase.createClient(SB_URL,SB_KEY);
+        sb.rpc('public_stats').then(function(r){ if(r&&r.data){ d.students=r.data.students||0; d.teachers=r.data.teachers||0; } render(d); }).catch(function(){ render(d); });
+      } else { render(d); }
+    }catch(e){ render(d); }
+  }
+  if(document.readyState!=='loading') go(); else document.addEventListener('DOMContentLoaded', go);
 })();
 </script>
 </body>
