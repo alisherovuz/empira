@@ -20,34 +20,40 @@
   --paper:#F6F7FB; --white:#FFFFFF; --ink:#0B1026; --ink2:#3A4166; --ink3:#5A6285;
   --blue:#3B4CFF; --blue-700:#2A38D6; --blue-050:#EEF0FF; --blue-300:#8B96FF;
   --amber:#FFB21E; --line:#D9DCE8; --mist:#EEF0F5;
-  --grid:#E4E7F3;
+  --grid:#E4E7F3; --grid-strong:#D2D7EC;
   --shadow:0 1px 2px rgba(11,16,38,.04),0 10px 30px rgba(11,16,38,.06);
   --shadow-lab:0 2px 4px rgba(11,16,38,.05),0 22px 60px rgba(11,16,38,.12);
+  --r:14px;
   --sora:'Sora',system-ui,sans-serif;
   --body:'Instrument Sans',system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 h1,h2,h3{font-family:var(--sora);margin:0;letter-spacing:-.02em;line-height:1.08}
 p{margin:0}
 a{color:inherit}
 img,svg{display:block;max-width:100%}
 .wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 24px}
 
+/* katak (squared-paper) motif */
+.katak{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:27px 27px}
+
 /* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:52px;padding:0 24px;border-radius:12px;font-family:var(--sora);font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:transform .12s ease,background .15s ease,border-color .15s ease;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:52px;padding:0 24px;border-radius:12px;font-family:var(--sora);font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:transform .12s ease,background .15s ease,border-color .15s ease,box-shadow .15s ease;white-space:nowrap}
 .btn:active{transform:translateY(1px)}
 .btn-blue{background:var(--blue);color:#fff;box-shadow:0 1px 1px rgba(11,16,38,.12),0 10px 22px rgba(59,76,255,.26)}
 .btn-blue:hover{background:var(--blue-700)}
 .btn-ghost{background:var(--white);color:var(--ink);border-color:var(--line)}
 .btn-ghost:hover{border-color:var(--ink3)}
+.btn-ghost-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-ghost-light:hover{border-color:rgba(255,255,255,.7)}
 .btn-sm{height:44px;padding:0 18px;font-size:15px}
 
 /* ---------- header ---------- */
-.site-header{position:sticky;top:0;z-index:40;background:rgba(246,247,251,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.site-header{position:sticky;top:0;z-index:40;background:rgba(246,247,251,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .header-in{display:flex;align-items:center;justify-content:space-between;height:68px}
-.brand{display:flex;align-items:center;text-decoration:none}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{height:26px;width:auto}
 .nav{display:flex;align-items:center;gap:30px}
 .nav a{font-size:15.5px;color:var(--ink2);text-decoration:none;font-weight:500}
@@ -58,101 +64,173 @@ img,svg{display:block;max-width:100%}
 #mobile-menu{display:none}
 
 /* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:27px 27px;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 40%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 40%,transparent 100%)}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:27px 27px;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);opacity:.9}
 .hero .wrap{position:relative;z-index:1}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:end;padding:64px 0 32px}
-h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
-.hero-sub{font-size:18px;color:var(--ink2);max-width:42ch}
-.hero-cta{display:flex;gap:13px;margin-top:24px;flex-wrap:wrap}
-.subjects{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.subj{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--white);font-size:14px;color:var(--ink3)}
-.subj b{font-family:var(--sora);font-weight:600;color:var(--ink)}
-.subj.live{border-color:rgba(59,76,255,.35)}
-.subj .dot{width:7px;height:7px;border-radius:50%;background:#1E9E6A}
-.subj.soon .dot{background:var(--line)}
-.hero-stats{display:flex;gap:34px;margin-top:28px;padding:24px 0 8px;border-top:1px solid var(--line);flex-wrap:wrap}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center;padding:38px 0 46px}
+.badge{display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 14px 0 11px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-size:13.5px;color:var(--ink2);font-weight:500;box-shadow:var(--shadow)}
+.badge .cup{width:15px;height:15px;color:var(--amber)}
+h1{font-size:clamp(38px,5.1vw,62px);font-weight:800}
+.hero-sub{margin-top:15px;font-size:18px;color:var(--ink2);max-width:33ch}
+.hero-cta{display:flex;gap:13px;margin-top:22px;flex-wrap:wrap}
+.hero-meta{display:flex;align-items:center;gap:16px;margin-top:26px;font-size:14.5px;color:var(--ink3);flex-wrap:wrap}
+.hero-meta span{display:inline-flex;align-items:center}
+.hero-meta span+span{padding-left:16px;border-left:1px solid var(--line)}
+.hero-meta b{color:var(--ink);font-weight:600}
+.hero-stats{display:flex;gap:30px;margin-top:20px;flex-wrap:wrap}
 .hs{display:flex;flex-direction:column}
-.hs .hv{font-family:var(--sora);font-weight:800;font-size:32px;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.hs .hv{font-family:var(--sora);font-weight:800;font-size:34px;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
 .hs .hk{font-size:13.5px;color:var(--ink3);margin-top:6px}
+@media (max-width:760px){.hero-stats{gap:18px 26px;margin-top:18px}.hs .hv{font-size:26px}.hs .hk{font-size:12.5px}}
+
+/* hero 3D lab */
+.hero-lab{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lab);overflow:hidden}
+.hero-lab-head{display:flex;align-items:center;justify-content:space-between;gap:12px;height:48px;padding:0 18px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink3)}
+.hero-lab-head strong{font-weight:500;color:var(--ink)}
+.hero-scene{position:relative;height:clamp(300px,33vw,392px);background:var(--paper)}
+.hero-scene iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.hero-scene #hero-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:1;transition:opacity .4s ease;pointer-events:none}
+.hero-scene.live #hero-poster{opacity:0}
+.hero-pills{position:absolute;inset:16px 16px auto 16px;display:flex;gap:8px;z-index:3;pointer-events:none;flex-wrap:wrap;opacity:0;transition:opacity .4s ease}
+.hero-scene.live .hero-pills{opacity:1}
+@media (prefers-reduced-motion:reduce){.hero-scene #hero-poster,.hero-pills{transition:none}}
+
+/* ---------- subjects band ---------- */
+.subjects{border-bottom:1px solid var(--line);background:var(--white)}
+.subjects .wrap{display:flex;align-items:center;gap:12px;padding:16px 24px;flex-wrap:wrap}
+.subjects .lbl{font-size:14px;color:var(--ink3);margin-right:2px}
+.subj{display:inline-flex;align-items:center;gap:9px;padding:8px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.subj svg{width:19px;height:19px;color:var(--ink3)}
+.subj b{font-family:var(--sora);font-weight:600;font-size:15px}
+.subj .st{font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:999px}
+.subj .st.on{color:#13855A;background:rgba(30,158,106,.12)}
+.subj .st.soon{color:var(--ink3);background:var(--mist)}
+.subj.live{border-color:rgba(59,76,255,.35);background:#fff}
+.subj.live svg{color:var(--blue)}
 
 /* ---------- section scaffolding ---------- */
+section{position:relative}
 .block{padding:76px 0}
 .rule{border:0;border-top:1px solid var(--line);margin:0}
-.kicker{display:inline-block;font-family:var(--sora);font-weight:600;font-size:14px;color:var(--blue);margin-bottom:14px}
-.h2{font-size:clamp(28px,3.4vw,40px);font-weight:700;max-width:20ch}
-.lead-p{margin-top:16px;font-size:18px;color:var(--ink2);max-width:58ch}
+.kicker{display:inline-block;font-family:var(--sora);font-weight:600;font-size:14px;color:var(--blue);margin-bottom:16px}
+.kicker .sec{color:var(--blue-300);margin-right:6px;font-weight:700}
+.h2{font-size:clamp(28px,3.4vw,40px);font-weight:700;max-width:18ch}
+.lead-p{margin-top:16px;font-size:18px;color:var(--ink2);max-width:60ch}
 
 /* ---------- live lab ---------- */
-#sinab{padding-top:48px}
-.tabs{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:12px;background:#fff;margin:24px 0 16px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.lab-head{display:flex;flex-direction:column}
+.tabs{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:12px;background:#fff;margin:22px 0 16px;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{appearance:none;border:0;background:transparent;font-family:var(--sora);font-weight:600;font-size:14.5px;color:var(--ink3);padding:9px 16px;border-radius:9px;cursor:pointer;white-space:nowrap}
 .tab[aria-selected="true"]{background:var(--ink);color:#fff}
-.lab-grid{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:stretch}
-.scene-card{position:relative;border:1px solid var(--line);border-radius:22px;background:#fff;overflow:hidden;box-shadow:var(--shadow-lab);display:flex;flex-direction:column;min-width:0}
+.lab-grid{display:grid;grid-template-columns:1fr 336px;gap:18px;align-items:stretch}
+.scene-card{position:relative;border:1px solid var(--line);border-radius:22px;background:#fff;overflow:hidden;box-shadow:var(--shadow-lab);display:flex;flex-direction:column}
 .scene-head{display:flex;align-items:center;justify-content:space-between;gap:12px;height:50px;padding:0 20px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink3)}
-.scene-head strong{font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.open-lab{font-weight:600;color:var(--blue);text-decoration:none;white-space:nowrap}
+.scene-head strong{font-weight:500;color:var(--ink)}
+.scene-head .right{display:flex;gap:16px;align-items:center}
+.open-lab{font-weight:600;color:var(--blue);text-decoration:none}
 .open-lab:hover{text-decoration:underline}
-.scene{position:relative;height:clamp(320px,44vw,468px);background:var(--paper)}
+.scene{position:relative;height:clamp(340px,44vw,468px);background:var(--paper)}
 .scene iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-.scene #scene-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;transition:opacity .4s ease;pointer-events:none}
+.scene #scene-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:1;transition:opacity .4s ease;pointer-events:none}
 .scene.live #scene-poster{opacity:0}
-#scene-overlay{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .3s ease}
+#scene-overlay{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .4s ease}
 .scene.live #scene-overlay{opacity:1}
 .scene.live #scene-overlay.out{opacity:0}
-.pills{position:absolute;inset:18px 18px auto 18px;display:flex;gap:10px;flex-wrap:wrap}
-.pill{display:flex;flex-direction:column;gap:1px;padding:9px 13px;border-radius:11px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);min-width:84px}
+@media (prefers-reduced-motion:reduce){.scene #scene-poster,#scene-overlay{transition:none}}
+.pills{position:absolute;inset:22px 22px auto 22px;display:flex;justify-content:space-between;gap:10px;pointer-events:none;flex-wrap:wrap}
+.pill{display:flex;flex-direction:column;gap:1px;padding:9px 13px;border-radius:11px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);min-width:84px}
 .pill span{font-size:11.5px;color:var(--ink3)}
 .pill strong{font-family:var(--sora);font-weight:700;font-size:16px}
-.pill.hot{border-color:rgba(255,178,30,.55);background:rgba(255,248,235,.94);margin-left:auto}
+.pill.hot{border-color:rgba(255,178,30,.55);background:rgba(255,248,235,.92)}
+.pill.hot .pdot{display:none}
+.pill.hot.lit{animation:sparkpulse 1s ease}
+@keyframes sparkpulse{0%{box-shadow:0 0 0 0 rgba(255,178,30,.5)}100%{box-shadow:0 0 0 14px rgba(255,178,30,0)}}
+.task{position:absolute;left:22px;bottom:20px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);font-size:14px;pointer-events:none;max-width:460px}
+.task-badge{font-family:var(--sora);font-weight:700;font-size:11px;color:#fff;background:var(--ink);padding:3px 8px;border-radius:6px;flex:none}
 .slider-row{display:flex;align-items:center;gap:16px;padding:16px 20px;border-top:1px solid var(--line)}
-.slider-row>span:first-child{font-size:14px;color:var(--ink2);min-width:92px}
-.slider-row input[type=range]{flex:1;min-width:0;accent-color:var(--blue)}
-.slider-val{display:flex;align-items:baseline;gap:10px;order:3}
-.slider-val b{font-family:var(--sora);font-weight:700;font-size:16px;white-space:nowrap}
-.slider-val #formula{font-size:13px;color:var(--ink3);white-space:nowrap}
-.quiz{border:1px solid var(--line);border-radius:22px;background:#fff;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow);transition:opacity .2s ease}
-.quiz.out{opacity:0}
-.quiz .ql{font-family:var(--sora);font-weight:600;font-size:12.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.quiz .qq{font-family:var(--sora);font-weight:600;font-size:18px;line-height:1.35}
-.quiz .qt{font-size:15px;color:var(--ink2);padding:12px 14px;border-radius:12px;background:var(--blue-050)}
-.quiz button{appearance:none;align-self:flex-start;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;font-family:var(--sora);font-weight:600;font-size:14px;color:var(--ink);cursor:pointer}
-.quiz button:hover{border-color:var(--ink3)}
-.quiz .qa{font-size:15px;color:var(--ink);border-left:3px solid var(--amber);padding-left:12px}
+.slider-row>span{font-size:14px;color:var(--ink2);min-width:92px}
+.slider-row input[type=range]{flex:1;accent-color:var(--blue);height:4px}
+.slider-val{display:flex;align-items:baseline;gap:10px;min-width:0}
+.slider-val b{font-family:var(--sora);font-weight:700;font-size:16px}
+.slider-val #formula{font-size:13px;color:var(--ink3)}
+.tutor{border:1px solid var(--line);border-radius:22px;background:#fff;padding:20px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.tutor-head{display:flex;align-items:center;gap:8px;font-family:var(--sora);font-weight:600;font-size:14px;color:var(--ink2);margin-bottom:14px}
+.spark{width:9px;height:9px;border-radius:50%;background:var(--amber);flex:none;box-shadow:0 0 0 4px rgba(255,178,30,.16)}
+#chat{display:flex;flex-direction:column;gap:10px}
+.bubble{font-size:14.5px;line-height:1.5;padding:11px 14px;border-radius:14px;max-width:92%}
+.bubble.ai{background:var(--blue-050);color:var(--ink);border-bottom-left-radius:5px}
+.bubble.me{background:var(--ink);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.tutor-note{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink3)}
 
-/* ---------- why ---------- */
+/* ---------- problem ---------- */
 .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
-.why-item h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.why-item{display:flex;flex-direction:column;gap:7px}
+.why-item .fig{width:40px;height:40px;color:var(--blue);margin-bottom:6px}
+.why-item h3{font-family:var(--sora);font-size:18px;font-weight:600}
 .why-item p{font-size:15.5px;color:var(--ink2)}
-.why-item .fig{width:36px;height:36px;color:var(--blue);margin-bottom:12px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px}
+.stat{border:1px solid var(--line);border-radius:18px;background:#fff;padding:28px 30px;box-shadow:var(--shadow)}
+.stat .num{font-family:var(--sora);font-weight:800;font-size:clamp(40px,5vw,56px);letter-spacing:-.03em;line-height:1}
+.stat .num small{font-size:.5em;font-weight:700;color:var(--ink3)}
+.stat .cap{margin-top:12px;font-size:15.5px;color:var(--ink2)}
+.stat .src{margin-top:8px;font-size:12.5px;color:var(--ink3)}
 
 /* ---------- steps ---------- */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
-.step{border:1px solid var(--line);border-radius:18px;background:#fff;padding:24px;box-shadow:var(--shadow)}
-.step .no{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;background:var(--blue-050);font-family:var(--sora);font-weight:700;font-size:15px;color:var(--blue);margin-bottom:16px}
-.step h3{font-size:18px;font-weight:600;margin-bottom:6px}
-.step p{font-size:15.5px;color:var(--ink2)}
+.steps{display:flex;flex-direction:column;margin-top:36px;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:52px 72px 1fr;gap:22px;align-items:start;padding:26px 0;border-bottom:1px solid var(--line)}
+.step .no{font-family:var(--sora);font-weight:700;font-size:17px;color:var(--blue);padding-top:12px}
+.step .tile{width:72px;height:72px;border-radius:16px;background:var(--blue-050);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.step .tile svg{width:34px;height:34px;color:var(--blue)}
+.step h3{font-family:var(--sora);font-size:19px;font-weight:600;margin-bottom:5px}
+.step p{font-size:15.5px;color:var(--ink2);max-width:62ch}
 
-/* ---------- audiences ---------- */
-.aud{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
-.aud-card{border:1px solid var(--line);border-radius:20px;background:#fff;padding:28px;box-shadow:var(--shadow)}
-.aud-card h3{font-size:21px;font-weight:700;margin-bottom:16px}
-.aud-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
-.aud-card li{position:relative;padding-left:22px;font-size:15.5px;color:var(--ink2)}
-.aud-card li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:2px;background:var(--blue)}
-.aud-card li.later{color:var(--ink3)}
-.aud-card li.later::before{background:var(--line)}
+/* ---------- teachers ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.report{border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow-lab);overflow:hidden}
+.report-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.report-top .tag{font-family:var(--sora);font-weight:700;font-size:11px;color:#fff;background:var(--blue);padding:4px 9px;border-radius:7px}
+.report-top .meta{font-size:13px;color:var(--ink3)}
+.report-body{padding:20px}
+.report-row{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.report-row .name{font-family:var(--sora);font-weight:700;font-size:20px}
+.report-row .chip{font-size:12.5px;color:var(--ink2);background:var(--mist);padding:3px 9px;border-radius:7px}
+.report-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.metric{border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.metric span{font-size:11.5px;color:var(--ink3);display:block;margin-bottom:3px}
+.metric b{font-family:var(--sora);font-weight:600;font-size:15px}
+.metric.good b{color:#1E9E6A}
+.report-note{font-size:14px;color:var(--ink2);padding-top:14px;border-top:1px solid var(--line)}
+.report-next{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13.5px;color:var(--ink3)}
+.report-next .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none}
+.class-chip{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:10px 15px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:14px;box-shadow:var(--shadow)}
+.class-chip b{font-family:var(--sora);color:var(--blue)}
+.teach-link{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-family:var(--sora);font-weight:600;color:var(--blue);text-decoration:none}
+.teach-link:hover{text-decoration:underline}
+
+/* ---------- students ---------- */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.feat-card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:26px 24px;box-shadow:var(--shadow)}
+.feat-card .fig{width:44px;height:44px;border-radius:12px;background:var(--blue-050);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-card .fig svg{width:24px;height:24px;color:var(--blue)}
+.feat-card h3{font-family:var(--sora);font-size:18px;font-weight:600;margin-bottom:7px}
+.feat-card p{font-size:15px;color:var(--ink2)}
+
+/* ---------- value ---------- */
+.value-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px;margin-top:36px;border-top:1px solid var(--line)}
+.value-item{display:flex;gap:16px;padding:24px 0;border-bottom:1px solid var(--line)}
+.value-item .vn{flex:none;width:12px;height:12px;margin-top:7px;border-radius:3px;background:var(--blue);box-shadow:0 0 0 4px var(--blue-050)}
+.value-item h3{font-family:var(--sora);font-size:18px;font-weight:600;margin-bottom:5px}
+.value-item p{font-size:15px;color:var(--ink2)}
 
 /* ---------- CTA ---------- */
 .cta{background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .cta::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(139,150,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(139,150,255,.10) 1px,transparent 1px);background-size:27px 27px;-webkit-mask-image:radial-gradient(120% 90% at 20% 0%,#000,transparent 72%);mask-image:radial-gradient(120% 90% at 20% 0%,#000,transparent 72%)}
-.cta .wrap{position:relative;padding:80px 24px}
+.cta .wrap{position:relative;padding:82px 24px}
 .cta h2{font-size:clamp(30px,4vw,46px);font-weight:700;max-width:16ch}
-.cta p{margin-top:18px;font-size:18px;color:#B9BEDC;max-width:52ch}
+.cta p{margin-top:18px;font-size:18px;color:#B9BEDc;max-width:56ch}
 .cta-actions{display:flex;gap:13px;margin-top:30px;flex-wrap:wrap}
-.cta-contacts{display:flex;gap:26px;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);font-size:14.5px;flex-wrap:wrap}
+.cta-contacts{display:flex;gap:26px;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);font-size:14.5px;color:#9AA0C4;flex-wrap:wrap}
 .cta-contacts a{color:#cfd3ef;text-decoration:none}
 .cta-contacts a:hover{color:#fff}
 
@@ -168,41 +246,43 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
 
 /* ---------- responsive ---------- */
 @media (max-width:920px){
-  .hero-grid{grid-template-columns:1fr;gap:18px;padding:40px 0 24px;align-items:start}
+  .hero-grid{grid-template-columns:1fr;gap:26px;padding:24px 0 34px}
+  .hero-sub{max-width:46ch}
+  .split{grid-template-columns:1fr;gap:30px}
   .lab-grid{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr}
-  .aud{grid-template-columns:1fr}
+  .value-grid{grid-template-columns:1fr}
 }
 @media (max-width:760px){
   body{font-size:16px}
-  .wrap{padding:0 16px}
   .nav{display:none}
   .header-cta .btn{display:none}
   .menu-btn{display:flex}
   #mobile-menu.open{display:block;border-bottom:1px solid var(--line);background:var(--white)}
-  #mobile-menu nav{display:flex;flex-direction:column;padding:10px 16px 18px}
+  #mobile-menu nav{display:flex;flex-direction:column;padding:10px 24px 18px}
   #mobile-menu a{padding:12px 0;border-bottom:1px solid var(--mist);text-decoration:none;color:var(--ink);font-weight:500}
-  #mobile-menu .btn{margin-top:14px;border-bottom:0;color:#fff}
+  #mobile-menu .btn{margin-top:14px}
   .block{padding:56px 0}
-  #sinab{padding-top:36px}
-  .hero-sub{font-size:17px}
-  .hero-cta .btn{flex:1 1 auto}
-  .hero-stats{gap:16px 24px;margin-top:22px}
-  .hs .hv{font-size:25px}
-  .hs .hk{font-size:12.5px}
-  .why-grid{grid-template-columns:1fr;gap:24px}
-  .scene-head{padding:0 14px}
-  .pills{inset:12px 12px auto 12px;gap:6px}
-  .pill{min-width:0;padding:7px 10px}
-  .pill strong{font-size:14px}
-  .slider-row{flex-wrap:wrap;gap:8px 14px;padding:14px 16px}
-  .slider-row input[type=range]{flex-basis:100%;order:4}
-  .aud-card{padding:22px}
-  .cta .wrap{padding:60px 16px}
-  .footer-in{padding:24px 16px}
+  .why-grid{grid-template-columns:1fr;gap:26px}
+  .stats{grid-template-columns:1fr}
+  .feat{grid-template-columns:1fr}
+  .step{grid-template-columns:34px 1fr;gap:14px}
+  .step .tile{display:none}
+  .report-metrics{grid-template-columns:1fr 1fr}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 :focus-visible{outline:3px solid var(--blue-300);outline-offset:2px;border-radius:6px}
+/* savol paneli */
+.quiz{display:flex;flex-direction:column;gap:16px;transition:opacity .2s ease}
+.quiz.out{opacity:0}
+.quiz .ql{font-family:var(--sora);font-weight:600;font-size:12.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.quiz .qq{font-family:var(--sora);font-weight:600;font-size:18px;line-height:1.35}
+.quiz .qt{font-size:15px;color:var(--ink2);padding:12px 14px;border-radius:12px;background:var(--blue-050)}
+.quiz button{appearance:none;align-self:flex-start;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;font-family:var(--sora);font-weight:600;font-size:14px;color:var(--ink);cursor:pointer}
+.quiz button:hover{border-color:var(--ink3)}
+.quiz .qa{font-size:15px;color:var(--ink);border-left:3px solid var(--amber);padding-left:12px}
+.feat-card li{margin-top:0}
+.feat-card.later{background:var(--paper);box-shadow:none}
+.feat-card.later .fig{background:var(--mist)}
+.feat-card.later .fig svg{color:var(--ink3)}
 </style>
 </head>
 <body>
@@ -211,22 +291,22 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
   <div class="wrap header-in">
     <a class="brand" href="#top" aria-label="Empira"><img src="./assets/full-logo-light.svg" alt="Empira"></a>
     <nav class="nav" aria-label="Asosiy">
-      <a href="#sinab">Sinab ko‘ring</a>
-      <a href="#nega">Nega Empira</a>
       <a href="#qanday">Qanday ishlaydi</a>
-      <a href="#kimga">Kimlar uchun</a>
+      <a href="#oqituvchi">O‘qituvchiga</a>
+      <a href="#oquvchi">O‘quvchiga</a>
+      <a href="#nega">Nega Empira</a>
     </nav>
     <div class="header-cta">
       <a class="btn btn-blue btn-sm" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
-      <button class="menu-btn" aria-label="Menyuni ochish" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="menu-btn" aria-label="Menyu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
   <div id="mobile-menu">
     <nav>
-      <a href="#sinab">Sinab ko‘ring</a>
-      <a href="#nega">Nega Empira</a>
       <a href="#qanday">Qanday ishlaydi</a>
-      <a href="#kimga">Kimlar uchun</a>
+      <a href="#oqituvchi">O‘qituvchiga</a>
+      <a href="#oquvchi">O‘quvchiga</a>
+      <a href="#nega">Nega Empira</a>
       <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
     </nav>
   </div>
@@ -238,52 +318,81 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
   <section class="hero">
     <div class="wrap">
       <div class="hero-grid">
-        <div>
+        <div class="hero-copy">
           <h1>Fizikani o‘qibgina emas, qilib o‘rganing.</h1>
-        </div>
-        <div>
           <p class="hero-sub">Empira — brauzerda ochiladigan 3D laboratoriya. O‘quvchi darslikdagi tajribani o‘zi yig‘adi, o‘lchaydi va natijani o‘z ko‘zi bilan ko‘radi. Asbob ham, alohida xona ham kerak emas.</p>
           <div class="hero-cta">
             <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
-            <a class="btn btn-ghost" href="#sinab">Tajribani sinash</a>
+            <a class="btn btn-ghost" href="#qanday">Qanday ishlaydi</a>
+          </div>
+          <div class="hero-stats" id="hero-stats">
+            <div class="hs"><span class="hv" id="hs-students" title="O‘qituvchilar bildirgan o‘quvchilar soni va bevosita o‘quvchi hisoblari asosidagi taxminiy qamrov">—</span><span class="hk">o‘quvchi</span></div>
+            <div class="hs"><span class="hv" id="hs-teachers">—</span><span class="hk">o‘qituvchi</span></div>
+            <div class="hs"><span class="hv" id="hs-topics">—</span><span class="hk">mavzu</span></div>
+            <div class="hs"><span class="hv" id="hs-labs">—</span><span class="hk">laboratoriya</span></div>
           </div>
         </div>
-      </div>
-      <div class="subjects" aria-label="Fanlar">
-        <span class="subj live"><span class="dot"></span><b>Fizika</b> 7–8-sinf</span>
-        <span class="subj soon"><span class="dot"></span><b>Kimyo</b> tayyorlanmoqda</span>
-        <span class="subj soon"><span class="dot"></span><b>Biologiya</b> tayyorlanmoqda</span>
-      </div>
-      <div class="hero-stats" id="hero-stats">
-        <div class="hs"><span class="hv" id="hs-labs">—</span><span class="hk">laboratoriya</span></div>
-        <div class="hs"><span class="hv" id="hs-topics">—</span><span class="hk">mavzu</span></div>
-        <div class="hs"><span class="hv" id="hs-teachers">—</span><span class="hk">o‘qituvchi</span></div>
-        <div class="hs"><span class="hv" id="hs-students" title="O‘qituvchilar ko‘rsatgan o‘quvchilar soni va o‘quvchi hisoblari asosida, taxminiy">—</span><span class="hk">o‘quvchi</span></div>
+
+        <div class="hero-fig">
+          <div class="hero-lab">
+            <div class="hero-lab-head"><strong>Om qonuni · 3D stol</strong><a class="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya</a></div>
+            <div class="hero-scene" id="hero-scene">
+              <iframe id="hero-frame" title="Om qonuni 3D laboratoriyasi" loading="eager"></iframe>
+              <img id="hero-poster" src="./assets/lab-preview.jpg" alt="Empira 3D fizika laboratoriyasi" aria-hidden="true">
+              <div class="hero-pills">
+                <div class="pill"><span>Kuchlanish</span><strong>6 V</strong></div>
+                <div class="pill"><span>Qarshilik</span><strong>10 Ω</strong></div>
+                <div class="pill hot lit"><span>Tok</span><strong>0,6 A</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- LIVE LAB -->
-  <section class="block" id="sinab" aria-labelledby="try-title">
+  <!-- SUBJECTS -->
+  <section class="subjects" aria-label="Fanlar">
     <div class="wrap">
-      <span class="kicker">Sinab ko‘ring</span>
-      <h2 class="h2" id="try-title">Bu rasm emas. Slayderni surib ko‘ring.</h2>
-      <p class="lead-p">Stolni aylantiring, qiymatni o‘zgartiring va asboblar nimani ko‘rsatishini kuzating. Ro‘yxatdan o‘tgach, shunday tajribalarni noldan o‘zingiz yig‘asiz.</p>
-      <div class="tabs" role="tablist" aria-label="Tajribani tanlang" id="tabs"></div>
+      <span class="lbl">Fanlar:</span>
+      <span class="subj live">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.3"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(120 12 12)"/></svg>
+        <b>Fizika</b><span class="st on">7–8-sinf</span>
+      </span>
+      <span class="subj">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5.5 9.3A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.7L14 9V3"/><path d="M7.5 15h9"/></svg>
+        <b>Kimyo</b><span class="st soon">Tayyorlanmoqda</span>
+      </span>
+      <span class="subj">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20C6 20 4 15 4 11c0-4 1-7 1-7s8 0 11 4c2.8 3.5 1.5 9-3 11-2 .9-4 1-4 1Z"/><path d="M5 20c3-6 7-9 11-11"/></svg>
+        <b>Biologiya</b><span class="st soon">Tayyorlanmoqda</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- LIVE LAB -->
+  <section class="block" aria-labelledby="try-title">
+    <div class="wrap">
+      <div class="lab-head">
+        <span class="kicker"><span class="sec">§</span>Sinab ko‘ring</span>
+        <h2 class="h2" id="try-title">Bu rasm emas. Slayderni surib ko‘ring.</h2>
+        <p class="lead-p">Stolni aylantiring, qiymatni o‘zgartiring va asboblar nimani ko‘rsatishini kuzating. Ro‘yxatdan o‘tgach, shunday tajribalarni noldan o‘zingiz yig‘asiz.</p>
+        <div class="tabs" role="tablist" aria-label="Tajribani tanlang" id="tabs"></div>
+      </div>
       <div class="lab-grid">
         <div class="scene-card">
           <div class="scene-head">
-            <strong id="lab-title">Om qonuni</strong>
-            <a class="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya →</a>
+            <strong id="lab-title">Fizika · Om qonuni · 3D stol</strong>
+            <span class="right"><span id="drag-hint">Burish uchun torting</span><a class="open-lab" id="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya →</a></span>
           </div>
           <div class="scene">
-            <iframe id="scene-frame" title="Om qonuni 3D laboratoriyasi"></iframe>
-            <img id="scene-poster" src="./assets/lab-preview.jpg" alt="" aria-hidden="true">
-            <div id="scene-overlay">
+            <iframe id="scene-frame" title="Om qonuni 3D laboratoriyasi" loading="lazy"></iframe>
+            <img id="scene-poster" src="./assets/lab-preview.jpg" alt="Empira 3D fizika laboratoriyasi" aria-hidden="true">
+            <div class="fade" id="scene-overlay">
               <div class="pills">
                 <div class="pill"><span id="ra">Kuchlanish</span><strong id="rav">6 V</strong></div>
                 <div class="pill"><span id="rb">Qarshilik</span><strong id="rbv">10 Ω</strong></div>
-                <div class="pill hot"><span id="rc">Tok</span><strong id="rcv">0,6 A</strong></div>
+                <div class="pill hot" id="result-pill"><span id="rc">Tok</span><strong id="rcv">0,6 A</strong></div>
               </div>
             </div>
           </div>
@@ -293,7 +402,7 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
             <span class="slider-val"><b id="slider-text">10 Ω</b><span id="formula">I = 6 ÷ R = 0,6 A</span></span>
           </label>
         </div>
-        <aside class="quiz" id="quiz" aria-live="polite">
+        <aside class="tutor quiz" id="quiz" aria-live="polite">
           <div><div class="ql">Savol</div><div class="qq" id="q-text"></div></div>
           <div class="qt" id="q-try"></div>
           <button type="button" id="q-btn" aria-expanded="false">Javobni ko‘rish</button>
@@ -305,30 +414,30 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
 
   <hr class="rule">
 
-  <!-- WHY -->
-  <section class="block" id="nega" aria-labelledby="why-title">
+  <!-- PROBLEM -->
+  <section class="block" aria-labelledby="why-title">
     <div class="wrap">
-      <span class="kicker">Nega Empira</span>
+      <span class="kicker"><span class="sec">§</span>Muammo</span>
       <h2 class="h2" id="why-title">Darslikda tajriba bor. Maktabda esa asbob yo‘q.</h2>
       <p class="lead-p">Fizika qo‘l bilan tekshirib ko‘rganda tushuniladi. Lekin ko‘p maktabda laboratoriya xonasi yo‘q yoki asbob butun sinfga yetmaydi. Natijada o‘quvchi Om qonunini sinab ko‘rmaydi, shunchaki yodlaydi.</p>
       <div class="why-grid">
         <div class="why-item">
           <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="7" width="30" height="34" rx="3"/><path d="M15 15h18M15 22h18M15 29h11"/></svg>
-          <h3>Darslik bo‘yicha</h3>
-          <p>Tajribalar 7–8-sinf fizika darsligidagi mavzular va ularning tartibida tuzilgan.</p>
+          <h3>Tajriba faqat rasmda</h3>
+          <p>Darslikda chizilgan tajribani o‘quvchi o‘qiydi, lekin o‘zi o‘tkazib ko‘rmaydi.</p>
         </div>
         <div class="why-item">
-          <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M40 30a3 3 0 0 1-3 3H16l-7 6V11a3 3 0 0 1 3-3h25a3 3 0 0 1 3 3Z"/><path d="M17 17h14M17 24h9"/></svg>
-          <h3>O‘zbek tilida</h3>
-          <p>Mavzu, ko‘rsatma va savollar ona tilida. Tarjima qilib o‘tirish shart emas.</p>
+          <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40V12l16-5 16 5v28"/><path d="M8 40h32M18 40V26h12v14"/></svg>
+          <h3>Asbob yetmaydi</h3>
+          <p>Jihozlangan fizika xonasi hamma maktabda yo‘q. Bor joyda ham asbob butun sinfga yetmaydi.</p>
         </div>
         <div class="why-item">
-          <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="9" width="36" height="24" rx="3"/><path d="M17 41h14M24 33v8"/></svg>
-          <h3>Oddiy kompyuterda ham</h3>
-          <p>Brauzerda ochiladi, hech narsa o‘rnatilmaydi. Maktab kompyuteri yoki telefon yetarli.</p>
+          <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6c-7 0-12 5-12 12 0 5 3 8 5 11 1 2 2 4 2 6h10c0-2 1-4 2-6 2-3 5-6 5-11 0-7-5-12-12-12Z"/><path d="M19 41h10"/></svg>
+          <h3>Formula yodlanadi</h3>
+          <p>Tushunmasdan yodlangan formula imtihondan keyin tez esdan chiqadi.</p>
         </div>
       </div>
-    </div>
+      </div>
   </section>
 
   <hr class="rule">
@@ -336,23 +445,23 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
   <!-- HOW -->
   <section class="block" id="qanday" aria-labelledby="how-title">
     <div class="wrap">
-      <span class="kicker">Qanday ishlaydi</span>
-      <h2 class="h2" id="how-title">Uch qadam.</h2>
+      <span class="kicker"><span class="sec">§</span>Qanday ishlaydi</span>
+      <h2 class="h2" id="how-title">Darslik mavzusidan tajribagacha — uch qadam.</h2>
       <div class="steps">
         <div class="step">
           <div class="no">1</div>
-          <h3>Mavzuni toping</h3>
-          <p>Sinf va mavzuni ro‘yxatdan tanlang. Yoki darslik sahifasini suratga oling, mos tajriba o‘zi chiqadi.</p>
+          <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="9" width="34" height="30" rx="3"/><path d="M7 33l9-8 7 6 8-9 10 10"/><circle cx="17" cy="18" r="3"/></svg></div>
+          <div><h3>Mavzuni toping</h3><p>Sinf va mavzuni ro‘yxatdan tanlang. Yoki darslik sahifasini suratga oling, mos tajriba o‘zi chiqadi.</p></div>
         </div>
         <div class="step">
           <div class="no">2</div>
-          <h3>Tajribani yig‘ing</h3>
-          <p>Tayyor stolni ko‘rib chiqing yoki asboblarni o‘zingiz tanlab, simlarini ulab, noldan yig‘ing. Xato ulansa, qayerda ekanini ko‘rsatadi.</p>
+          <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6v6M24 36v6M6 24h6M36 24h6M11 11l4 4M33 33l4 4M37 11l-4 4M15 33l-4 4"/><circle cx="24" cy="24" r="8"/></svg></div>
+          <div><h3>Tajribani yig‘ing</h3><p>Tayyor stolni ko‘rib chiqing yoki asboblarni o‘zingiz tanlab, simlarini ulab, noldan yig‘ing. Xato ulansa, qayerda ekanini ko‘rsatadi.</p></div>
         </div>
         <div class="step">
           <div class="no">3</div>
-          <h3>O‘lchang va xulosa qiling</h3>
-          <p>Qiymatlarni o‘zgartiring, natijalarni jadvalga yozing va qonuniyatni o‘zingiz toping.</p>
+          <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40c9 0 16-7 16-16S33 8 24 8 8 15 8 24"/><path d="M8 24l-4-4M8 24l4-4"/><circle cx="24" cy="24" r="5"/></svg></div>
+          <div><h3>O‘lchang va xulosa qiling</h3><p>Qiymatlarni o‘zgartiring, natijalarni jadvalga yozing va qonuniyatni o‘zingiz toping.</p></div>
         </div>
       </div>
     </div>
@@ -360,29 +469,71 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
 
   <hr class="rule">
 
-  <!-- AUDIENCES -->
-  <section class="block" id="kimga" aria-labelledby="aud-title">
+  <!-- TEACHERS -->
+  <section class="block" id="oqituvchi" aria-labelledby="teach-title">
     <div class="wrap">
-      <span class="kicker">Kimlar uchun</span>
-      <h2 class="h2" id="aud-title">O‘quvchi ham, o‘qituvchi ham.</h2>
-      <div class="aud">
-        <div class="aud-card">
-          <h3>O‘quvchiga</h3>
-          <ul>
-            <li>Tajribani kuzatib qolmaysiz, o‘zingiz yig‘ib, o‘zingiz ishga tushirasiz.</li>
-            <li>Qiynalsangiz, maslahat bor. Uni so‘raganingiz uchun yulduz kamaymaydi.</li>
-            <li>Uyda ham, maktabda ham: Google yoki Telegram orqali kirasiz.</li>
-          </ul>
+      <span class="kicker"><span class="sec">§</span>O‘qituvchiga</span>
+      <h2 class="h2" id="teach-title">Tajribani butun sinfga ko‘rsating.</h2>
+      <div class="feat">
+        <div class="feat-card">
+          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+          <h3>Doskada yoki proyektorda</h3>
+          <p>Laboratoriyani ochasiz va tajribani butun sinf bir vaqtda ko‘radi. Asbob tarqatish shart emas.</p>
         </div>
-        <div class="aud-card">
-          <h3>O‘qituvchiga</h3>
-          <ul>
-            <li>Tajribani proyektor yoki doskada ochib, butun sinfga bir vaqtda ko‘rsatasiz.</li>
-            <li>Qiymatlarni dars davomida o‘zgartirib, “nima bo‘ladi?” deb sinf bilan birga tekshirasiz.</li>
-            <li>Ayrim mavzular uchun tayyor dars bor: slaydlar, 3D tajriba va DTM uslubidagi savol.</li>
-            <li class="later">Sinf bo‘yicha hisobotlar ustida ishlayapmiz.</li>
-          </ul>
+        <div class="feat-card">
+          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01"/></svg></div>
+          <h3>“Nima bo‘ladi?” deb so‘rang</h3>
+          <p>Qiymatni dars davomida o‘zgartirib, sinf bilan birga taxmin qilasiz va darhol tekshirasiz.</p>
         </div>
+        <div class="feat-card later">
+          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+          <h3>Sinf hisobotlari</h3>
+          <p>Kim qayerda qiynalganini ko‘rsatadigan hisobotlar ustida ishlayapmiz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- STUDENTS -->
+  <section class="block" id="oquvchi" aria-labelledby="stu-title">
+    <div class="wrap">
+      <span class="kicker"><span class="sec">§</span>O‘quvchiga</span>
+      <h2 class="h2" id="stu-title">Kuzatib qolmaysiz, o‘zingiz qilasiz.</h2>
+      <div class="feat">
+        <div class="feat-card">
+          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
+          <h3>Noldan yig‘ing</h3>
+          <p>Kerakli asbobni o‘zingiz tanlaysiz, simlarni ulaysiz. Tajriba to‘g‘ri yig‘ilsagina ishlaydi.</p>
+        </div>
+        <div class="feat-card">
+          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/><path d="M8 9h8M8 12h5"/></svg></div>
+          <h3>Maslahat bor</h3>
+          <p>Qiynalsangiz, maslahat so‘rang. Buning uchun yulduz kamaymaydi.</p>
+        </div>
+        <div class="feat-card">
+          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+          <h3>Uyda ham, maktabda ham</h3>
+          <p>Google yoki Telegram orqali kirasiz va istalgan kompyuter yoki telefonda davom ettirasiz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- VALUE -->
+  <section class="block" id="nega" aria-labelledby="val-title">
+    <div class="wrap">
+      <span class="kicker"><span class="sec">§</span>Nega Empira</span>
+      <h2 class="h2" id="val-title">O‘zbek maktabi uchun qurilgan.</h2>
+      <p class="lead-p">Chet el platformalari yaxshi, lekin ular boshqa dastur va boshqa til uchun qilingan. Empira o‘zbek sinfi uchun.</p>
+      <div class="value-grid">
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Darslik bo‘yicha</h3><p>Tajribalar 7–8-sinf fizika darsligidagi mavzular va ularning tartibida tuzilgan.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>O‘zbek tilida</h3><p>Mavzu, ko‘rsatma va savollar ona tilida. Tarjima qilib o‘tirish shart emas.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Hech narsa o‘rnatilmaydi</h3><p>Brauzerda ochiladi. Oddiy maktab kompyuteri yoki telefon yetarli.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Fizikadan boshladik</h3><p>7–8-sinf fizikasi tayyor. Kimyo va biologiya ustida ishlayapmiz.</p></div></div>
       </div>
     </div>
   </section>
@@ -391,13 +542,13 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
   <section class="cta" aria-labelledby="cta-title">
     <div class="wrap">
       <h2 id="cta-title">Bitta tajribadan boshlang.</h2>
-      <p>Ro‘yxatdan o‘tish bir daqiqa oladi. Hozircha 7 va 8-sinf fizikasi tayyor, kimyo va biologiya ustida ishlayapmiz. Fikr yoki taklifingiz bo‘lsa, yozing: har bir xabarni o‘qiymiz.</p>
+      <p>Ro‘yxatdan o‘tish bir daqiqa oladi. Fikr yoki taklifingiz bo‘lsa, yozing: har bir xabarni o‘qiymiz.</p>
       <div class="cta-actions">
         <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
-      </div>
+              </div>
       <div class="cta-contacts">
-        <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram</a>
-        <a href="#" data-email-link></a>
+        <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram: @empira</a>
+        <a href="#" data-email-link>hello@empira.uz</a>
       </div>
     </div>
   </section>
@@ -407,7 +558,6 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
   <div class="wrap footer-in">
     <div class="footer-brand"><img src="./assets/full-logo-dark.svg" alt="Empira"><span>© 2026 Empira</span></div>
     <nav class="footer-nav" aria-label="Pastki menyu">
-      <a href="#sinab">Sinab ko‘rish</a>
       <a href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Kirish</a>
       <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram</a>
       <a href="#" data-email-link>Email</a>
@@ -417,31 +567,31 @@ h1{font-size:clamp(38px,5.4vw,66px);font-weight:800;max-width:13ch}
 
 <script>
 /* ===== aloqa sozlamalari — faqat shuni tahrirlang ===== */
-const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz" };
+const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
 /* ====================================================== */
 (function () {
   const nf = n => String(n).replace('.', ',');
   const LABS = [
-    { id:'electricity', tab:'Om qonuni', title:'Om qonuni', frameTitle:'Om qonuni 3D laboratoriyasi', def:10, min:5, max:30, step:1, sliderLabel:'Qarshilik',
+    { id:'electricity', tab:'Om qonuni', title:'Fizika · Om qonuni · 3D stol', frameTitle:'Om qonuni 3D laboratoriyasi', def:10, min:5, max:30, step:1, sliderLabel:'Qarshilik',
       q:'Qarshilik ikki barobar oshsa, tok qanday o‘zgaradi?',
       t:'Qarshilikni 10 Ω dan 20 Ω ga suring va ampermetrga qarang.',
       a:'Tok 0,6 A dan 0,3 A ga tushadi, ya’ni ikki barobar kamayadi. Kuchlanish o‘zgarmasa, tok qarshilikka teskari proporsional: I = U ÷ R.',
       calc:v=>{const i=6/v;return{a:['Kuchlanish','6 V'],b:['Qarshilik',v+' Ω'],c:['Tok',nf(i.toFixed(1))+' A'],formula:'I = 6 ÷ R = '+nf(i.toFixed(1))+' A',val:v+' Ω'};} },
-    { id:'pendulum', tab:'Mayatnik', title:'Matematik mayatnik', frameTitle:'Mayatnik 3D laboratoriyasi', def:1, min:0.25, max:2, step:0.05, sliderLabel:'Ip uzunligi',
+    { id:'pendulum', tab:'Mayatnik', title:'Fizika · Matematik mayatnik · 3D stol', frameTitle:'Mayatnik 3D laboratoriyasi', def:1, min:0.25, max:2, step:0.05, sliderLabel:'Ip uzunligi',
       q:'Ip 4 barobar qisqarsa, tebranish davri qanday o‘zgaradi?',
       t:'Ip uzunligini 1 m dan 0,25 m ga tushiring.',
       a:'Davr 2,0 s dan 1,0 s ga kamayadi: to‘rt emas, ikki barobar. Chunki davr ip uzunligining kvadrat ildiziga bog‘liq: T = 2π√(L ÷ g).',
       calc:v=>{const T=2*Math.PI*Math.sqrt(v/9.8);return{a:['Uzunlik',nf(v.toFixed(2))+' m'],b:['g','9,8 m/s²'],c:['Davr',nf(T.toFixed(1))+' s'],formula:'T = 2π√(L ÷ 9,8) = '+nf(T.toFixed(1))+' s',val:nf(v.toFixed(2))+' m'};} },
-    { id:'springs', tab:'Prujina', title:'Guk qonuni', frameTitle:'Guk qonuni 3D laboratoriyasi', def:0.5, min:0.1, max:1, step:0.05, sliderLabel:'Massa',
+    { id:'springs', tab:'Prujina', title:'Fizika · Guk qonuni · 3D stol', frameTitle:'Guk qonuni 3D laboratoriyasi', def:0.5, min:0.1, max:1, step:0.05, sliderLabel:'Massa',
       q:'Yuk massasi ikki barobar oshsa, prujina qancha cho‘ziladi?',
       t:'Massani 0,5 kg dan 1 kg ga oshiring.',
       a:'Cho‘zilish 9,8 sm dan 19,6 sm ga, ya’ni ikki barobar ortadi. Cho‘zilish ta’sir qilayotgan kuchga proporsional. Bu Guk qonuni: F = k · x.',
       calc:v=>{const x=(v*9.8)/50*100;return{a:['Massa',nf(+v.toFixed(2))+' kg'],b:['Bikrlik','50 N/m'],c:['Cho‘zilish',nf(x.toFixed(1))+' sm'],formula:'x = (m × 9,8) ÷ 50 = '+nf(x.toFixed(1))+' sm',val:nf(+v.toFixed(2))+' kg'};} },
-    { id:'optics', tab:'Optika', title:'Yorug‘likning sinishi', frameTitle:'Yorug‘lik sinishi 3D laboratoriyasi', def:30, min:0, max:80, step:1, sliderLabel:'Tushish burchagi',
+    { id:'optics', tab:'Optika', title:'Fizika · Yorug‘likning sinishi · 3D stol', frameTitle:'Yorug‘lik sinishi 3D laboratoriyasi', def:30, min:0, max:80, step:1, sliderLabel:'Tushish burchagi',
       q:'Tushish burchagi ikki barobar oshsa, shisha ichidagi burchak ham ikki barobar oshadimi?',
       t:'Burchakni 30° dan 60° ga oshiring.',
       a:'Yo‘q. Ichkaridagi burchak 19,5° dan 35,3° ga oshadi. Proporsional bo‘lgani burchaklarning o‘zi emas, ularning sinuslari: sin θ₁ = n · sin θ₂.',
-      calc:v=>{const t=Math.asin(Math.sin(v*Math.PI/180)/1.5)*180/Math.PI;return{a:['Tushish',v+'°'],b:['n (shisha)','1,5'],c:['Ichkarida',nf(t.toFixed(1))+'°'],formula:'sin θ₂ = sin θ₁ ÷ 1,5',val:v+'°'};} }
+      calc:v=>{const t=Math.asin(Math.sin(v*Math.PI/180)/1.5)*180/Math.PI;return{a:['Tushish',v+'°'],b:['n (shisha)','1,5'],c:['Ichkarida',nf(t.toFixed(1))+'°'],formula:'sin θ₂ = sin θ₁ ÷ 1,5 → '+nf(t.toFixed(1))+'°',val:v+'°'};} }
   ];
   const $=id=>document.getElementById(id);
   const mobileMQ=matchMedia('(max-width: 760px)');
@@ -450,33 +600,34 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz" };
   let current=0, timer;
 
   const frame=$('scene-frame');
+  const startFrame=()=>{if(!frame.getAttribute('src'))frame.src='./lab-scene.html?lab=electricity&r=10'+(mobileMQ.matches?'&static=1':'');};
   const send=msg=>{if(frame.contentWindow)frame.contentWindow.postMessage(msg,'*');};
   const syncFrame=()=>{const L=LABS[current];send({type:'lab',lab:L.id,value:vals[L.id]});};
-  // 3D sahna chindan chizilgandagina ko‘rsatiladi; aks holda rasm qoladi.
+  // Jonli 3D sahna chindan chizilayotganiga ishonch hosil bo‘lgandagina ko‘rsatiladi;
+  // aks holda rasm (poster) qoladi va panel hech qachon bo‘sh ko‘rinmaydi.
   const scene=document.querySelector('.scene');
   let liveChecks=0;
   function checkLive(){
     liveChecks++;
     let ok=false;
-    try{const c=frame.contentDocument&&frame.contentDocument.querySelector('canvas');ok=!!(c&&c.width>0&&c.height>0);}catch(e){ok=true;}
-    if(ok)scene.classList.add('live');
-    else if(liveChecks<20)setTimeout(checkLive,250);
+    try{const c=frame.contentDocument&&frame.contentDocument.querySelector('canvas');ok=!!(c&&c.width>0&&c.height>0);}catch(e){ok=true;/* cross-origin: yuklandi deb hisoblaymiz */}
+    if(ok){scene.classList.add('live');}
+    else if(liveChecks<20){setTimeout(checkLive,250);}
   }
   frame.addEventListener('load',()=>{if(!frame.getAttribute('src'))return;syncFrame();checkLive();});
-  // sahna ekranga yaqinlashganda yuklanadi
-  const startFrame=()=>{if(!frame.getAttribute('src'))frame.src='./lab-scene.html?lab=electricity&r=10'+(mobileMQ.matches?'&static=1':'');};
-  if('IntersectionObserver' in window){
-    const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){startFrame();io.disconnect();}},{rootMargin:'400px'});io.observe(scene);
-  }else startFrame();
+  // pastdagi sahna faqat ekranga yaqinlashganda yuklanadi (hero sahnasi bilan bir vaqtda emas)
+  if('IntersectionObserver' in window){const fio=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){startFrame();fio.disconnect();}},{rootMargin:'300px'});fio.observe(document.querySelector('.scene'));}else startFrame();
+  if(mobileMQ.matches)$('drag-hint').textContent='3D stol';
 
   const tabsEl=$('tabs');
   LABS.forEach((L,i)=>{const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.setAttribute('aria-selected',String(i===0));b.textContent=L.tab;b.addEventListener('click',()=>pick(i));tabsEl.appendChild(b);});
 
   function renderReadouts(){const L=LABS[current],c=L.calc(vals[L.id]);
     $('ra').textContent=c.a[0];$('rav').textContent=c.a[1];$('rb').textContent=c.b[0];$('rbv').textContent=c.b[1];$('rc').textContent=c.c[0];$('rcv').textContent=c.c[1];
-    $('slider-text').textContent=c.val;$('formula').textContent=c.formula;}
+    $('slider-text').textContent=c.val;$('formula').textContent=c.formula;$('formula').hidden=!c.formula;}
 
   function setAnswer(open){$('q-ans').hidden=!open;$('q-btn').textContent=open?'Javobni yashirish':'Javobni ko‘rish';$('q-btn').setAttribute('aria-expanded',String(open));}
+  $('q-btn').addEventListener('click',()=>setAnswer($('q-ans').hidden));
 
   function renderLab(){const L=LABS[current];
     [...tabsEl.children].forEach((b,i)=>b.setAttribute('aria-selected',String(i===current)));
@@ -490,9 +641,18 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz" };
     fades.forEach(el=>el.classList.add('out'));clearTimeout(timer);
     timer=setTimeout(()=>{current=i;renderLab();syncFrame();fades.forEach(el=>el.classList.remove('out'));},180);}
 
-  $('q-btn').addEventListener('click',()=>setAnswer($('q-ans').hidden));
   $('slider').addEventListener('input',e=>{const L=LABS[current],v=Number(e.target.value);vals[L.id]=v;renderReadouts();send({type:'value',value:v});});
   renderLab();
+
+  // hero sahnasi — faqat ko‘rsatish uchun jonli 3D manzara
+  const hf=$('hero-frame');
+  if(hf){
+    const hs=$('hero-scene');
+    hf.src='./lab-scene.html?lab=electricity&r=10'+(mobileMQ.matches?'&static=1':'');
+    hf.addEventListener('load',()=>{let n=0;(function chk(){n++;let ok=false;
+      try{const c=hf.contentDocument&&hf.contentDocument.querySelector('canvas');ok=!!(c&&c.width>0&&c.height>0);}catch(e){ok=true;}
+      if(ok)hs.classList.add('live');else if(n<20)setTimeout(chk,250);})();});
+  }
 
   // mobil menyu
   const menuBtn=document.querySelector('.menu-btn'),menu=$('mobile-menu');
@@ -502,8 +662,8 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz" };
 
   // aloqa havolalari
   const tgUrl=EMPIRA.telegramUsername?'https://t.me/'+EMPIRA.telegramUsername:'';
-  document.querySelectorAll('[data-telegram-link]').forEach(a=>{if(tgUrl){a.href=tgUrl;if(a.closest('.cta-contacts'))a.textContent='Telegram: @'+EMPIRA.telegramUsername;}else a.remove();});
-  document.querySelectorAll('[data-email-link]').forEach(a=>{if(EMPIRA.email){a.href='mailto:'+EMPIRA.email;if(!a.textContent.trim())a.textContent=EMPIRA.email;}else a.remove();});
+  document.querySelectorAll('[data-telegram-link]').forEach(a=>{if(tgUrl)a.href=tgUrl;else a.remove();});
+  document.querySelectorAll('[data-email-link]').forEach(a=>{if(EMPIRA.email)a.href='mailto:'+EMPIRA.email;else a.remove();});
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
@@ -526,11 +686,8 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz" };
       if(el&&Number.isFinite(value)&&value>=0&&painted[key]!==value){painted[key]=value;animate(el,value);}
     });
   }
-  // son yuklanmasa, "—" ko‘rsatib turmaymiz: o‘sha ko‘rsatkich yashiriladi
   function unavailable(keys){
     keys.forEach(function(key){var el=document.getElementById('hs-'+key);var hs=el&&el.closest('.hs');if(hs)hs.hidden=true;});
-    var box=document.getElementById('hero-stats');
-    if(box&&!box.querySelector('.hs:not([hidden])'))box.hidden=true;
   }
   function bounded(p){return Promise.race([p,new Promise(function(_,reject){setTimeout(function(){reject(new Error('timeout'));},6000);})]);}
   function go(){
@@ -539,14 +696,14 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz" };
       var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){visible=true;render();io.disconnect();}},{threshold:0.1});io.observe(el);
     }else{visible=true;}
     bounded(fetch('https://test.empira.uz/api/catalog').then(function(r){if(!r.ok)throw new Error('catalog');return r.json();}))
-      .then(function(d){['topics','labs'].forEach(function(k){if(Number.isInteger(d[k])&&d[k]>=0)counts[k]=d[k];else unavailable([k]);});render();})
+      .then(function(d){['topics','labs'].forEach(function(k){if(Number.isInteger(d[k])&&d[k]>=0)counts[k]=d[k];});render();})
       .catch(function(){unavailable(['topics','labs']);});
     try{
       if(!window.supabase)throw new Error('stats');
       var sb=window.supabase.createClient(SB_URL,SB_KEY);
       bounded(sb.rpc('public_stats')).then(function(r){
         if(r.error||!r.data)throw new Error('stats');
-        ['students','teachers'].forEach(function(k){var n=Number(r.data[k]);if(r.data[k]!=null&&Number.isFinite(n)&&n>=0)counts[k]=n;else unavailable([k]);});
+        ['students','teachers'].forEach(function(k){var n=Number(r.data[k]);if(r.data[k]!=null&&Number.isFinite(n)&&n>=0)counts[k]=n;});
         render();
       }).catch(function(){unavailable(['students','teachers']);});
     }catch(e){unavailable(['students','teachers']);}
