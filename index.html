@@ -313,10 +313,10 @@ section{position:relative}
             <a class="btn btn-ghost" href="#qanday">Qanday ishlaydi</a>
           </div>
           <div class="hero-stats" id="hero-stats">
-            <div class="hs"><span class="hv" id="hs-students">0</span><span class="hk">o‘quvchi</span></div>
-            <div class="hs"><span class="hv" id="hs-teachers">0</span><span class="hk">o‘qituvchi</span></div>
-            <div class="hs"><span class="hv" id="hs-topics">0</span><span class="hk">mavzu</span></div>
-            <div class="hs"><span class="hv" id="hs-labs">0</span><span class="hk">laboratoriya</span></div>
+            <div class="hs"><span class="hv" id="hs-students" title="O‘qituvchilar bildirgan o‘quvchilar soni va bevosita o‘quvchi hisoblari asosidagi taxminiy qamrov">—</span><span class="hk">qamrov</span></div>
+            <div class="hs"><span class="hv" id="hs-teachers">—</span><span class="hk">o‘qituvchi</span></div>
+            <div class="hs"><span class="hv" id="hs-topics">—</span><span class="hk">mavzu</span></div>
+            <div class="hs"><span class="hv" id="hs-labs">—</span><span class="hk">laboratoriya</span></div>
           </div>
           <div class="hero-meta" hidden>
           </div>
@@ -394,7 +394,7 @@ section{position:relative}
         </div>
         <aside class="tutor" aria-live="polite">
           <div class="fade" id="tutor-inner">
-            <div id="chat"><div class="tutor-head"><span class="spark"></span>Ustoz, o‘zbek tilida tushuntiradi</div></div>
+            <div id="chat"><div class="tutor-head"><span class="spark"></span>O‘zbekcha yordamchi · namuna</div></div>
           </div>
         </aside>
       </div>
@@ -462,12 +462,12 @@ section{position:relative}
         <div class="step">
           <div class="no">3</div>
           <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40c9 0 16-7 16-16S33 8 24 8 8 15 8 24"/><path d="M8 24l-4-4M8 24l4-4"/><circle cx="24" cy="24" r="5"/></svg></div>
-          <div><h3>O‘quvchi o‘zi quradi va o‘lchaydi</h3><p>Asboblarni ulaydi, tajribani o‘tkazadi va natijani 3D da ko‘radi. Ustoz har qadamda yo‘l ko‘rsatib turadi.</p></div>
+          <div><h3>O‘quvchi o‘zi quradi va o‘lchaydi</h3><p>Asboblarni ulaydi, tajribani o‘tkazadi va natijani 3D da ko‘radi. Ko‘rsatmalar va maslahatlar tajribani bajarishga yordam beradi.</p></div>
         </div>
         <div class="step">
           <div class="no">4</div>
           <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="7" width="30" height="34" rx="3"/><path d="M15 16h12M15 23h18M15 30h9"/><circle cx="33" cy="16" r="2.4" fill="currentColor" stroke="none"/></svg></div>
-          <div><h3>O‘qituvchi hisobot oladi</h3><p>Har bir o‘quvchi bo‘yicha: qaysi qadamda qiynaldi, nimani tushundi, qancha vaqt sarfladi — tayyor ko‘rinishda.</p></div>
+          <div><h3>Sinf hisobotlari tayyorlanmoqda</h3><p>Keyingi bosqichda o‘quvchilarning tajriba natijalarini sinf bo‘yicha kuzatish imkonini qo‘shamiz.</p></div>
         </div>
       </div>
     </div>
@@ -480,8 +480,8 @@ section{position:relative}
     <div class="wrap split">
       <div>
         <span class="kicker"><span class="sec">§</span>O‘qituvchiga</span>
-        <h2 class="h2" id="teach-title">Har bir o‘quvchi uchun — tayyor hisobot.</h2>
-        <p class="lead-p">Daftar tekshirishga ketadigan vaqtni tejang. Empira o‘quvchi aslida nima qilganidan hisobot va izoh tayyorlaydi; siz faqat ko‘rib chiqasiz va tasdiqlaysiz.</p>
+        <h2 class="h2" id="teach-title">Sinf hisobotlari — keyingi bosqich.</h2>
+        <p class="lead-p">Hozir o‘quvchilaringiz bilan tayyor laboratoriyalarni oching va tajriba o‘tkazing. Quyida kelajakdagi sinf hisobotining namunasi ko‘rsatilgan.</p>
         <div class="class-chip">Sinf hisoboti (namuna): o‘quvchilarning <b>60%</b> parallel ulanishda qiynalgan.</div>
         <br>
         <a class="teach-link" href="teacher/index.html">O‘qituvchi panelini ko‘rish
@@ -519,7 +519,7 @@ section{position:relative}
         </div>
         <div class="feat-card">
           <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/><path d="M8 9h8M8 12h5"/></svg></div>
-          <h3>Ona tilidagi ustoz</h3>
+          <h3>Ona tilidagi ko‘rsatmalar</h3>
           <p>Nima bo‘layotganini sodda tushuntiradi va xatoni o‘zing topishingga yo‘naltiradi.</p>
         </div>
         <div class="feat-card">
@@ -541,7 +541,7 @@ section{position:relative}
       <p class="lead-p">Chet el platformalari kuchli, lekin ular o‘zbek sinfi uchun yaratilmagan. Empira aynan shu bo‘shliqni to‘ldiradi.</p>
       <div class="value-grid">
         <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Milliy o‘quv dasturiga mos</h3><p>Tajribalar darslikdagi mavzular va ularning tartibi bo‘yicha tuzilgan.</p></div></div>
-        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>To‘liq ona tilida</h3><p>Interfeys ham, ustoz ham, hisobot ham — hammasi o‘zbek tilida.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>To‘liq ona tilida</h3><p>Mavzular, ko‘rsatmalar va tajriba savollari — o‘zbek tilida.</p></div></div>
         <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Hech narsa o‘rnatilmaydi</h3><p>Brauzerda ochiladi; kuchli kompyuter yoki maxsus jihoz talab qilmaydi.</p></div></div>
         <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Fizikadan boshlab, barcha laboratoriya fanlari</h3><p>Fizika (7–8-sinf) hozir tayyor; kimyo va biologiya bosqichma-bosqich qo‘shiladi.</p></div></div>
       </div>
@@ -638,9 +638,9 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", liveUrl: 
     $('lab-title').textContent=L.title;frame.title=L.frameTitle;
     const s=$('slider');s.min=L.min;s.max=L.max;s.step=L.step;s.value=vals[L.id];s.setAttribute('aria-label',L.sliderLabel);$('slider-label').textContent=L.sliderLabel;
     $('task-text-d').textContent=L.task;
-    const chat=$('chat');chat.innerHTML='<div class="tutor-head"><span class="spark"></span>Ustoz, o‘zbek tilida tushuntiradi</div>';
+    const chat=$('chat');chat.innerHTML='<div class="tutor-head"><span class="spark"></span>O‘zbekcha yordamchi · namuna</div>';
     const cls=['ai','me','ai'];L.chat.forEach((t,i)=>{const d=document.createElement('div');d.className='bubble '+cls[i];d.textContent=t;chat.appendChild(d);});
-    const note=document.createElement('div');note.className='tutor-note';note.innerHTML='<span class="spark"></span>Har bir qadam o‘qituvchi hisobotiga yoziladi';chat.appendChild(note);
+    const note=document.createElement('div');note.className='tutor-note';note.innerHTML='<span class="spark"></span>Namuna ko‘rinishi · sinf hisobotlari tayyorlanmoqda';chat.appendChild(note);
     renderReadouts();}
 
   function pick(i){if(i===current)return;const fades=[$('scene-overlay'),$('tutor-inner')];
@@ -682,35 +682,45 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", liveUrl: 
 <script>
 (function(){
   var SB_URL="https://bxxpukjszidkcbuewbcf.supabase.co", SB_KEY="sb_publishable_OxQzGLAdRWcCX06JnzEN7A_cRrRyMBM";
-  var TOPICS=12, LABS=88; // platformadagi mavzu va laboratoriya soni
-  function animate(el,to){ if(!el) return; var dur=1500,t0=null;
-    function step(now){ if(!t0)t0=now; var p=Math.min((now-t0)/dur,1); var e=1-Math.pow(1-p,3);
-      el.textContent=Math.round(e*to).toLocaleString('en-US').replace(/,/g,' '); if(p<1)requestAnimationFrame(step); }
-    requestAnimationFrame(step); }
-  function render(d){
-    animate(document.getElementById('hs-students'), d.students||0);
-    animate(document.getElementById('hs-teachers'), d.teachers||0);
-    animate(document.getElementById('hs-topics'), TOPICS);
-    animate(document.getElementById('hs-labs'), LABS);
-  }
-  function go(){
-    var d={students:0,teachers:0}, fired=false;
-    var el=document.getElementById('hero-stats');
-    function run(){ if(fired)return; fired=true; render(d); }
-    function arm(){
-      if('IntersectionObserver' in window && el){
-        var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ run(); io.disconnect(); } }); }, {threshold:0.4});
-        io.observe(el);
-      } else { run(); }
+  var counts={},painted={},visible=false;
+  function animate(el,to){
+    var start=null;
+    function step(now){if(start===null)start=now;var p=Math.min((now-start)/1000,1);
+      el.textContent=Math.round((1-Math.pow(1-p,3))*to).toLocaleString('en-US').replace(/,/g,' ');
+      if(p<1)requestAnimationFrame(step);
     }
-    try{
-      if(window.supabase){
-        var sb=window.supabase.createClient(SB_URL,SB_KEY);
-        sb.rpc('public_stats').then(function(r){ if(r&&r.data){ d.students=r.data.students||0; d.teachers=r.data.teachers||0; } arm(); }).catch(arm);
-      } else { arm(); }
-    }catch(e){ arm(); }
+    requestAnimationFrame(step);
   }
-  if(document.readyState!=='loading') go(); else document.addEventListener('DOMContentLoaded', go);
+  function render(){
+    if(!visible)return;
+    Object.keys(counts).forEach(function(key){
+      var value=counts[key],el=document.getElementById('hs-'+key);
+      if(el&&Number.isFinite(value)&&value>=0&&painted[key]!==value){painted[key]=value;animate(el,value);}
+    });
+  }
+  function unavailable(keys){
+    keys.forEach(function(key){var el=document.getElementById('hs-'+key);if(el)el.title='Hozir sonni yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring.';});
+  }
+  function bounded(p){return Promise.race([p,new Promise(function(_,reject){setTimeout(function(){reject(new Error('timeout'));},6000);})]);}
+  function go(){
+    var el=document.getElementById('hero-stats');
+    if('IntersectionObserver' in window&&el){
+      var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){visible=true;render();io.disconnect();}},{threshold:0.1});io.observe(el);
+    }else{visible=true;}
+    bounded(fetch('https://test.empira.uz/api/catalog').then(function(r){if(!r.ok)throw new Error('catalog');return r.json();}))
+      .then(function(d){['topics','labs'].forEach(function(k){if(Number.isInteger(d[k])&&d[k]>=0)counts[k]=d[k];});render();})
+      .catch(function(){unavailable(['topics','labs']);});
+    try{
+      if(!window.supabase)throw new Error('stats');
+      var sb=window.supabase.createClient(SB_URL,SB_KEY);
+      bounded(sb.rpc('public_stats')).then(function(r){
+        if(r.error||!r.data)throw new Error('stats');
+        ['students','teachers'].forEach(function(k){var n=Number(r.data[k]);if(r.data[k]!=null&&Number.isFinite(n)&&n>=0)counts[k]=n;});
+        render();
+      }).catch(function(){unavailable(['students','teachers']);});
+    }catch(e){unavailable(['students','teachers']);}
+  }
+  if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 })();
 </script>
 </body>
