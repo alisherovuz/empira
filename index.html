@@ -297,7 +297,7 @@ section{position:relative}
       <a href="#nega">Nega Empira</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-blue btn-sm" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+      <a class="btn btn-blue btn-sm" href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
       <button class="menu-btn" aria-label="Menyu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
@@ -307,7 +307,7 @@ section{position:relative}
       <a href="#oqituvchi">O‘qituvchiga</a>
       <a href="#oquvchi">O‘quvchiga</a>
       <a href="#nega">Nega Empira</a>
-      <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+      <a class="btn btn-blue" href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
     </nav>
   </div>
 </header>
@@ -322,7 +322,7 @@ section{position:relative}
           <h1>Har bir tajriba qog‘ozdan chiqib, o‘quvchining qo‘liga ko‘chadi.</h1>
           <p class="hero-sub">Empira — O‘zbek maktablari uchun brauzerda ochiladigan 3D virtual laboratoriya. O‘quvchi darslikdagi tajribani o‘zi yig‘adi, o‘lchaydi va natijani o‘z ko‘zi bilan ko‘radi. Asbob ham, alohida xona ham kerak emas.</p>
           <div class="hero-cta">
-            <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+            <a class="btn btn-blue" href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
             <a class="btn btn-ghost" href="#qanday">Qanday ishlaydi</a>
           </div>
           <div class="hero-stats" id="hero-stats">
@@ -335,7 +335,7 @@ section{position:relative}
 
         <div class="hero-fig">
           <div class="hero-lab">
-            <div class="hero-lab-head"><strong>Om qonuni · 3D stol</strong><a class="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya</a></div>
+            <div class="hero-lab-head"><strong>Om qonuni · 3D stol</strong><a class="open-lab" href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya</a></div>
             <div class="hero-scene" id="hero-scene">
               <iframe id="hero-frame" title="Om qonuni 3D laboratoriyasi" loading="eager"></iframe>
               <img id="hero-poster" src="./assets/lab-preview.jpg" alt="Empira 3D fizika laboratoriyasi" aria-hidden="true">
@@ -383,7 +383,7 @@ section{position:relative}
         <div class="scene-card">
           <div class="scene-head">
             <strong id="lab-title">Fizika · Om qonuni · 3D stol</strong>
-            <span class="right"><span id="drag-hint">Burish uchun torting</span><a class="open-lab" id="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya →</a></span>
+            <span class="right"><span id="drag-hint">Burish uchun torting</span><a class="open-lab" id="open-lab" href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya →</a></span>
           </div>
           <div class="scene">
             <iframe id="scene-frame" title="Om qonuni 3D laboratoriyasi" loading="lazy"></iframe>
@@ -561,7 +561,7 @@ section{position:relative}
       <h2 id="cta-title">Bitta tajribadan boshlang.</h2>
       <p>Ro‘yxatdan o‘tish bir daqiqa oladi. Fikr yoki taklifingiz bo‘lsa, yozing: har bir xabarni o‘qiymiz.</p>
       <div class="cta-actions">
-        <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+        <a class="btn btn-blue" href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
               </div>
       <div class="cta-contacts">
         <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram: @empira</a>
@@ -575,7 +575,7 @@ section{position:relative}
   <div class="wrap footer-in">
     <div class="footer-brand"><img src="./assets/full-logo-dark.svg" alt="Empira"><span>© 2026 Empira</span></div>
     <nav class="footer-nav" aria-label="Pastki menyu">
-      <a href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Kirish</a>
+      <a href="https://app.empira.uz/dashboard" target="_blank" rel="noopener">Kirish</a>
       <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram</a>
       <a href="#" data-email-link>Email</a>
     </nav>
@@ -713,7 +713,7 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
     if('IntersectionObserver' in window&&el){
       var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){visible=true;render();io.disconnect();}},{threshold:0.1});io.observe(el);
     }else{visible=true;}
-    bounded(fetch('https://test.empira.uz/api/catalog').then(function(r){if(!r.ok)throw new Error('catalog');return r.json();}))
+    bounded(fetch('https://app.empira.uz/api/catalog').then(function(r){if(!r.ok)throw new Error('catalog');return r.json();}))
       .then(function(d){['topics','labs'].forEach(function(k){if(Number.isInteger(d[k])&&d[k]>0)counts[k]=d[k];else unavailable([k]);});render();})
       .catch(function(){unavailable(['topics','labs']);});
     bounded(fetch(SB_URL+'/rest/v1/rpc/public_stats',{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'content-type':'application/json'},body:'{}'}).then(function(r){if(!r.ok)throw new Error('stats');return r.json();}))
