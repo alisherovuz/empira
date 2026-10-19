@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Empira — maktab fizikasi uchun 3D laboratoriya</title>
-<meta name="description" content="Empira — brauzerda ochiladigan 3D laboratoriya. 7–8-sinf fizikasidagi tajribalarni o‘quvchi o‘zi yig‘adi, o‘lchaydi va natijani ko‘radi. O‘zbek tilida, hech narsa o‘rnatmasdan.">
+<title>Empira — laboratoriya fanlari uchun 3D virtual laboratoriya</title>
+<meta name="description" content="Empira — O‘zbek maktablari uchun 3D virtual laboratoriya. Fizika, kimyo, biologiya tajribalarini o‘quvchi o‘zi yig‘adi, o‘lchaydi va natijani ko‘radi. Hammasi ona tilida, brauzerning o‘zida.">
 <meta name="theme-color" content="#F6F7FB">
 <link rel="canonical" href="https://empira.uz/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://empira.uz/">
-<meta property="og:title" content="Empira — maktab fizikasi uchun 3D laboratoriya">
-<meta property="og:description" content="7–8-sinf fizikasidagi tajribalarni o‘quvchi o‘zi yig‘adi va o‘lchaydi. O‘zbek tilida, brauzerda, asbobsiz.">
+<meta property="og:title" content="Empira — O‘zbek maktablari uchun 3D virtual laboratoriya">
+<meta property="og:description" content="Fizika, kimyo, biologiya tajribalarini o‘quvchi o‘zi yig‘adigan 3D laboratoriya. Ona tilida, brauzerda, asbobsiz.">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,21 +67,16 @@ img,svg{display:block;max-width:100%}
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
 .hero::before{content:"";position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:27px 27px;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);opacity:.9}
 .hero .wrap{position:relative;z-index:1}
-.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center;padding:38px 0 46px}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center;padding:62px 0 72px}
 .badge{display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 14px 0 11px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-size:13.5px;color:var(--ink2);font-weight:500;box-shadow:var(--shadow)}
 .badge .cup{width:15px;height:15px;color:var(--amber)}
 h1{font-size:clamp(38px,5.1vw,62px);font-weight:800}
-.hero-sub{margin-top:15px;font-size:18px;color:var(--ink2);max-width:33ch}
-.hero-cta{display:flex;gap:13px;margin-top:22px;flex-wrap:wrap}
+.hero-sub{margin-top:22px;font-size:19px;color:var(--ink2);max-width:33ch}
+.hero-cta{display:flex;gap:13px;margin-top:30px;flex-wrap:wrap}
 .hero-meta{display:flex;align-items:center;gap:16px;margin-top:26px;font-size:14.5px;color:var(--ink3);flex-wrap:wrap}
 .hero-meta span{display:inline-flex;align-items:center}
 .hero-meta span+span{padding-left:16px;border-left:1px solid var(--line)}
 .hero-meta b{color:var(--ink);font-weight:600}
-.hero-stats{display:flex;gap:30px;margin-top:20px;flex-wrap:wrap}
-.hs{display:flex;flex-direction:column}
-.hs .hv{font-family:var(--sora);font-weight:800;font-size:34px;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
-.hs .hk{font-size:13.5px;color:var(--ink3);margin-top:6px}
-@media (max-width:760px){.hero-stats{gap:18px 26px;margin-top:18px}.hs .hv{font-size:26px}.hs .hk{font-size:12.5px}}
 
 /* hero 3D lab */
 .hero-lab{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lab);overflow:hidden}
@@ -246,7 +241,7 @@ section{position:relative}
 
 /* ---------- responsive ---------- */
 @media (max-width:920px){
-  .hero-grid{grid-template-columns:1fr;gap:26px;padding:24px 0 34px}
+  .hero-grid{grid-template-columns:1fr;gap:38px;padding:44px 0 56px}
   .hero-sub{max-width:46ch}
   .split{grid-template-columns:1fr;gap:30px}
   .lab-grid{grid-template-columns:1fr}
@@ -270,19 +265,6 @@ section{position:relative}
   .report-metrics{grid-template-columns:1fr 1fr}
 }
 :focus-visible{outline:3px solid var(--blue-300);outline-offset:2px;border-radius:6px}
-/* savol paneli */
-.quiz{display:flex;flex-direction:column;gap:16px;transition:opacity .2s ease}
-.quiz.out{opacity:0}
-.quiz .ql{font-family:var(--sora);font-weight:600;font-size:12.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.quiz .qq{font-family:var(--sora);font-weight:600;font-size:18px;line-height:1.35}
-.quiz .qt{font-size:15px;color:var(--ink2);padding:12px 14px;border-radius:12px;background:var(--blue-050)}
-.quiz button{appearance:none;align-self:flex-start;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;font-family:var(--sora);font-weight:600;font-size:14px;color:var(--ink);cursor:pointer}
-.quiz button:hover{border-color:var(--ink3)}
-.quiz .qa{font-size:15px;color:var(--ink);border-left:3px solid var(--amber);padding-left:12px}
-.feat-card li{margin-top:0}
-.feat-card.later{background:var(--paper);box-shadow:none}
-.feat-card.later .fig{background:var(--mist)}
-.feat-card.later .fig svg{color:var(--ink3)}
 </style>
 </head>
 <body>
@@ -297,7 +279,7 @@ section{position:relative}
       <a href="#nega">Nega Empira</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-blue btn-sm" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+      <a class="btn btn-blue btn-sm" href="https://test.empira.uz" target="_blank" rel="noopener">Laboratoriyani ochish</a>
       <button class="menu-btn" aria-label="Menyu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
@@ -307,7 +289,7 @@ section{position:relative}
       <a href="#oqituvchi">O‘qituvchiga</a>
       <a href="#oquvchi">O‘quvchiga</a>
       <a href="#nega">Nega Empira</a>
-      <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+      <a class="btn btn-blue" href="https://test.empira.uz" target="_blank" rel="noopener">Laboratoriyani ochish</a>
     </nav>
   </div>
 </header>
@@ -319,23 +301,23 @@ section{position:relative}
     <div class="wrap">
       <div class="hero-grid">
         <div class="hero-copy">
-          <h1>Fizikani o‘qibgina emas, qilib o‘rganing.</h1>
-          <p class="hero-sub">Empira — brauzerda ochiladigan 3D laboratoriya. O‘quvchi darslikdagi tajribani o‘zi yig‘adi, o‘lchaydi va natijani o‘z ko‘zi bilan ko‘radi. Asbob ham, alohida xona ham kerak emas.</p>
+          <span class="badge"><svg class="cup" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v2h3v3a4 4 0 0 1-4 4h-.3A6 6 0 0 1 13 16.9V19h3v2H8v-2h3v-2.1A6 6 0 0 1 7.3 12H7a4 4 0 0 1-4-4V5h3V3Zm0 4H5v1a2 2 0 0 0 1 1.7V7Zm12 0v2.7A2 2 0 0 0 19 8V7h-1Z"/></svg>Milliy sun’iy intellekt xakatoni, Namangan bosqichi g‘olibi</span>
+          <h1>Har bir tajriba qog‘ozdan chiqib, o‘quvchining qo‘liga ko‘chadi.</h1>
+          <p class="hero-sub">Empira — O‘zbek maktablari uchun 3D virtual laboratoriya. Fizika, kimyo, biologiya: o‘quvchi har bir tajribani o‘zi yig‘adi, o‘lchaydi va natijani ko‘radi. Na asbob, na alohida xona kerak.</p>
           <div class="hero-cta">
-            <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
+            <a class="btn btn-blue" href="https://test.empira.uz" target="_blank" rel="noopener">Laboratoriyani ochish</a>
             <a class="btn btn-ghost" href="#qanday">Qanday ishlaydi</a>
           </div>
-          <div class="hero-stats" id="hero-stats">
-            <div class="hs"><span class="hv" id="hs-students" title="O‘qituvchilar bildirgan o‘quvchilar soni va bevosita o‘quvchi hisoblari asosidagi taxminiy qamrov">—</span><span class="hk">o‘quvchi</span></div>
-            <div class="hs"><span class="hv" id="hs-teachers">—</span><span class="hk">o‘qituvchi</span></div>
-            <div class="hs"><span class="hv" id="hs-topics">—</span><span class="hk">mavzu</span></div>
-            <div class="hs"><span class="hv" id="hs-labs">—</span><span class="hk">laboratoriya</span></div>
+          <div class="hero-meta">
+            <span><b>Fizikadan 88</b>&nbsp;ta tajriba tayyor</span>
+            <span>Kimyo, biologiya&nbsp;<b>yo‘lda</b></span>
+            <span>Ro‘yxatdan o‘tishsiz</span>
           </div>
         </div>
 
         <div class="hero-fig">
           <div class="hero-lab">
-            <div class="hero-lab-head"><strong>Om qonuni · 3D stol</strong><a class="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya</a></div>
+            <div class="hero-lab-head"><strong>Om qonuni · 3D stol</strong><a class="open-lab" href="https://test.empira.uz" target="_blank" rel="noopener">To‘liq laboratoriya</a></div>
             <div class="hero-scene" id="hero-scene">
               <iframe id="hero-frame" title="Om qonuni 3D laboratoriyasi" loading="eager"></iframe>
               <img id="hero-poster" src="./assets/lab-preview.jpg" alt="Empira 3D fizika laboratoriyasi" aria-hidden="true">
@@ -357,15 +339,15 @@ section{position:relative}
       <span class="lbl">Fanlar:</span>
       <span class="subj live">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.3"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(120 12 12)"/></svg>
-        <b>Fizika</b><span class="st on">7–8-sinf</span>
+        <b>Fizika</b><span class="st on">Tayyor</span>
       </span>
       <span class="subj">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5.5 9.3A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.7L14 9V3"/><path d="M7.5 15h9"/></svg>
-        <b>Kimyo</b><span class="st soon">Tayyorlanmoqda</span>
+        <b>Kimyo</b><span class="st soon">Tez orada</span>
       </span>
       <span class="subj">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20C6 20 4 15 4 11c0-4 1-7 1-7s8 0 11 4c2.8 3.5 1.5 9-3 11-2 .9-4 1-4 1Z"/><path d="M5 20c3-6 7-9 11-11"/></svg>
-        <b>Biologiya</b><span class="st soon">Tayyorlanmoqda</span>
+        <b>Biologiya</b><span class="st soon">Tez orada</span>
       </span>
     </div>
   </section>
@@ -374,16 +356,16 @@ section{position:relative}
   <section class="block" aria-labelledby="try-title">
     <div class="wrap">
       <div class="lab-head">
-        <span class="kicker"><span class="sec">§</span>Sinab ko‘ring</span>
-        <h2 class="h2" id="try-title">Bu rasm emas. Slayderni surib ko‘ring.</h2>
-        <p class="lead-p">Stolni aylantiring, qiymatni o‘zgartiring va asboblar nimani ko‘rsatishini kuzating. Ro‘yxatdan o‘tgach, shunday tajribalarni noldan o‘zingiz yig‘asiz.</p>
+        <span class="kicker"><span class="sec">§</span>Haqiqiy tajriba</span>
+        <h2 class="h2" id="try-title">Mana — haqiqiy Empira tajribasi.</h2>
+        <p class="lead-p">Stolni burab ko‘ring, qarshilikni o‘zgartiring va asboblardagi raqamlar jonli o‘zgarishini kuzating. Namuna fizikadan — kimyo va biologiya ham xuddi shu tarzda ishlaydi.</p>
         <div class="tabs" role="tablist" aria-label="Tajribani tanlang" id="tabs"></div>
       </div>
       <div class="lab-grid">
         <div class="scene-card">
           <div class="scene-head">
             <strong id="lab-title">Fizika · Om qonuni · 3D stol</strong>
-            <span class="right"><span id="drag-hint">Burish uchun torting</span><a class="open-lab" id="open-lab" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">To‘liq laboratoriya →</a></span>
+            <span class="right"><span id="drag-hint">Burish uchun torting</span><a class="open-lab" id="open-lab" href="https://test.empira.uz" target="_blank" rel="noopener">To‘liq laboratoriya</a></span>
           </div>
           <div class="scene">
             <iframe id="scene-frame" title="Om qonuni 3D laboratoriyasi" loading="lazy"></iframe>
@@ -392,8 +374,9 @@ section{position:relative}
               <div class="pills">
                 <div class="pill"><span id="ra">Kuchlanish</span><strong id="rav">6 V</strong></div>
                 <div class="pill"><span id="rb">Qarshilik</span><strong id="rbv">10 Ω</strong></div>
-                <div class="pill hot" id="result-pill"><span id="rc">Tok</span><strong id="rcv">0,6 A</strong></div>
+                <div class="pill hot" id="result-pill"><span class="pdot"></span><span id="rc">Tok</span><strong id="rcv">0,6 A</strong></div>
               </div>
+              <div class="task" id="task-desktop"><span class="task-badge" id="task-badge-d">Savol</span><span id="task-text-d">Qarshilik ikki barobar oshsa, tok qanday o‘zgaradi?</span></div>
             </div>
           </div>
           <label class="slider-row">
@@ -402,11 +385,10 @@ section{position:relative}
             <span class="slider-val"><b id="slider-text">10 Ω</b><span id="formula">I = 6 ÷ R = 0,6 A</span></span>
           </label>
         </div>
-        <aside class="tutor quiz" id="quiz" aria-live="polite">
-          <div><div class="ql">Savol</div><div class="qq" id="q-text"></div></div>
-          <div class="qt" id="q-try"></div>
-          <button type="button" id="q-btn" aria-expanded="false">Javobni ko‘rish</button>
-          <p class="qa" id="q-ans" hidden></p>
+        <aside class="tutor" aria-live="polite">
+          <div class="fade" id="tutor-inner">
+            <div id="chat"><div class="tutor-head"><span class="spark"></span>Ustoz, o‘zbek tilida tushuntiradi</div></div>
+          </div>
         </aside>
       </div>
     </div>
@@ -418,26 +400,38 @@ section{position:relative}
   <section class="block" aria-labelledby="why-title">
     <div class="wrap">
       <span class="kicker"><span class="sec">§</span>Muammo</span>
-      <h2 class="h2" id="why-title">Darslikda tajriba bor. Maktabda esa asbob yo‘q.</h2>
-      <p class="lead-p">Fizika qo‘l bilan tekshirib ko‘rganda tushuniladi. Lekin ko‘p maktabda laboratoriya xonasi yo‘q yoki asbob butun sinfga yetmaydi. Natijada o‘quvchi Om qonunini sinab ko‘rmaydi, shunchaki yodlaydi.</p>
+      <h2 class="h2" id="why-title">Laboratoriya fanlari hamon qog‘ozda o‘qitiladi.</h2>
+      <p class="lead-p">Fizika, kimyo, biologiya — tajriba talab qiladigan fanlar. Lekin o‘quvchi tajribani ko‘zi bilan ko‘rsa ham, qo‘li bilan bajarmaydi. Shu sabab ular qiziq fandan quruq formulaga aylanib qoladi.</p>
       <div class="why-grid">
         <div class="why-item">
           <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="7" width="30" height="34" rx="3"/><path d="M15 15h18M15 22h18M15 29h11"/></svg>
-          <h3>Tajriba faqat rasmda</h3>
-          <p>Darslikda chizilgan tajribani o‘quvchi o‘qiydi, lekin o‘zi o‘tkazib ko‘rmaydi.</p>
+          <h3>Tajriba — faqat rasm</h3>
+          <p>Darslikdagi tajriba qotib qolgan rasm. O‘quvchi uni o‘qiydi, biroq o‘zi o‘tkazmaydi.</p>
         </div>
         <div class="why-item">
           <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40V12l16-5 16 5v28"/><path d="M8 40h32M18 40V26h12v14"/></svg>
-          <h3>Asbob yetmaydi</h3>
-          <p>Jihozlangan fizika xonasi hamma maktabda yo‘q. Bor joyda ham asbob butun sinfga yetmaydi.</p>
+          <h3>Laboratoriya kam</h3>
+          <p>Ko‘p maktabda jihozlangan fizika xonasi yo‘q yoki butun sinfga yetarli emas.</p>
         </div>
         <div class="why-item">
           <svg class="fig" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6c-7 0-12 5-12 12 0 5 3 8 5 11 1 2 2 4 2 6h10c0-2 1-4 2-6 2-3 5-6 5-11 0-7-5-12-12-12Z"/><path d="M19 41h10"/></svg>
-          <h3>Formula yodlanadi</h3>
-          <p>Tushunmasdan yodlangan formula imtihondan keyin tez esdan chiqadi.</p>
+          <h3>Natija — yodlash</h3>
+          <p>O‘quvchi tushunish o‘rniga formulani yodlaydi va imtihondan keyin unutadi.</p>
         </div>
       </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="num">10%</div>
+          <div class="cap">Tabiiy fanlar darslarining atigi o‘ndan biri amaliy o‘tiladi. Rivojlangan davlatlarda bu ko‘rsatkich 30–50%.</div>
+          <div class="src">Manba: maktab ta’limiga bag‘ishlangan yig‘ilish ma’lumotlari.</div>
+        </div>
+        <div class="stat">
+          <div class="num">300<small> / 1 500</small></div>
+          <div class="cap">Ko‘rikdan o‘tkazilgan 1 500 maktabning 300 tasida zamonaviy laboratoriya umuman bo‘lmagan.</div>
+          <div class="src">Manba: ta’lim sohasidagi ochiq hisobot ma’lumotlari.</div>
+        </div>
       </div>
+    </div>
   </section>
 
   <hr class="rule">
@@ -446,22 +440,27 @@ section{position:relative}
   <section class="block" id="qanday" aria-labelledby="how-title">
     <div class="wrap">
       <span class="kicker"><span class="sec">§</span>Qanday ishlaydi</span>
-      <h2 class="h2" id="how-title">Darslik mavzusidan tajribagacha — uch qadam.</h2>
+      <h2 class="h2" id="how-title">Darslik mavzusidan tirik tajribagacha — to‘rt qadamda.</h2>
       <div class="steps">
         <div class="step">
           <div class="no">1</div>
           <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="9" width="34" height="30" rx="3"/><path d="M7 33l9-8 7 6 8-9 10 10"/><circle cx="17" cy="18" r="3"/></svg></div>
-          <div><h3>Mavzuni toping</h3><p>Sinf va mavzuni ro‘yxatdan tanlang. Yoki darslik sahifasini suratga oling, mos tajriba o‘zi chiqadi.</p></div>
+          <div><h3>Mavzuni tanlang yoki sahifani suratga oling</h3><p>Masalan, Om qonuni yoki kislota-ishqor reaksiyasi. Yoki darslik sahifasini suratga oling — kerakli mavzu o‘zi aniqlanadi.</p></div>
         </div>
         <div class="step">
           <div class="no">2</div>
           <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6v6M24 36v6M6 24h6M36 24h6M11 11l4 4M33 33l4 4M37 11l-4 4M15 33l-4 4"/><circle cx="24" cy="24" r="8"/></svg></div>
-          <div><h3>Tajribani yig‘ing</h3><p>Tayyor stolni ko‘rib chiqing yoki asboblarni o‘zingiz tanlab, simlarini ulab, noldan yig‘ing. Xato ulansa, qayerda ekanini ko‘rsatadi.</p></div>
+          <div><h3>Tajriba yig‘iladi</h3><p>Mavzuga mos asboblar tanlanadi va 3D stol tayyorlanadi: ampermetr, dinamometr yoki probirka — nima kerak bo‘lsa.</p></div>
         </div>
         <div class="step">
           <div class="no">3</div>
           <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40c9 0 16-7 16-16S33 8 24 8 8 15 8 24"/><path d="M8 24l-4-4M8 24l4-4"/><circle cx="24" cy="24" r="5"/></svg></div>
-          <div><h3>O‘lchang va xulosa qiling</h3><p>Qiymatlarni o‘zgartiring, natijalarni jadvalga yozing va qonuniyatni o‘zingiz toping.</p></div>
+          <div><h3>O‘quvchi o‘zi quradi va o‘lchaydi</h3><p>Asboblarni ulaydi, tajribani o‘tkazadi va natijani 3D da ko‘radi. Ustoz har qadamda yo‘l ko‘rsatib turadi.</p></div>
+        </div>
+        <div class="step">
+          <div class="no">4</div>
+          <div class="tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="7" width="30" height="34" rx="3"/><path d="M15 16h12M15 23h18M15 30h9"/><circle cx="33" cy="16" r="2.4" fill="currentColor" stroke="none"/></svg></div>
+          <div><h3>O‘qituvchi hisobot oladi</h3><p>Har bir o‘quvchi bo‘yicha: qaysi qadamda qiynaldi, nimani tushundi, qancha vaqt sarfladi — tayyor ko‘rinishda.</p></div>
         </div>
       </div>
     </div>
@@ -471,24 +470,28 @@ section{position:relative}
 
   <!-- TEACHERS -->
   <section class="block" id="oqituvchi" aria-labelledby="teach-title">
-    <div class="wrap">
-      <span class="kicker"><span class="sec">§</span>O‘qituvchiga</span>
-      <h2 class="h2" id="teach-title">Tajribani butun sinfga ko‘rsating.</h2>
-      <div class="feat">
-        <div class="feat-card">
-          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
-          <h3>Doskada yoki proyektorda</h3>
-          <p>Laboratoriyani ochasiz va tajribani butun sinf bir vaqtda ko‘radi. Asbob tarqatish shart emas.</p>
-        </div>
-        <div class="feat-card">
-          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01"/></svg></div>
-          <h3>“Nima bo‘ladi?” deb so‘rang</h3>
-          <p>Qiymatni dars davomida o‘zgartirib, sinf bilan birga taxmin qilasiz va darhol tekshirasiz.</p>
-        </div>
-        <div class="feat-card later">
-          <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
-          <h3>Sinf hisobotlari</h3>
-          <p>Kim qayerda qiynalganini ko‘rsatadigan hisobotlar ustida ishlayapmiz.</p>
+    <div class="wrap split">
+      <div>
+        <span class="kicker"><span class="sec">§</span>O‘qituvchiga</span>
+        <h2 class="h2" id="teach-title">Har bir o‘quvchi uchun — tayyor hisobot.</h2>
+        <p class="lead-p">Daftar tekshirishga ketadigan vaqtni tejang. Empira o‘quvchi aslida nima qilganidan hisobot va izoh tayyorlaydi; siz faqat ko‘rib chiqasiz va tasdiqlaysiz.</p>
+        <div class="class-chip">Sinf hisoboti (namuna): o‘quvchilarning <b>60%</b> parallel ulanishda qiynalgan.</div>
+        <br>
+        <a class="teach-link" href="teacher/index.html">O‘qituvchi panelini ko‘rish
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="report">
+        <div class="report-top"><span class="tag">Namuna hisobot</span><span class="meta">Om qonuni · 12 daqiqa · 2 xato</span></div>
+        <div class="report-body">
+          <div class="report-row"><span class="name">Aziz R.</span><span class="chip">8-sinf</span><span class="chip">Elektr</span></div>
+          <div class="report-metrics">
+            <div class="metric good"><span>Tushunish</span><b>Yaxshi</b></div>
+            <div class="metric"><span>Yordam so‘radi</span><b>0 marta</b></div>
+            <div class="metric"><span>Mustaqillik</span><b>Yuqori</b></div>
+          </div>
+          <p class="report-note">Ampermetrni avval ikki marta noto‘g‘ri uladi, so‘ng o‘zi tuzatdi. Om qonunini tushundi; parallel ulanishda hali ishonchi to‘liq emas.</p>
+          <div class="report-next"><span class="dot"></span>Keyingi mavzu: parallel ulanish</div>
         </div>
       </div>
     </div>
@@ -500,22 +503,22 @@ section{position:relative}
   <section class="block" id="oquvchi" aria-labelledby="stu-title">
     <div class="wrap">
       <span class="kicker"><span class="sec">§</span>O‘quvchiga</span>
-      <h2 class="h2" id="stu-title">Kuzatib qolmaysiz, o‘zingiz qilasiz.</h2>
+      <h2 class="h2" id="stu-title">Bu — video emas, o‘zing boshqaradigan laboratoriya.</h2>
       <div class="feat">
         <div class="feat-card">
           <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
-          <h3>Noldan yig‘ing</h3>
-          <p>Kerakli asbobni o‘zingiz tanlaysiz, simlarni ulaysiz. Tajriba to‘g‘ri yig‘ilsagina ishlaydi.</p>
+          <h3>Haqiqiy 3D tajriba</h3>
+          <p>Simlarni o‘zing ulaysan, kalitni bosasan va lampochka yonishini istalgan qurilmada ko‘rasan.</p>
         </div>
         <div class="feat-card">
           <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/><path d="M8 9h8M8 12h5"/></svg></div>
-          <h3>Maslahat bor</h3>
-          <p>Qiynalsangiz, maslahat so‘rang. Buning uchun yulduz kamaymaydi.</p>
+          <h3>Ona tilidagi ustoz</h3>
+          <p>Nima bo‘layotganini sodda tushuntiradi va xatoni o‘zing topishingga yo‘naltiradi.</p>
         </div>
         <div class="feat-card">
           <div class="fig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3.2"/></svg></div>
-          <h3>Uyda ham, maktabda ham</h3>
-          <p>Google yoki Telegram orqali kirasiz va istalgan kompyuter yoki telefonda davom ettirasiz.</p>
+          <h3>O‘zing yig‘asan</h3>
+          <p>Tajribani noldan o‘zing qurib, kerakli asbobni tanlaysan, natijani olasan va keyingi mavzuga o‘tasan.</p>
         </div>
       </div>
     </div>
@@ -528,12 +531,12 @@ section{position:relative}
     <div class="wrap">
       <span class="kicker"><span class="sec">§</span>Nega Empira</span>
       <h2 class="h2" id="val-title">O‘zbek maktabi uchun qurilgan.</h2>
-      <p class="lead-p">Chet el platformalari yaxshi, lekin ular boshqa dastur va boshqa til uchun qilingan. Empira o‘zbek sinfi uchun.</p>
+      <p class="lead-p">Chet el platformalari kuchli, lekin ular o‘zbek sinfi uchun yaratilmagan. Empira aynan shu bo‘shliqni to‘ldiradi.</p>
       <div class="value-grid">
-        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Darslik bo‘yicha</h3><p>Tajribalar 7–8-sinf fizika darsligidagi mavzular va ularning tartibida tuzilgan.</p></div></div>
-        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>O‘zbek tilida</h3><p>Mavzu, ko‘rsatma va savollar ona tilida. Tarjima qilib o‘tirish shart emas.</p></div></div>
-        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Hech narsa o‘rnatilmaydi</h3><p>Brauzerda ochiladi. Oddiy maktab kompyuteri yoki telefon yetarli.</p></div></div>
-        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Fizikadan boshladik</h3><p>7–8-sinf fizikasi tayyor. Kimyo va biologiya ustida ishlayapmiz.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Milliy o‘quv dasturiga mos</h3><p>Tajribalar darslikdagi mavzular va ularning tartibi bo‘yicha tuzilgan.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>To‘liq ona tilida</h3><p>Interfeys ham, ustoz ham, hisobot ham — hammasi o‘zbek tilida.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Hech narsa o‘rnatilmaydi</h3><p>Brauzerda ochiladi; kuchli kompyuter yoki maxsus jihoz talab qilmaydi.</p></div></div>
+        <div class="value-item"><span class="vn" aria-hidden="true"></span><div><h3>Fizikadan boshlab, barcha laboratoriya fanlari</h3><p>Fizika (7–8-sinf) hozir tayyor; kimyo va biologiya bosqichma-bosqich qo‘shiladi.</p></div></div>
       </div>
     </div>
   </section>
@@ -541,12 +544,14 @@ section{position:relative}
   <!-- CTA -->
   <section class="cta" aria-labelledby="cta-title">
     <div class="wrap">
-      <h2 id="cta-title">Bitta tajribadan boshlang.</h2>
-      <p>Ro‘yxatdan o‘tish bir daqiqa oladi. Fikr yoki taklifingiz bo‘lsa, yozing: har bir xabarni o‘qiymiz.</p>
+      <h2 id="cta-title">Bitta tajribani oching — va o‘zingiz ko‘ring.</h2>
+      <p>Fizikadan 7 va 8-sinflar hozir tayyor; kimyo va biologiya yo‘lda. Mavzuni tanlang, tajribani yig‘ing va ishlashini kuzating. Hammasi brauzerda, o‘zbek tilida, o‘rnatishsiz.</p>
       <div class="cta-actions">
-        <a class="btn btn-blue" href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Loyihaga qo‘shilish</a>
-              </div>
+        <a class="btn btn-blue" href="https://test.empira.uz" target="_blank" rel="noopener">Laboratoriyani ochish</a>
+        <a class="btn btn-ghost-light" href="#qanday">Qanday ishlaydi</a>
+      </div>
       <div class="cta-contacts">
+        <span>test.empira.uz</span>
         <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram: @empira</a>
         <a href="#" data-email-link>hello@empira.uz</a>
       </div>
@@ -556,9 +561,10 @@ section{position:relative}
 
 <footer class="site-footer">
   <div class="wrap footer-in">
-    <div class="footer-brand"><img src="./assets/full-logo-dark.svg" alt="Empira"><span>© 2026 Empira</span></div>
+    <div class="footer-brand"><img src="./assets/full-logo-dark.svg" alt="Empira"><span>© 2026 Empira. Milliy sun’iy intellekt xakatoni g‘olibi, Namangan bosqichi.</span></div>
     <nav class="footer-nav" aria-label="Pastki menyu">
-      <a href="https://test.empira.uz/dashboard" target="_blank" rel="noopener">Kirish</a>
+      <a href="https://test.empira.uz" target="_blank" rel="noopener">Laboratoriya</a>
+      <a href="teacher/index.html">O‘qituvchi paneli</a>
       <a href="#" data-telegram-link target="_blank" rel="noopener">Telegram</a>
       <a href="#" data-email-link>Email</a>
     </nav>
@@ -567,31 +573,27 @@ section{position:relative}
 
 <script>
 /* ===== aloqa sozlamalari — faqat shuni tahrirlang ===== */
-const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
+const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", liveUrl: "https://test.empira.uz" };
 /* ====================================================== */
 (function () {
   const nf = n => String(n).replace('.', ',');
   const LABS = [
-    { id:'electricity', tab:'Om qonuni', title:'Fizika · Om qonuni · 3D stol', frameTitle:'Om qonuni 3D laboratoriyasi', def:10, min:5, max:30, step:1, sliderLabel:'Qarshilik',
-      q:'Qarshilik ikki barobar oshsa, tok qanday o‘zgaradi?',
-      t:'Qarshilikni 10 Ω dan 20 Ω ga suring va ampermetrga qarang.',
-      a:'Tok 0,6 A dan 0,3 A ga tushadi, ya’ni ikki barobar kamayadi. Kuchlanish o‘zgarmasa, tok qarshilikka teskari proporsional: I = U ÷ R.',
+    { id:'electricity', tab:'Elektr', title:"Fizika · Om qonuni · 3D stol", frameTitle:"Om qonuni 3D laboratoriyasi", def:10, min:5, max:30, step:1, sliderLabel:'Qarshilik',
+      task:'Qarshilik ikki barobar oshsa, tok qanday o‘zgaradi?',
+      chat:['Qarshilikni 20 Ω ga o‘zgartiring. Ampermetr endi nimani ko‘rsatyapti?','0,3 A. Tok ikki barobar kamaydi!','To‘g‘ri — tok qarshilikka teskari proporsional. Endi formulani o‘zingiz yozib ko‘ring.'],
       calc:v=>{const i=6/v;return{a:['Kuchlanish','6 V'],b:['Qarshilik',v+' Ω'],c:['Tok',nf(i.toFixed(1))+' A'],formula:'I = 6 ÷ R = '+nf(i.toFixed(1))+' A',val:v+' Ω'};} },
     { id:'pendulum', tab:'Mayatnik', title:'Fizika · Matematik mayatnik · 3D stol', frameTitle:'Mayatnik 3D laboratoriyasi', def:1, min:0.25, max:2, step:0.05, sliderLabel:'Ip uzunligi',
-      q:'Ip 4 barobar qisqarsa, tebranish davri qanday o‘zgaradi?',
-      t:'Ip uzunligini 1 m dan 0,25 m ga tushiring.',
-      a:'Davr 2,0 s dan 1,0 s ga kamayadi: to‘rt emas, ikki barobar. Chunki davr ip uzunligining kvadrat ildiziga bog‘liq: T = 2π√(L ÷ g).',
-      calc:v=>{const T=2*Math.PI*Math.sqrt(v/9.8);return{a:['Uzunlik',nf(v.toFixed(2))+' m'],b:['g','9,8 m/s²'],c:['Davr',nf(T.toFixed(1))+' s'],formula:'T = 2π√(L ÷ 9,8) = '+nf(T.toFixed(1))+' s',val:nf(v.toFixed(2))+' m'};} },
-    { id:'springs', tab:'Prujina', title:'Fizika · Guk qonuni · 3D stol', frameTitle:'Guk qonuni 3D laboratoriyasi', def:0.5, min:0.1, max:1, step:0.05, sliderLabel:'Massa',
-      q:'Yuk massasi ikki barobar oshsa, prujina qancha cho‘ziladi?',
-      t:'Massani 0,5 kg dan 1 kg ga oshiring.',
-      a:'Cho‘zilish 9,8 sm dan 19,6 sm ga, ya’ni ikki barobar ortadi. Cho‘zilish ta’sir qilayotgan kuchga proporsional. Bu Guk qonuni: F = k · x.',
+      task:'Ip 4 barobar qisqarsa, tebranish davri qanday o‘zgaradi?',
+      chat:['Uzunlikni 0,25 m ga qo‘ying. Davr endi qancha?','1,0 s. To‘rt barobar emas, ikki barobar kamaydi!','To‘g‘ri — davr uzunlikning kvadrat ildiziga bog‘liq. 4 barobar qisqarsa, nega 2 barobar kamayishini ko‘ryapsizmi?'],
+      calc:v=>{const T=2*Math.PI*Math.sqrt(v/9.8);return{a:['Uzunlik',nf(v.toFixed(2))+' m'],b:['Erkin tushish','9,8 m/s²'],c:['Davr',nf(T.toFixed(1))+' s'],formula:'T = 2π√(L ÷ 9,8) = '+nf(T.toFixed(1))+' s',val:nf(v.toFixed(2))+' m'};} },
+    { id:'springs', tab:'Prujina', title:"Fizika · Guk qonuni · 3D stol", frameTitle:"Guk qonuni 3D laboratoriyasi", def:0.5, min:0.1, max:1, step:0.05, sliderLabel:'Massa',
+      task:'Massani ikki barobar oshirsangiz, cho‘zilish qanday o‘zgaradi?',
+      chat:['Massani 1,0 kg ga o‘zgartiring. Prujina endi qancha cho‘ziladi?','19,6 sm. Ikki barobar oshdi!','To‘g‘ri — kuch cho‘zilishga proporsional. Bu — Guk qonuni. Uni formula ko‘rinishida yozib ko‘ring.'],
       calc:v=>{const x=(v*9.8)/50*100;return{a:['Massa',nf(+v.toFixed(2))+' kg'],b:['Bikrlik','50 N/m'],c:['Cho‘zilish',nf(x.toFixed(1))+' sm'],formula:'x = (m × 9,8) ÷ 50 = '+nf(x.toFixed(1))+' sm',val:nf(+v.toFixed(2))+' kg'};} },
-    { id:'optics', tab:'Optika', title:'Fizika · Yorug‘likning sinishi · 3D stol', frameTitle:'Yorug‘lik sinishi 3D laboratoriyasi', def:30, min:0, max:80, step:1, sliderLabel:'Tushish burchagi',
-      q:'Tushish burchagi ikki barobar oshsa, shisha ichidagi burchak ham ikki barobar oshadimi?',
-      t:'Burchakni 30° dan 60° ga oshiring.',
-      a:'Yo‘q. Ichkaridagi burchak 19,5° dan 35,3° ga oshadi. Proporsional bo‘lgani burchaklarning o‘zi emas, ularning sinuslari: sin θ₁ = n · sin θ₂.',
-      calc:v=>{const t=Math.asin(Math.sin(v*Math.PI/180)/1.5)*180/Math.PI;return{a:['Tushish',v+'°'],b:['n (shisha)','1,5'],c:['Ichkarida',nf(t.toFixed(1))+'°'],formula:'sin θ₂ = sin θ₁ ÷ 1,5 → '+nf(t.toFixed(1))+'°',val:v+'°'};} }
+    { id:'optics', tab:'Optika', title:'Fizika · Yorug‘lik sinishi · 3D stol', frameTitle:'Yorug‘lik sinishi 3D laboratoriyasi', def:30, min:0, max:80, step:1, sliderLabel:'Tushish burchagi',
+      task:'Tushish burchagini ikki barobar oshirsangiz, ichkaridagi burchak ham shuncha oshadimi?',
+      chat:['Tushish burchagini 60° ga qo‘ying. Shishadagi burchak qancha?','35,3°. Ikki barobar oshmadi!','Yaxshi kuzatdingiz — proporsional bo‘lgani burchaklar emas, ularning sinuslari. Bu — Snellius qonuni.'],
+      calc:v=>{const t=Math.asin(Math.sin(v*Math.PI/180)/1.5)*180/Math.PI;return{a:['Tushish',v+'°'],b:['Sindirish ko‘rsatkichi','1,5'],c:['Ichkarida',nf(t.toFixed(1))+'°'],formula:'sin θ₂ = sin θ₁ ÷ 1,5 → '+nf(t.toFixed(1))+'°',val:v+'°'};} }
   ];
   const $=id=>document.getElementById(id);
   const mobileMQ=matchMedia('(max-width: 760px)');
@@ -600,7 +602,7 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
   let current=0, timer;
 
   const frame=$('scene-frame');
-  const startFrame=()=>{if(!frame.getAttribute('src'))frame.src='./lab-scene.html?lab=electricity&r=10'+(mobileMQ.matches?'&static=1':'');};
+  frame.src='./lab-scene.html?lab=electricity&r=10'+(mobileMQ.matches?'&static=1':'');
   const send=msg=>{if(frame.contentWindow)frame.contentWindow.postMessage(msg,'*');};
   const syncFrame=()=>{const L=LABS[current];send({type:'lab',lab:L.id,value:vals[L.id]});};
   // Jonli 3D sahna chindan chizilayotganiga ishonch hosil bo‘lgandagina ko‘rsatiladi;
@@ -614,9 +616,7 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
     if(ok){scene.classList.add('live');}
     else if(liveChecks<20){setTimeout(checkLive,250);}
   }
-  frame.addEventListener('load',()=>{if(!frame.getAttribute('src'))return;syncFrame();checkLive();});
-  // pastdagi sahna faqat ekranga yaqinlashganda yuklanadi (hero sahnasi bilan bir vaqtda emas)
-  if('IntersectionObserver' in window){const fio=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){startFrame();fio.disconnect();}},{rootMargin:'300px'});fio.observe(document.querySelector('.scene'));}else startFrame();
+  frame.addEventListener('load',()=>{syncFrame();checkLive();});
   if(mobileMQ.matches)$('drag-hint').textContent='3D stol';
 
   const tabsEl=$('tabs');
@@ -626,23 +626,28 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
     $('ra').textContent=c.a[0];$('rav').textContent=c.a[1];$('rb').textContent=c.b[0];$('rbv').textContent=c.b[1];$('rc').textContent=c.c[0];$('rcv').textContent=c.c[1];
     $('slider-text').textContent=c.val;$('formula').textContent=c.formula;$('formula').hidden=!c.formula;}
 
-  function setAnswer(open){$('q-ans').hidden=!open;$('q-btn').textContent=open?'Javobni yashirish':'Javobni ko‘rish';$('q-btn').setAttribute('aria-expanded',String(open));}
-  $('q-btn').addEventListener('click',()=>setAnswer($('q-ans').hidden));
-
   function renderLab(){const L=LABS[current];
     [...tabsEl.children].forEach((b,i)=>b.setAttribute('aria-selected',String(i===current)));
     $('lab-title').textContent=L.title;frame.title=L.frameTitle;
     const s=$('slider');s.min=L.min;s.max=L.max;s.step=L.step;s.value=vals[L.id];s.setAttribute('aria-label',L.sliderLabel);$('slider-label').textContent=L.sliderLabel;
-    $('q-text').textContent=L.q;$('q-try').textContent=L.t;$('q-ans').textContent=L.a;setAnswer(false);
+    $('task-text-d').textContent=L.task;
+    const chat=$('chat');chat.innerHTML='<div class="tutor-head"><span class="spark"></span>Ustoz, o‘zbek tilida tushuntiradi</div>';
+    const cls=['ai','me','ai'];L.chat.forEach((t,i)=>{const d=document.createElement('div');d.className='bubble '+cls[i];d.textContent=t;chat.appendChild(d);});
+    const note=document.createElement('div');note.className='tutor-note';note.innerHTML='<span class="spark"></span>Har bir qadam o‘qituvchi hisobotiga yoziladi';chat.appendChild(note);
     renderReadouts();}
 
-  function pick(i){if(i===current)return;const fades=[$('scene-overlay'),$('quiz')];
+  function pick(i){if(i===current)return;const fades=[$('scene-overlay'),$('tutor-inner')];
     if(reduced()){current=i;renderLab();syncFrame();return;}
     fades.forEach(el=>el.classList.add('out'));clearTimeout(timer);
     timer=setTimeout(()=>{current=i;renderLab();syncFrame();fades.forEach(el=>el.classList.remove('out'));},180);}
 
   $('slider').addEventListener('input',e=>{const L=LABS[current],v=Number(e.target.value);vals[L.id]=v;renderReadouts();send({type:'value',value:v});});
   renderLab();
+
+  // natija pilli birinchi marta ko‘ringanda bir martalik amber "ishladi" effekti
+  if(!reduced()&&'IntersectionObserver'in window){
+    const p=$('result-pill');const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){p.classList.add('lit');io.disconnect();}});},{threshold:.6});io.observe(p);
+  }
 
   // hero sahnasi — faqat ko‘rsatish uchun jonli 3D manzara
   const hf=$('hero-frame');
@@ -664,51 +669,6 @@ const EMPIRA = { telegramUsername: "empira", email: "hello@empira.uz", };
   const tgUrl=EMPIRA.telegramUsername?'https://t.me/'+EMPIRA.telegramUsername:'';
   document.querySelectorAll('[data-telegram-link]').forEach(a=>{if(tgUrl)a.href=tgUrl;else a.remove();});
   document.querySelectorAll('[data-email-link]').forEach(a=>{if(EMPIRA.email)a.href='mailto:'+EMPIRA.email;else a.remove();});
-})();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
-<script>
-(function(){
-  var SB_URL="https://bxxpukjszidkcbuewbcf.supabase.co", SB_KEY="sb_publishable_OxQzGLAdRWcCX06JnzEN7A_cRrRyMBM";
-  var counts={},painted={},visible=false;
-  function animate(el,to){
-    var start=null;
-    function step(now){if(start===null)start=now;var p=Math.min((now-start)/1000,1);
-      el.textContent=Math.round((1-Math.pow(1-p,3))*to).toLocaleString('en-US').replace(/,/g,' ');
-      if(p<1)requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  function render(){
-    if(!visible)return;
-    Object.keys(counts).forEach(function(key){
-      var value=counts[key],el=document.getElementById('hs-'+key);
-      if(el&&Number.isFinite(value)&&value>=0&&painted[key]!==value){painted[key]=value;animate(el,value);}
-    });
-  }
-  function unavailable(keys){
-    keys.forEach(function(key){var el=document.getElementById('hs-'+key);var hs=el&&el.closest('.hs');if(hs)hs.hidden=true;});
-  }
-  function bounded(p){return Promise.race([p,new Promise(function(_,reject){setTimeout(function(){reject(new Error('timeout'));},6000);})]);}
-  function go(){
-    var el=document.getElementById('hero-stats');
-    if('IntersectionObserver' in window&&el){
-      var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){visible=true;render();io.disconnect();}},{threshold:0.1});io.observe(el);
-    }else{visible=true;}
-    bounded(fetch('https://test.empira.uz/api/catalog').then(function(r){if(!r.ok)throw new Error('catalog');return r.json();}))
-      .then(function(d){['topics','labs'].forEach(function(k){if(Number.isInteger(d[k])&&d[k]>=0)counts[k]=d[k];});render();})
-      .catch(function(){unavailable(['topics','labs']);});
-    try{
-      if(!window.supabase)throw new Error('stats');
-      var sb=window.supabase.createClient(SB_URL,SB_KEY);
-      bounded(sb.rpc('public_stats')).then(function(r){
-        if(r.error||!r.data)throw new Error('stats');
-        ['students','teachers'].forEach(function(k){var n=Number(r.data[k]);if(r.data[k]!=null&&Number.isFinite(n)&&n>=0)counts[k]=n;});
-        render();
-      }).catch(function(){unavailable(['students','teachers']);});
-    }catch(e){unavailable(['students','teachers']);}
-  }
-  if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 })();
 </script>
 </body>
